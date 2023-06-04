@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "RN0720RC5.app"
-               BlueprintName = "RN0720RC5"
-               ReferencedContainer = "container:RN0720RC5.xcodeproj">
+               BuildableName = "Bardistry.app"
+               BlueprintName = "Bardistry"
+               ReferencedContainer = "container:Bardistry.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "RN0720RC5Tests.xctest"
-               BlueprintName = "RN0720RC5Tests"
-               ReferencedContainer = "container:RN0720RC5.xcodeproj">
+               BuildableName = "BardistryTests.xctest"
+               BlueprintName = "BardistryTests"
+               ReferencedContainer = "container:Bardistry.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "RN0720RC5.app"
-            BlueprintName = "RN0720RC5"
-            ReferencedContainer = "container:RN0720RC5.xcodeproj">
+            BuildableName = "Bardistry.app"
+            BlueprintName = "Bardistry"
+            ReferencedContainer = "container:Bardistry.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "RN0720RC5.app"
-            BlueprintName = "RN0720RC5"
-            ReferencedContainer = "container:RN0720RC5.xcodeproj">
+            BuildableName = "Bardistry.app"
+            BlueprintName = "Bardistry"
+            ReferencedContainer = "container:Bardistry.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

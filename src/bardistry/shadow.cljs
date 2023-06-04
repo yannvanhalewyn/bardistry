@@ -6,4 +6,4 @@
 
 (defn ^:dev/after-load init []
   (.log js/console "INIT, loading")
-  (render-root "RN0720RC5" (r/as-element [core/app-root])))
+  (render-root "Bardistry" (r/as-element [core/app-root])))

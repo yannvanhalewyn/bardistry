@@ -1,4 +1,4 @@
-rootProject.name = 'RN0720RC5'
+rootProject.name = 'Bardistry'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
 includeBuild('../node_modules/@react-native/gradle-plugin')
