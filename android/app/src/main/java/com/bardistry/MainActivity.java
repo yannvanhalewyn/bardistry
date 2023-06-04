@@ -1,4 +1,4 @@
-package com.rn0720rc5;
+package com.bardistry;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

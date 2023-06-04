@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.rn0720rc5"
+    namespace "com.bardistry"
     defaultConfig {
-        applicationId "com.rn0720rc5"
+        applicationId "com.bardistry"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
