@@ -17,7 +17,7 @@ const Component = props => {
   console.log('Rendering bardistry/Component.js', "songs:", props.songs?.length);
 
   return (
-    <SafeAreaView className="">
+    <SafeAreaView className="dark:bg-black">
       <Text className="mx-4 text-4xl font-bold dark:text-white">My Songs</Text>
       <View className="mt-2 border border-orange-500"/>
       <FlatList className="" data={props.songs} renderItem={renderItem} />

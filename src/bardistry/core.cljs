@@ -5,25 +5,22 @@
    [bardistry.db :as db]
    [clojure.string :as str]))
 
-;; (def component (.-default (js/require "../../foo.js")))
-;; (def component (.-default (js/require "../../src/foo.js")))
-(def component (r/adapt-react-class (.-default (js/require "../../src/bardistry/Component.js"))))
+(def SongList (r/adapt-react-class (.-default (js/require "../../src/bardistry/Component.js"))))
 (def App (r/adapt-react-class (.-default (js/require "../../src/bardistry/App.js"))))
-
-;; (def component (r/adapt-react-class (.-default (js/require "../../src/bardistry/Component.js"))))
 
 (def view (r/adapt-react-class rn/View))
 (def text (r/adapt-react-class rn/Text))
 
-(defn app-root []
+(defn song-list []
   (db/load-songs!)
   (fn []
-    #_[view {:margin-top 64}
-       [text {:style {:color "blue"}}
-        "--I  change this and it just works! "]]
+    [SongList
+     {:songs (for [song (:songs @db/db)]
+               (update song :song/contents #(str/trim (str/join "\n" %))))}]))
 
-    [App {:songs (for [song (:songs @db/db)]
-                         (update song :song/contents #(str/trim (str/join "\n" %))))}]))
+(defn app-root []
+  [App {:screens
+        [{:name "Songs" :component #(r/as-element [song-list])}]}])
 
 (defn ^:export -main
   []

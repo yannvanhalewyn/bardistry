@@ -1,24 +1,25 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {View, Text} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Component from './Component.js';
-
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-    </View>
-  );
-}
 
 const Stack = createNativeStackNavigator();
 
-function App() {
+function App(props) {
+  // console.log(props.screens)
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          name={props.screens[0].name}
+          component={props.screens[0].component}
+        />
+        {/* {props.screens.map(screen => { */}
+        {/*   return ( */}
+        {/*     <Stack.Screen name={screen.name} component={screen.component} /> */}
+        {/*   ); */}
+        {/* })} */}
       </Stack.Navigator>
     </NavigationContainer>
   );
