@@ -68,3 +68,4 @@ yarn-error.log
 /.clj-kondo/
 /.cpcache/
 /.lsp/
+/.shadow-cljs/

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@cljs-oss/module-deps": "^1.1.1",
+    "create-react-class": "^15.7.0",
     "react": "18.2.0",
     "react-native": "0.72.0-rc.5",
     "react-native-device-info": "8.1.2",
@@ -32,6 +33,7 @@
     "metro-react-native-babel-preset": "0.76.5",
     "prettier": "^2.4.1",
     "react-test-renderer": "18.2.0",
+    "shadow-cljs": "^2.23.3",
     "typescript": "4.8.4"
   },
   "engines": {

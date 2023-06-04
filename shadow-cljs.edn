@@ -1,0 +1,12 @@
+{:deps true
+ :builds
+ {:app
+  {:target :react-native
+   :init-fn bardistry.shadow/init
+   :output-dir "target/app"
+   ;; :compiler-options {:closure-defines
+   ;;                    {"re_frame.trace.trace_enabled_QMARK_" true}}
+   :devtools {:reload-strategy :full
+              ;; :preloads [re-frisk-remote.preload]
+              }
+   }}}
