@@ -378,7 +378,7 @@ Green Eyes
 Coldplay
 
 [Verse 1]
-Honey, you are a rock
+Honey you, are a rock
 Upon which I stand
 And I come here to talk
 I hope you understand
@@ -397,7 +397,8 @@ That I could never go on without you
 Green eyes
 
 [Verse 2]
-Honey, you are the sea upon which I float
+Honey you, are the sea
+Upon which I float
 And I came here to talk
 I think you should know
 
@@ -2315,16 +2316,15 @@ Maybe it's time to let the old ways die
 Oh, maybe it's time to let the old ways die
 
 {{SONG}}
-While my guitar gently wheeps
+While my Guitar Gently Wheeps
 The Beatles
-
 
 I look at you all, see the love there that's sleeping
 While my guitar gently weeps
 I look at the floor and I see it needs sweeping
 Still my guitar gently weeps
 
-
+[Chorus]
 I don't know why nobody told you
 How to unfold your love
 I don't know how someone controlled you
@@ -2336,7 +2336,7 @@ While my guitar gently weeps
 With every mistake, we must surely be learning
 Still my guitar gently weeps
 
-
+[Chorus]
 I don't know how you were diverted
 You were perverted too
 I don't know how you were inverted
@@ -2767,7 +2767,7 @@ Honey honey
 Where do I go to fall from grace?
 God put a smile upon your face, yeah
 
-
+[Chorus]
 Ah, when you work it out I'm worse than you
 Yeah, when you work it out I wanted to
 Ah, when you work out where to draw the line
@@ -2779,7 +2779,7 @@ Don't ever say you're on your way down when
 God gave you style and gave you grace
 And put a smile upon your face ah yeah
 
-
+[Chorus]
 Ah, when you work it out I'm worse than you
 Yeah, when you work it out I want it to
 Ah, when you work out where to draw the line

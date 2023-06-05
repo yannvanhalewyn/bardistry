@@ -4,11 +4,11 @@ import {useNavigation} from '@react-navigation/native';
 
 const Lyrics = props => {
   return (
-    <ScrollView className="px-4">
-      <View className="pb-32">
+    <ScrollView className="bg-white dark:bg-black">
+      <View className="px-4 pb-32">
         {props.song.processedLyrics.map(section => {
           const highlight = section['chorus?'];
-          const hlClassNames = ' p-4 rounded-2xl bg-gray-900';
+          const hlClassNames = ' p-4 rounded-2xl bg-gray-100 dark:bg-gray-900';
 
           return (
             <View

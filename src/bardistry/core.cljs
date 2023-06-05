@@ -41,7 +41,7 @@
   (let [section-title (parse-section-title header-or-line)]
     (-> (if section-title
           {:section/title section-title
-           :section/chorus? (re-find (re-pattern "(?i)chorus") section-title)
+           :section/chorus? (= (str/lower-case section-title) "chorus")
            :section/lines lines}
           {:section/lines all-lines})
         (assoc :section/id (random-uuid)))))

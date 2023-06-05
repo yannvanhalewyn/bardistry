@@ -19,9 +19,7 @@ const ListItem = props => {
 
 const SongList = ({songs}) => {
   return (
-    <SafeAreaView >
-      <Text className="mx-4 text-4xl font-bold dark:text-white">My Songs</Text>
-      <View className="mt-2 border border-orange-500" />
+    <SafeAreaView className="bg-white dark:bg-black">
       <FlatList
         className=""
         data={songs}
