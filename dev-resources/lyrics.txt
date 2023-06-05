@@ -810,7 +810,7 @@ Pack and get dressed
 Before your father hears us
 Before all hell breaks loose
 
-[Verse 3]
+[Chorus]
 Breathe, keep breathing
 Don't lose your nerve
 Breathe, keep breathing
@@ -1879,6 +1879,7 @@ You'll see that you can breathe without no back up
 So much stuff you got to understand
 
 
+Chorus
 For every step in any walk
 Any town of any thought
 I'll be your guide

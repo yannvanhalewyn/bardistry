@@ -9,15 +9,6 @@
 (def Lyrics (r/adapt-react-class (.-default (js/require "../../src/bardistry/Lyrics.js"))))
 (def App (r/adapt-react-class (.-default (js/require "../../src/bardistry/App.js"))))
 
-;; (defn collapse [collapse-el]
-;;   (fn [rf]
-;;     (fn
-;;       ([rf] rf)
-;;       ([rf x]
-;;        (rf x))
-;;       ([rf acc x]
-;;        ))))
-
 (defn collapse-xf [collapse-el]
   (fn [rf]
     (let [seen (atom nil)]
@@ -41,11 +32,19 @@
               (conj out el)))
           [] coll))
 
+(defn- parse-section-title [line]
+  (or (second (re-find #"\[(.*)\]" line))
+      (when (contains? #{"chorus" "verse"} (str/lower-case line))
+        line)))
+
 (defn- process-section [[header-or-line & lines :as all-lines]]
-  (if-let [[_ section-title] (re-find #"\[(.*)\]" header-or-line)]
-    {:section/title section-title
-     :section/lines lines}
-    {:section/lines all-lines}))
+  (let [section-title (parse-section-title header-or-line)]
+    (-> (if section-title
+          {:section/title section-title
+           :section/chorus? (re-find (re-pattern "(?i)chorus") section-title)
+           :section/lines lines}
+          {:section/lines all-lines})
+        (assoc :section/id (random-uuid)))))
 
 (defn- prepare-song-contents [contents]
   (->> contents
@@ -54,6 +53,11 @@
        (remove #(= % [""]))
        (map process-section)
        (map (fn [song] (update song :section/lines #(str/trim (str/join "\n" %)))))))
+
+(defn- process-song [song]
+  (when song
+    (assoc song
+      :song/processed-lyrics (prepare-song-contents (:song/contents song)))))
 
 (comment
   (->> (:song/contents (first (:songs @db/db)))
@@ -64,13 +68,39 @@
        (map (fn [song] (update song :section/lines #(str/trim (str/join "\n" %)))))
        )
 
+  (defn my-process [[a & res]]
+    (re-find #"Chorus" a)
+    )
+
+  (defn- my-process [[header-or-line & lines :as all-lines]]
+    (.log js/console "-------------")
+    (.log js/console header-or-line (type header-or-line))
+    (let (or (second (re-find #"\[(.*)\]" header-or-line))
+             (contains? #{"chorus" "verse"} (str/lower-case header-or-line)))
+      (-> (if section-title
+            {:section/title section-title
+             :section/chorus? (re-find (re-pattern "(?i)chorus") section-title)
+             :section/lines lines}
+            {:section/lines all-lines})
+          (assoc :section/id (random-uuid)))))
+
+  (process-section
+   (second
+    (for [x (:song/processed-lyrics
+             (process-song (first (sort-by :song/sort-artist (:songs @db/db)))))]
+      x
+      )))
+
+  (process-song (first (:songs @db/db)))
+
+
+
   )
 
 (defn app-root []
   (db/load-songs!)
   (fn []
-    (let [songs (for [song (:songs @db/db) #_(sort-by :song/sort-artist (:songs @db/db))]
-                  (update song :song/contents prepare-song-contents))
+    (let [songs (sort-by :song/sort-artist (:songs @db/db))
           find-song (fn [id] (first (filter #(= (:song/id %) id) songs)))]
       [App {:screens
             [{:name "Songs"
@@ -79,7 +109,7 @@
                [SongList {:songs songs}])}
              {:name "Lyrics"
               :component #(let [id (j/get-in % [:route :params :id])]
-                            (r/as-element [Lyrics {:song (find-song id)}]))}]}])))
+                            (r/as-element [Lyrics {:song (process-song (find-song id))}]))}]}])))
 
 (defn ^:export -main
   []
