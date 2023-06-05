@@ -4,10 +4,17 @@ import {useNavigation} from '@react-navigation/native';
 
 const Lyrics = props => {
   return (
-    <ScrollView className="px-4 dark:bg-black">
-      <Text className="text-md mt-2 leading-5 dark:text-white">
-        {props.song.contents}
-      </Text>
+    <ScrollView className="px-4 ">
+      {props.song.contents.map(section => {
+        return (
+          <View className="mt-6">
+            {section.title ? (
+              <Text className="font-bold dark:text-white">{section.title}</Text>
+            ) : null}
+            <Text className="text-lg dark:text-white">{section.lines}</Text>
+          </View>
+        );
+      })}
     </ScrollView>
   );
 };

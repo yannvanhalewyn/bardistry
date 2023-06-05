@@ -1,15 +1,15 @@
 import * as React from 'react';
-import {View, Text} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {View, Text, useColorScheme} from 'react-native';
+import {NavigationContainer, DefaultTheme, DarkTheme} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Component from './Component.js';
 
 const Stack = createNativeStackNavigator();
 
 function App(props) {
-  // console.log(props.screens)
+  const color = useColorScheme();
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={color === "dark" ? DarkTheme : DefaultTheme}>
       <Stack.Navigator>
         <Stack.Screen
           name={props.screens[0].name}
@@ -20,11 +20,6 @@ function App(props) {
           component={props.screens[1].component}
           options={({ route }) => ({ title: route.params.title })}
         />
-        {/* {props.screens.map(screen => { */}
-        {/*   return ( */}
-        {/*     <Stack.Screen name={screen.name} component={screen.component} /> */}
-        {/*   ); */}
-        {/* })} */}
       </Stack.Navigator>
     </NavigationContainer>
   );

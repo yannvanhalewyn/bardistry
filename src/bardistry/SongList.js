@@ -17,11 +17,9 @@ const ListItem = props => {
   );
 };
 
-const Component = ({songs}) => {
-  console.log('Rendering bardistry/Component.js', 'songs:', songs?.length);
-
+const SongList = ({songs}) => {
   return (
-    <SafeAreaView className="dark:bg-black">
+    <SafeAreaView >
       <Text className="mx-4 text-4xl font-bold dark:text-white">My Songs</Text>
       <View className="mt-2 border border-orange-500" />
       <FlatList
@@ -33,4 +31,4 @@ const Component = ({songs}) => {
   );
 };
 
-export default Component;
+export default SongList;

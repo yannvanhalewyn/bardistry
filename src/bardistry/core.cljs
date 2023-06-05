@@ -1,25 +1,76 @@
 (ns bardistry.core
   (:require
    [reagent.core :as r]
-   [react-native :as rn]
    [bardistry.db :as db]
    [clojure.string :as str]
    [applied-science.js-interop :as j]))
 
-(def SongList (r/adapt-react-class (.-default (js/require "../../src/bardistry/Component.js"))))
+(def SongList (r/adapt-react-class (.-default (js/require "../../src/bardistry/SongList.js"))))
 (def Lyrics (r/adapt-react-class (.-default (js/require "../../src/bardistry/Lyrics.js"))))
 (def App (r/adapt-react-class (.-default (js/require "../../src/bardistry/App.js"))))
 
-(def view (r/adapt-react-class rn/View))
-(def text (r/adapt-react-class rn/Text))
+;; (defn collapse [collapse-el]
+;;   (fn [rf]
+;;     (fn
+;;       ([rf] rf)
+;;       ([rf x]
+;;        (rf x))
+;;       ([rf acc x]
+;;        ))))
 
-(def args (atom nil))
+(defn collapse-xf [collapse-el]
+  (fn [rf]
+    (let [seen (atom nil)]
+      (fn
+        ([] (rf))
+        ([result] (rf result))
+        ([result input]
+         (let [repeat? (and @seen (= input collapse-el))]
+           (if (= input collapse-el)
+             (reset! seen true)
+             (reset! seen false))
+           (if repeat?
+             result
+             (rf result input))))))))
+
+(defn collapse [collapse-el coll]
+  (reduce (fn [out el]
+            (if (and (= el collapse-el)
+                     (= (last out) collapse-el))
+              out
+              (conj out el)))
+          [] coll))
+
+(defn- process-section [[header-or-line & lines :as all-lines]]
+  (if-let [[_ section-title] (re-find #"\[(.*)\]" header-or-line)]
+    {:section/title section-title
+     :section/lines lines}
+    {:section/lines all-lines}))
+
+(defn- prepare-song-contents [contents]
+  (->> contents
+       (collapse "")
+       (partition-by #(= % ""))
+       (remove #(= % [""]))
+       (map process-section)
+       (map (fn [song] (update song :section/lines #(str/trim (str/join "\n" %)))))))
+
+(comment
+  (->> (:song/contents (first (:songs @db/db)))
+       (collapse "")
+       (partition-by #(= % ""))
+       (remove #(= % [""]))
+       (map process-section)
+       (map (fn [song] (update song :section/lines #(str/trim (str/join "\n" %)))))
+       )
+
+  )
 
 (defn app-root []
   (db/load-songs!)
   (fn []
-    (let [songs (for [song (sort-by :song/sort-artist (:songs @db/db))]
-                  (update song :song/contents #(str/trim (str/join "\n" %))))
+    (let [songs (for [song (:songs @db/db) #_(sort-by :song/sort-artist (:songs @db/db))]
+                  (update song :song/contents prepare-song-contents))
           find-song (fn [id] (first (filter #(= (:song/id %) id) songs)))]
       [App {:screens
             [{:name "Songs"
