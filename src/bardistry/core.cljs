@@ -3,24 +3,32 @@
    [reagent.core :as r]
    [react-native :as rn]
    [bardistry.db :as db]
-   [clojure.string :as str]))
+   [clojure.string :as str]
+   [applied-science.js-interop :as j]))
 
 (def SongList (r/adapt-react-class (.-default (js/require "../../src/bardistry/Component.js"))))
+(def Lyrics (r/adapt-react-class (.-default (js/require "../../src/bardistry/Lyrics.js"))))
 (def App (r/adapt-react-class (.-default (js/require "../../src/bardistry/App.js"))))
 
 (def view (r/adapt-react-class rn/View))
 (def text (r/adapt-react-class rn/Text))
 
-(defn song-list []
-  (db/load-songs!)
-  (fn []
-    [SongList
-     {:songs (for [song (:songs @db/db)]
-               (update song :song/contents #(str/trim (str/join "\n" %))))}]))
+(def args (atom nil))
 
 (defn app-root []
-  [App {:screens
-        [{:name "Songs" :component #(r/as-element [song-list])}]}])
+  (db/load-songs!)
+  (fn []
+    (let [songs (for [song (sort-by :song/sort-artist (:songs @db/db))]
+                  (update song :song/contents #(str/trim (str/join "\n" %))))
+          find-song (fn [id] (first (filter #(= (:song/id %) id) songs)))]
+      [App {:screens
+            [{:name "Songs"
+              :component
+              #(r/as-element
+               [SongList {:songs songs}])}
+             {:name "Lyrics"
+              :component #(let [id (j/get-in % [:route :params :id])]
+                            (r/as-element [Lyrics {:song (find-song id)}]))}]}])))
 
 (defn ^:export -main
   []

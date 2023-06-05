@@ -15,6 +15,11 @@ function App(props) {
           name={props.screens[0].name}
           component={props.screens[0].component}
         />
+        <Stack.Screen
+          name={props.screens[1].name}
+          component={props.screens[1].component}
+          options={({ route }) => ({ title: route.params.title })}
+        />
         {/* {props.screens.map(screen => { */}
         {/*   return ( */}
         {/*     <Stack.Screen name={screen.name} component={screen.component} /> */}
