@@ -1,6 +1,7 @@
 // Would like to use the Lato font.
 import {View, Text, Pressable, FlatList, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import SearchBar from './SearchBar.js';
 
 const Song = props => {
   const navigation = useNavigation();
@@ -22,18 +23,17 @@ const Song = props => {
   );
 };
 
-const SongList = ({songs}) => {
+const SongList = ({songs, onQueryChange}) => {
   return (
     <SafeAreaView className="px-4 bg-white dark:bg-black">
-      <View className="mx-4 mt-4 rounded-2xl border dark:border-gray-700">
+      <SearchBar className="mt-4" onChangeText={onQueryChange} />
+
         <FlatList
-          className=""
+          className="mx-4 mt-4 flex rounded-2xl border dark:border-gray-700"
           data={songs}
           renderItem={props => <Song {...props} />}
-          /* ItemSeparatorComponent={<Separator alignSelf="stretch" backgroundColor="red" horizontal/>} */
           ItemSeparatorComponent={<View className="border border-gray-700"></View>}
         />
-      </View>
     </SafeAreaView>
   );
 };
