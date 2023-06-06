@@ -1,5 +1,7 @@
 import {Suspense} from 'react';
-import {View, Text, useColorScheme} from 'react-native';
+import {View, Text} from 'react-native';
+import {useColorScheme} from 'nativewind';
+
 import {
   NavigationContainer,
   DefaultTheme,
@@ -13,13 +15,13 @@ import tamaguiConfig from '../../tamagui.config';
 const Stack = createNativeStackNavigator();
 
 function App(props) {
-  const color = useColorScheme();
+  const {colorScheme} = useColorScheme();
 
   return (
     <TamaguiProvider config={tamaguiConfig}>
       <Suspense>
         <NavigationContainer
-          theme={color === 'dark' ? DarkTheme : DefaultTheme}>
+          theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <Stack.Navigator>
             <Stack.Screen
               options={{headerShown: false}}

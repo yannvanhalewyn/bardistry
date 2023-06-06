@@ -19,8 +19,8 @@
   (let [query (r/atom "")]
     (fn [{:keys [songs]}]
       [SongList {:songs (if-let [q @query]
-                          (do
-                            (.log js/console @query q)
-                            (filter (song-matcher q) songs))
+                          (filter (song-matcher q) songs)
                           songs)
+                 :showClearSearch (not-empty @query)
+                 :onClearSearch #(reset! query "")
                  :onQueryChange #(reset! query %)}])))
