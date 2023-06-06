@@ -24,7 +24,6 @@ const Song = props => {
 };
 
 const SongList = ({songs, showClearSearch, onClearSearch, onQueryChange}) => {
-  console.log("onclear", onClearSearch)
   return (
     <SafeAreaView className="px-4 bg-white dark:bg-black">
       <View className="mx-4 mt-8 flex-row items-center">
