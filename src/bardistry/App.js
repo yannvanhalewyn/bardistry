@@ -22,6 +22,7 @@ function App(props) {
           theme={color === 'dark' ? DarkTheme : DefaultTheme}>
           <Stack.Navigator>
             <Stack.Screen
+              options={{headerShown: false}}
               name={props.screens[0].name}
               component={props.screens[0].component}
             />

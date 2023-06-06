@@ -26,6 +26,7 @@ const Song = props => {
 const SongList = ({songs, onQueryChange}) => {
   return (
     <SafeAreaView className="px-4 bg-white dark:bg-black">
+      <Text className="text-4xl mt-2 mx-4 font-black dark:text-white">Bardistry</Text>
       <SearchBar className="mt-4" onChangeText={onQueryChange} />
 
         <FlatList
