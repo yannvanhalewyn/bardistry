@@ -1,12 +1,9 @@
 {:paths ["src" "resources"]
- :deps {io.vouch/krell
-        {:mvn/version "0.5.4"}
-        #_{:git/url "https://github.com/vouch-opensource/krell.git"
-           :sha "24e2456b4180b16191e21ec79739c31c2e627bde"}
-        ;; net.cgrand/xforms {:mvn/version "0.19.4"}
+ :deps {net.cgrand/xforms {:mvn/version "0.19.4"}
+        http-kit/http-kit {:mvn/version "2.7.0-SNAPSHOT"}
+
         reagent/reagent {:mvn/version "1.2.0"
                          :exclusions [cljsjs/react cljsjs/react-dom]}
-        http-kit/http-kit {:mvn/version "2.7.0-SNAPSHOT"}
         funcool/promesa {:mvn/version "11.0.671"}
         com.cognitect/transit-cljs {:mvn/version "0.8.280"}
         applied-science/js-interop {:mvn/version "0.4.2"}}
