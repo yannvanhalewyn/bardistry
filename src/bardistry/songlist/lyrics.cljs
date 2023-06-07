@@ -18,7 +18,7 @@
 
 (defn- parse-section-title [line]
   (second
-   (re-find (re-pattern "(?i)\\[((?:chorus|verse|bridge|intro|outro)\\s*\\d*)\\]?$") line)))
+   (re-find (re-pattern "(?i)\\[?((?:chorus|verse|bridge|intro|outro)\\s*\\d*)\\]?$") line)))
 
 (defn- process-section [[header-or-line & lines :as all-lines]]
   (let [section-title (parse-section-title header-or-line)]
