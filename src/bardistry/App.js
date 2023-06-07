@@ -1,6 +1,7 @@
 import {Suspense} from 'react';
 import {View, Text} from 'react-native';
 import {useColorScheme} from 'nativewind';
+import colors from 'tailwindcss/colors';
 
 import {
   NavigationContainer,
@@ -31,7 +32,8 @@ function App(props) {
             <Stack.Screen
               name={props.screens[1].name}
               component={props.screens[1].component}
-              options={({route}) => ({title: route.params.title})}
+              options={({route}) => ({title: route.params.title,
+                                      headerTintColor: colors.orange['500']})}
             />
           </Stack.Navigator>
         </NavigationContainer>

@@ -10,7 +10,7 @@ const Song = props => {
   const song = props.item;
 
   return (
-    <View className="bg-gray-100 dark:bg-gray-900">
+    <View className="dark:bg-gray-900">
       <Pressable
         className="px-4 py-3"
         onPress={() =>
@@ -40,11 +40,11 @@ const SongList = ({songs, showClearSearch, onClearSearch, onQueryChange}) => {
       />
 
       <FlatList
-        className="mx-4 my-4 rounded-2xl border dark:border-gray-700"
+        className="mx-4 my-4 rounded-lg border-gray-100 dark:border-gray-700"
         data={songs}
         renderItem={props => <Song {...props} />}
         ItemSeparatorComponent={
-          <View className="border border-gray-700"></View>
+          <View className="border-0.5 border-gray-200 dark:border-gray-700"></View>
         }
       />
     </SafeAreaView>

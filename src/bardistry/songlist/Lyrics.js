@@ -17,7 +17,7 @@ const Lyrics = props => {
               {section.title ? (
                 <Text className="font-bold dark:text-white">{section.title}</Text>
               ) : null}
-              <Text className="text-lg dark:text-white">{section.lines}</Text>
+              <Text className="text-lg font-lato dark:text-white">{section.lines}</Text>
             </View>
           );
         })}
