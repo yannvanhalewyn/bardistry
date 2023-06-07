@@ -18,11 +18,16 @@
       [App {:screens
             [{:name "Songs"
               :component
-              #(r/as-element [songlist/component {:songs songs}])}
+              #(r/as-element
+                [songlist/component
+                 {:songs (for [song songs]
+                           ;; TODO don't need to be thinking about types and
+                           ;; routing implementation
+                           (update song :song/id str))}])}
              {:name "Lyrics"
               :component
               #(let [id (j/get-in % [:route :params :id])]
-                 (r/as-element [lyrics/component {:song (find-song id)}]))}]}])))
+                 (r/as-element [lyrics/component {:song (find-song (uuid id))}]))}]}])))
 
 (defn ^:export -main
   []

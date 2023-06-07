@@ -41,7 +41,6 @@ const SongList = ({songs, showClearSearch, onClearSearch, onQueryChange}) => {
 
       <FlatList
         className="mx-4 my-4 rounded-2xl border dark:border-gray-700"
-        /* data={[]} */
         data={songs}
         renderItem={props => <Song {...props} />}
         ItemSeparatorComponent={
