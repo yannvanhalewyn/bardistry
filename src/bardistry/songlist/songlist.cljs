@@ -23,9 +23,10 @@
                     ;; TODO don't need to be thinking about types and routing
                     ;; implementation
                     (update song :song/id str))]
-        [SongList {:songs (if-let [q @query]
-                            (filter (song-matcher q) songs)
-                            songs)
+        [SongList {:songs (->> (if-let [q @query]
+                                 (filter (song-matcher q) songs)
+                                 songs)
+                               (sort-by :song/sort-artist))
                    :isLoading (db/loading?)
                    :loadSongs db/load-songs!
                    :showClearSearch (not-empty @query)
