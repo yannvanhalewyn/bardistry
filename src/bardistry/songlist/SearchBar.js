@@ -18,7 +18,7 @@ const SearchBar = ({style, showClearSearch, onChangeText, onClearSearch}) => {
       <TextInput
         ref={inputRef}
         // Can replace the button with this one line, but not for android.
-        clearButtonMode={true}
+        // clearButtonMode={true}
         autoCorrect={false}
         className="flex-grow ml-2 py-3 font-lato text-gray-500 dark:text-white"
         placeholder="Search for titles, artists, ..."

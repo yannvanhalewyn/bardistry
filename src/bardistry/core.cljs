@@ -11,6 +11,7 @@
    (.-default (js/require "../../src/bardistry/App.js"))))
 
 (defn app-root []
+  (db/hydrate!)
   (db/load-songs!)
   (fn []
     (let [songs (sort-by :song/sort-artist (:songs @db/db))

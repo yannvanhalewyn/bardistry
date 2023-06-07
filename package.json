@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@cljs-oss/module-deps": "^1.1.1",
+    "@react-native-async-storage/async-storage": "^1.18.2",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "@tamagui/babel-plugin": "^1.30.26",
