@@ -2275,39 +2275,40 @@ And whispered in the sounds of silence."
 {{SONG}}
 Maybe It’ Time
 Bradley Cooper
+
+Verse
 Maybe it's time to let the old ways die
 Maybe it's time to let the old ways die
 It takes a lot to change a man
 Hell, it takes a lot to try
 Maybe it's time to let the old ways die
 
-
 Nobody knows what waits for the dead
 Nobody knows what waits for the dead
 Some folks just believe in the things they've heard and the things they read
 Nobody knows what awaits for the dead
 
-
+Chorus
 I'm glad I can't go back to where I came from
 I'm glad those days are gone, gone for good
 But if I could take spirits from my past and bring 'em here
 You know I would
 Know I would
 
-
+Verse
 Nobody speaks to God these days
 Nobody speaks to God these days
 I'd like to think he's lookin' down and laughin' at our ways
 Nobody speaks to God these days
 
-
+Chorus
 When I was a child, they tried to fool me
 Said the worldly man was lost and that a Hell was real
 Well I've seen Hell in Reno
 And this world's one big old Catherine wheel
 Spinnin' steel
 
-
+Verse
 Maybe it's time to let the old ways die
 Maybe it's time to let the old ways die
 It takes a lot to change your plans
@@ -3331,6 +3332,7 @@ Oo-oo-ooh, yeah-yeah, yeah-yeah-yeah
 Eleonor Rigby
 The Beatles
 
+[Verse]
 Eleanor Rigby
 Picks up the rice in the church where a wedding has been
 Lives in a dream
@@ -3691,64 +3693,6 @@ Phew, for a minute there
 I lost myself, I lost myself
 
 {{SONG}}
-Eleonor Rigby
-The Beatles
-Ah, look at all the lonely people!
-Ah, look at all the lonely people!
-
-
-[Verse 1: Paul McCartney]
-Eleanor Rigby
-Picks up the rice in the church where a wedding has been
-Lives in a dream
-Waits at the window
-Wearing the face that she keeps in a jar by the door
-Who is it for?
-
-
-[Chorus: Paul McCartney]
-All the lonely people
-Where do they all come from?
-All the lonely people
-Where do they all belong?
-
-
-[Verse 2: Paul McCartney]
-Father McKenzie
-Writing the words of a sermon that no one will hear
-No one comes near
-Look at him working
-Darning his socks in the night when there's nobody there
-What does he care?
-
-
-All the lonely people
-Where do they all come from?
-All the lonely people
-Where do they all belong?
-
-
-[Bridge: Paul McCartney, John Lennon & George Harrison]
-Ah, look at all the lonely people!
-Ah, look at all the lonely people!
-
-
-[Verse 3: Paul McCartney]
-Eleanor Rigby
-Died in the church and was buried along with her name
-Nobody came
-Father McKenzie
-Wiping the dirt from his hands as he walks from the grave
-No one was saved
-
-
-[Outro: Paul McCartney]
-All the lonely people (Ah, look at all the lonely people!)
-Where do they all come from?
-All the lonely people (Ah, look at all the lonely people!)
-Where do they all belong?
-
-{{SONG}}
 Get lucky
 Daft Punk
 Like the legend of the phoenix, huh 
@@ -3805,3 +3749,265 @@ We're up all night to get lucky
 We're up all night to get lucky 
 We're up all night to get lucky 
 We're up all night to get lucky
+
+{{SONG}}
+Let it Be
+The Beatles
+
+Verse 1
+When I find myself in times of trouble
+Mother Mary comes to me
+Speaking words of wisdom, let it be
+
+And in my hour of darkness
+She is standing right in front of me
+Speaking words of wisdom, let it be
+
+Chorus
+Let it be, let it be
+Let it be, let it be
+Whisper words of wisdom, let it be
+
+Verse 2
+And when the broken-hearted people
+Living in the world agree
+There will be an answer, let it be
+
+For though they may be parted
+There is still a chance that they will see
+There will be an answer, let it be
+
+Chorus
+Let it be, let it be
+Let it be, let it be
+Yeah, there will be an answer, let it be
+
+Let it be, let it be
+Let it be, let it be
+Whisper words of wisdom, let it be
+
+Let it be, let it be
+Ah, let it be, yeah, let it be
+Whisper words of wisdom, let it be
+
+And when the night is cloudy
+There is still a light that shines on me
+Shine on until tomorrow, let it be
+
+Verse 3
+I wake up to the sound of music
+Mother Mary comes to me
+Speaking words of wisdom, let it be
+
+Chorus
+Let it be, let it be
+Let it be, yeah, let it be
+Oh, there will be an answer, let it be
+
+Let it be, let it be
+Let it be, yeah, let it be
+There will be an answer, let it be
+
+Let it be, let it be
+Ah, let it be, yeah, let it be
+Whisper words of wisdom, let it be
+
+{{SONG}}
+Hey Jude
+The Beatles
+
+Verse 1
+Hey Jude, don't make it bad
+Take a sad song and make it better
+Remember to let her into your heart
+Then you can start to make it better
+
+Hey Jude, don't be afraid
+You were made to go out and get her
+The minute you let her under your skin
+Then you begin to make it better
+
+Chorus
+And anytime you feel the pain, hey Jude, refrain
+Don't carry the world upon your shoulders
+For well you know that it's a fool who plays it cool
+By making his world a little colder
+Na-na-na-na-na
+Na-na-na-na
+
+Verse 2
+Hey Jude, don't let me down
+You have found her, now go and get her
+(Let it out and let it in)
+Remember (hey Jude) to let her into your heart
+Then you can start to make it better
+
+Chorus
+So let it out and let it in, hey Jude, begin
+You're waiting for someone to perform with
+And don't you know that it's just you, hey Jude, you'll do
+The movement you need is on your shoulder
+Na-na-na-na-na
+Na-na-na-na, yeah
+
+Verse 3
+Hey Jude, don't make it bad
+Take a sad song and make it better
+Remember to let her under your skin
+Then you'll begin to make it
+Better, better, better, better, better, better, oh
+
+Bridge
+Yeah, yeah, yeah, yeah, yeah, yeah, yeah
+Na-na-na-na-na
+Na-na-na-na, hey Jude
+Na-na-na-na-na
+Na-na-na-na, hey Jude
+Na-na-na-na-na
+Na-na-na-na, hey Jude
+Na-na-na-na-na
+Na-na-na-na, hey Jude (Jude, Judy, Judy, Judy, Judy, Judy)
+
+Etc..
+
+{{SONG}}
+The Long and Winding Road
+The Beatles
+
+Verse
+The long and winding road
+That leads to your door
+Will never disappear
+I've seen that road before
+It always leads me here
+Lead me to your door
+
+The wild and windy night
+That the rain washed away
+Has lefted full of tears
+Crying for the day
+Why leave me standing here
+Let me know the way
+
+Chorus
+Many times I've been alone
+And many times I've cried
+Anyway you'll never know
+The many ways I've tried
+
+Verse
+But still they lead me back
+To the long winding road
+You left me standing here
+A long-long time ago
+Don't leave me waiting here
+Lead me to your door
+
+But still they lead me back
+To the long winding road
+You left me standing here
+A long-long time ago
+Don't keep me waiting here
+Lead me to your door
+Yeah, yeah, yeah, yeah
+
+{{SONG}}
+Signal
+Sohn
+Signal
+
+Verse
+Wave across the waterfall near
+Let me know
+That you'll be waiting there for me
+Oh, I've been troubling
+Waiting for our moment of peace
+These stormy waters
+Got me thinking of how I wanted to be
+
+Chorus
+(Be, be, wanted to, wanted to be)
+(Be, wanted to be)
+
+Verse
+Signal
+Lighters on and fires on me
+In me, no doubt
+That I'm the one who never has to leave
+Oh, I've been dividing
+But time and time again I keep the peace
+Give me shelter
+Let me be the man I've wanted to be
+
+Chorus
+(Be, be, wanted to, wanted to be)
+(Be, wanted to be)
+(Be, be, wanted to, wanted to be)
+(Be, wanted to, wanted to be)
+(Be, wanted to, wanted to be)
+(Be, wanted to be)
+(Be, wanted to, wanted to be)
+(Be, wanted to, wanted to be)
+(Be, wanted to, wanted to be)
+(Be)
+
+{{SONG}}
+Veto
+Sohn
+
+Verse
+I won't play your games no more
+No, I won't play your games no more
+If you won't believe my motives all
+If you want to leave this lonely hole
+Well I won't play your game no more
+
+When the colors fade I'm locked out of this
+When the colors fade, I'll go
+
+And when the votes are made I might make a mark
+When the votes are made I'll know
+
+Chorus
+We were formed from a...
+Small set of emotions
+We're over ground
+
+Nothing here but a...
+We'll set it in motion
+To let it stop
+
+Verse
+I won't play your games no more
+No, I won't play your games no more
+If you won't believe my motives all
+If you want to leave this lonely hole
+Well I won't play your game no more
+I won't
+
+With the covers on I'll breathe in the days
+With the covers I'll give
+
+Chorus
+We were formed from a...
+Small set of emotions
+With a undertow
+
+Live in half-lies
+Going through the motions
+We won't let this grow
+
+Verse
+I won't play your games no more
+No, I won't play your games no more
+If you won't believe my motives all
+If you want to leave this lonely hole
+
+Chorus
+We were formed from a...
+Small set of emotions
+The undertow
+
+Live in half-lies
+Going through the motions
+They won't let us go
