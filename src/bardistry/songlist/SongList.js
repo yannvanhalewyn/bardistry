@@ -1,4 +1,3 @@
-// Would like to use the Lato font.
 import {View, Text, Pressable, FlatList, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SparklesIcon} from 'react-native-heroicons/solid';
