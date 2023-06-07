@@ -29,6 +29,7 @@ const SearchBar = ({style, showClearSearch, onChangeText, onClearSearch}) => {
           className="p-3"
           onPress={() => {
             inputRef.current?.clear();
+            inputRef.current?.focus();
             onClearSearch();
           }}>
           <XCircleIcon size={20} color={iconColor} />

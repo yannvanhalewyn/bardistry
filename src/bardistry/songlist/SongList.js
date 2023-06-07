@@ -12,7 +12,7 @@ const Song = props => {
   return (
     <View className="bg-gray-100 dark:bg-gray-900">
       <Pressable
-        className="px-4 py-4"
+        className="px-4 py-3"
         onPress={() =>
           navigation.navigate('Lyrics', {id: song.id, title: song.title})
         }>
@@ -40,7 +40,8 @@ const SongList = ({songs, showClearSearch, onClearSearch, onQueryChange}) => {
       />
 
       <FlatList
-        className="mx-4 mt-4 flex rounded-2xl border dark:border-gray-700"
+        className="mx-4 my-4 rounded-2xl border dark:border-gray-700"
+        /* data={[]} */
         data={songs}
         renderItem={props => <Song {...props} />}
         ItemSeparatorComponent={

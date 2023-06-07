@@ -16,9 +16,9 @@
           [] coll))
 
 (defn- parse-section-title [line]
-  (or (second (re-find #"\[(.*)\]" line))
-      (when (contains? #{"chorus" "verse"} (str/lower-case line))
-        line)))
+  (second
+   (or (re-find #"\[(.*)\]" line)
+       (re-find (re-pattern "(?i)^(chorus|verse\\s*\\d*|bridge)$") line))))
 
 (defn- process-section [[header-or-line & lines :as all-lines]]
   (let [section-title (parse-section-title header-or-line)]
