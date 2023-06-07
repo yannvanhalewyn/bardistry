@@ -19,12 +19,7 @@
       [App {:screens
             [{:name "Songs"
               :component
-              #(r/as-element
-                [songlist/component
-                 {:songs (for [song songs]
-                           ;; TODO don't need to be thinking about types and
-                           ;; routing implementation
-                           (update song :song/id str))}])}
+              #(r/as-element [songlist/component])}
              {:name "Lyrics"
               :component
               #(let [id (j/get-in % [:route :params :id])]

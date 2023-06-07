@@ -1,5 +1,6 @@
 (ns bardistry.songlist.songlist
   (:require
+   [bardistry.db :as db]
    [clojure.string :as str]
    [reagent.core :as r]))
 
@@ -17,10 +18,16 @@
 
 (defn component []
   (let [query (r/atom "")]
-    (fn [{:keys [songs]}]
-      [SongList {:songs (if-let [q @query]
-                          (filter (song-matcher q) songs)
-                          songs)
-                 :showClearSearch (not-empty @query)
-                 :onClearSearch #(reset! query "")
-                 :onQueryChange #(reset! query %)}])))
+    (fn []
+      (let [songs (for [song (db/get-songs)]
+                    ;; TODO don't need to be thinking about types and routing
+                    ;; implementation
+                    (update song :song/id str))]
+        [SongList {:songs (if-let [q @query]
+                            (filter (song-matcher q) songs)
+                            songs)
+                   :isLoading (db/loading?)
+                   :loadSongs db/load-songs!
+                   :showClearSearch (not-empty @query)
+                   :onClearSearch #(reset! query "")
+                   :onQueryChange #(reset! query %)}]))))

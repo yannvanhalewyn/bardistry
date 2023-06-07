@@ -23,7 +23,7 @@ const Song = props => {
   );
 };
 
-const SongList = ({songs, showClearSearch, onClearSearch, onQueryChange}) => {
+const SongList = ({songs, isLoading, loadSongs, showClearSearch, onClearSearch, onQueryChange}) => {
   return (
     <SafeAreaView className="px-4 flex-1 bg-white dark:bg-black">
       <View className="mx-4 mt-8 flex-row items-center">
@@ -46,6 +46,8 @@ const SongList = ({songs, showClearSearch, onClearSearch, onQueryChange}) => {
         ItemSeparatorComponent={
           <View className="border-0.5 border-gray-200 dark:border-gray-700"></View>
         }
+        refreshing={isLoading}
+        onRefresh={loadSongs}
       />
     </SafeAreaView>
   );
