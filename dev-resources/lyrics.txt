@@ -1600,6 +1600,7 @@ You never shined so brightly
 Fix you
 Coldplay
 
+Verse
 When you try your best, but you don't succeed
 When you get what you want, but not what you need
 When you feel so tired, but you can't sleep
@@ -1610,19 +1611,23 @@ When you lose something you can't replace
 When you love someone, but it goes to waste
 Could it be worse?
 
+Chorus
 Lights will guide you home
 And ignite your bones
 And I will try to fix you
 
+Verse
 And high up above, or down below
 When you're too in love to let it go
 But if you never try, you'll never know
 Just what you're worth
 
+Chorus
 Lights will guide you home
 And ignite your bones
 And I will try to fix you
 
+Bridge
 Tears stream down your face
 When you lose something you cannot replace
 Tears stream down your face, and I
@@ -3914,7 +3919,6 @@ Yeah, yeah, yeah, yeah
 {{SONG}}
 Signal
 Sohn
-Signal
 
 Verse
 Wave across the waterfall near
