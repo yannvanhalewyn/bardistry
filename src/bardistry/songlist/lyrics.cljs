@@ -1,7 +1,8 @@
 (ns bardistry.songlist.lyrics
   (:require
    [clojure.string :as str]
-   [reagent.core :as r]))
+   [reagent.core :as r]
+   [bardistry.db :as db]))
 
 (def Lyrics
   (r/adapt-react-class
@@ -42,5 +43,7 @@
     (assoc song
       :song/processed-lyrics (prepare-song-contents (:song/contents song)))))
 
-(defn component [{:keys [song]}]
-  [Lyrics {:song (process-song song)}])
+(defn component [{:keys [:song/id]}]
+  (if-let [song (db/song-by-id id)]
+    [Lyrics {:song (process-song song)}]
+    (.error js/console "Could not find song for id:" id)))

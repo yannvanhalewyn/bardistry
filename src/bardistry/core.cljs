@@ -14,16 +14,14 @@
   (db/hydrate!)
   (db/load-songs!)
   (fn []
-    (let [songs (sort-by :song/sort-artist (:songs @db/db))
-          find-song (fn [id] (first (filter #(= (:song/id %) id) songs)))]
-      [App {:screens
-            [{:name "Songs"
-              :component
-              #(r/as-element [songlist/component])}
-             {:name "Lyrics"
-              :component
-              #(let [id (j/get-in % [:route :params :id])]
-                 (r/as-element [lyrics/component {:song (find-song (uuid id))}]))}]}])))
+    [App {:screens
+          [{:name "Songs"
+            :component
+            #(r/as-element [songlist/component])}
+           {:name "Lyrics"
+            :component
+            #(let [id (j/get-in % [:route :params :id])]
+               (r/as-element [lyrics/component {:song/id (uuid id)}]))}]}]))
 
 (defn ^:export -main
   []

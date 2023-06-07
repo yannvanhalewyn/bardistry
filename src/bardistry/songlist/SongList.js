@@ -10,20 +10,27 @@ const Song = props => {
   const song = props.item;
 
   return (
-    <View className="dark:bg-gray-900">
-      <Pressable
-        className="px-4 py-3"
-        onPress={() =>
-          navigation.navigate('Lyrics', {id: song.id, title: song.title})
-        }>
-        <Text className="font-lato text-md dark:text-white font-bold">{song.title}</Text>
-        <Text className="font-lato mt-1 text-orange-500">{song.artist}</Text>
-      </Pressable>
-    </View>
+    <Pressable
+      className="px-4 py-3"
+      onPress={() =>
+        navigation.navigate('Lyrics', {id: song.id, title: song.title})
+      }>
+      <Text className="font-lato text-md dark:text-white font-bold">
+        {song.title}
+      </Text>
+      <Text className="font-lato mt-1 text-orange-500">{song.artist}</Text>
+    </Pressable>
   );
 };
 
-const SongList = ({songs, isLoading, loadSongs, showClearSearch, onClearSearch, onQueryChange}) => {
+const SongList = ({
+  songs,
+  isLoading,
+  loadSongs,
+  showClearSearch,
+  onClearSearch,
+  onQueryChange,
+}) => {
   return (
     <SafeAreaView className="px-4 flex-1 bg-white dark:bg-black">
       <View className="mx-4 mt-8 flex-row items-center">
@@ -40,7 +47,7 @@ const SongList = ({songs, isLoading, loadSongs, showClearSearch, onClearSearch, 
       />
 
       <FlatList
-        className="mx-4 my-4 rounded-lg border-gray-100 dark:border-gray-700"
+        className="mx-4 my-4 rounded-lg bg-gray-50 dark:bg-gray-900 border-gray-100 dark:border-gray-700"
         data={songs}
         renderItem={props => <Song {...props} />}
         ItemSeparatorComponent={

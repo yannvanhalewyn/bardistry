@@ -24,5 +24,8 @@
 (defn get-songs []
   (:songs @db))
 
+(defn song-by-id [id]
+  (first (filter #(= (:song/id %) id) (get-songs))))
+
 (defn loading? []
   (:loading? @db))
