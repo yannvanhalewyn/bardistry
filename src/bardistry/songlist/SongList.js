@@ -16,8 +16,8 @@ const Song = props => {
         onPress={() =>
           navigation.navigate('Lyrics', {id: song.id, title: song.title})
         }>
-        <Text className="text-md dark:text-white font-bold">{song.title}</Text>
-        <Text className="mt-1 text-orange-500">{song.artist}</Text>
+        <Text className="font-lato text-md dark:text-white font-bold">{song.title}</Text>
+        <Text className="font-lato mt-1 text-orange-500">{song.artist}</Text>
       </Pressable>
     </View>
   );
