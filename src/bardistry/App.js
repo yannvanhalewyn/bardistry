@@ -10,35 +10,30 @@ import {
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {TamaguiProvider} from 'tamagui';
-import tamaguiConfig from '../../tamagui.config';
-
 const Stack = createNativeStackNavigator();
 
 function App(props) {
   const {colorScheme} = useColorScheme();
 
   return (
-    <TamaguiProvider config={tamaguiConfig}>
-      <Suspense>
-        <NavigationContainer
-          theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack.Navigator>
-            <Stack.Screen
-              options={{headerShown: false}}
-              name={props.screens[0].name}
-              component={props.screens[0].component}
-            />
-            <Stack.Screen
-              name={props.screens[1].name}
-              component={props.screens[1].component}
-              options={({route}) => ({title: route.params.title,
-                                      headerTintColor: colors.orange['500']})}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </Suspense>
-    </TamaguiProvider>
+    <Suspense>
+      <NavigationContainer
+        theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack.Navigator>
+          <Stack.Screen
+            options={{headerShown: false}}
+            name={props.screens[0].name}
+            component={props.screens[0].component}
+          />
+          <Stack.Screen
+            name={props.screens[1].name}
+            component={props.screens[1].component}
+            options={({route}) => ({title: route.params.title,
+                                    headerTintColor: colors.orange['500']})}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Suspense>
   );
 }
 
