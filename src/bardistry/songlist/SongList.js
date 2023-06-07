@@ -25,7 +25,7 @@ const Song = props => {
 
 const SongList = ({songs, showClearSearch, onClearSearch, onQueryChange}) => {
   return (
-    <SafeAreaView className="px-4 bg-white dark:bg-black">
+    <SafeAreaView className="px-4 flex-1 bg-white dark:bg-black">
       <View className="mx-4 mt-8 flex-row items-center">
         <SparklesIcon color={colors.orange['500']} />
         <Text className="ml-2 text-4xl font-black dark:text-white">
