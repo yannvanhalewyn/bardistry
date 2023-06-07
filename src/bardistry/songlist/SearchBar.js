@@ -13,7 +13,7 @@ const SearchBar = ({style, showClearSearch, onChangeText, onClearSearch}) => {
   return (
     <View
       style={style}
-      className="mx-4 px-2 flex-row items-center rounded-lg bg-gray-200 dark:bg-gray-900 dark:border-gray-900">
+      className="mx-4 px-2 flex-row items-center border rounded-lg bg-gray-100 border-gray-200 dark:bg-gray-900 dark:border-gray-800">
       <MagnifyingGlassIcon size={20} color={iconColor} />
       <TextInput
         ref={inputRef}
@@ -21,7 +21,7 @@ const SearchBar = ({style, showClearSearch, onChangeText, onClearSearch}) => {
         // clearButtonMode={true}
         autoCorrect={false}
         className="flex-grow ml-2 py-3 font-lato text-gray-500 dark:text-white"
-        placeholder="Search for titles, artists, ..."
+        placeholder="Search for songs, artists, ..."
         onChangeText={onChangeText}
       />
       {showClearSearch ? (

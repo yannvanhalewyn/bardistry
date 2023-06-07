@@ -46,11 +46,11 @@ const SongList = ({
       />
 
       <FlatList
-        className="mx-4 my-4 rounded-lg bg-gray-50 dark:bg-gray-900 border-gray-100 dark:border-gray-700"
+        className="mx-4 my-4 rounded-lg bg-gray-50 border bg-gray-100 border-gray-200 dark:bg-gray-900 dark:border-gray-800"
         data={songs}
         renderItem={props => <Song {...props} />}
         ItemSeparatorComponent={
-          <View className="border-0.5 border-gray-200 dark:border-gray-700"></View>
+          <View className="border-0.5 border-gray-200 dark:border-gray-800"></View>
         }
         refreshing={isLoading}
         onRefresh={loadSongs}
