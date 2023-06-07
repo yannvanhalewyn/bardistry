@@ -18,14 +18,13 @@
 
 (defn- parse-section-title [line]
   (second
-   (or (re-find #"\[(.*)\]" line)
-       (re-find (re-pattern "(?i)^(chorus|verse\\s*\\d*|bridge)$") line))))
+   (re-find (re-pattern "(?i)\\[((?:chorus|verse|bridge|intro|outro)\\s*\\d*)\\]?$") line)))
 
 (defn- process-section [[header-or-line & lines :as all-lines]]
   (let [section-title (parse-section-title header-or-line)]
     (-> (if section-title
           {:section/title section-title
-           :section/chorus? (= (str/lower-case section-title) "chorus")
+           :section/chorus? (str/includes? (str/lower-case section-title) "chorus")
            :section/lines lines}
           {:section/lines all-lines})
         (assoc :section/id (random-uuid)))))
