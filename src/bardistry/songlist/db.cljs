@@ -6,5 +6,5 @@
 
 (defn create-song! []
   (let [new-song (song/make)]
-    (swap! db/db update :songs conj new-song)
-    (nav/navigate! "Lyrics" {:song/id (:song/id new-song)})))
+    (swap! db/db update :songs assoc-in [:songs (:song/id new-song)] new-song)
+    (nav/navigate! "Lyrics" {:song/id new-song})))

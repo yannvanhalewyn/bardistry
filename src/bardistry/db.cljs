@@ -2,6 +2,7 @@
   (:require
    [bardistry.http :as http]
    [bardistry.storage :as storage]
+   [bardistry.util :as u]
    [promesa.core :as p]
    [reagent.core :as r]))
 
@@ -14,18 +15,16 @@
     ::http/on-failure #(swap! db assoc :loading? false)
     ::http/on-success
     (fn [songs]
-      (storage/store-clj "bardistry.songs" songs)
-      (swap! db assoc :loading? false :songs songs))}))
+      (let [songs (u/key-by :song/id songs)]
+        (storage/store-clj "bardistry.songs" songs)
+        (swap! db assoc :loading? false :songs songs)))}))
 
 (defn hydrate! []
   (p/let [songs (storage/retreive-clj "bardistry.songs")]
     (swap! db assoc :songs songs)))
 
-(defn get-songs []
-  (:songs @db))
-
 (defn song-by-id [id]
-  (first (filter #(= (:song/id %) id) (get-songs))))
+  (get-in @db [:songs id]))
 
 (defn loading? []
   (:loading? @db))
