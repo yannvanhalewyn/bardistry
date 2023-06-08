@@ -22,7 +22,11 @@ const SongForm = ({song, onSheetClose, onSongEdit}) => {
         placeholder={placeholder}
         key={k}
         onEndEditing={e => {
-          onSongEdit(song.id, k, e.nativeEvent.text);
+          const value = e.nativeEvent.text;
+          // TODO hack to prevent bottom sheet to pop back up because of
+          // re-render, in case this gets dispatched because of swiping the
+          // sheet down.
+          setTimeout(() => onSongEdit(song.id, k, value), 200);
         }}
         defaultValue={defaultValue}
       />
