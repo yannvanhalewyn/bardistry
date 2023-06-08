@@ -2,6 +2,7 @@
   (:require
    [applied-science.js-interop :as j]
    [bardistry.db :as db]
+   [bardistry.navigation :as nav]
    [bardistry.songlist.songlist :as songlist]
    [bardistry.songlist.lyrics :as lyrics]
    [reagent.core :as r]))
@@ -14,14 +15,16 @@
   (db/hydrate!)
   (db/load-songs!)
   (fn []
-    [App {:screens
+    [App {:navigation-ref nav/navigation-ref
+          :screens
           [{:name "Songs"
             :component
             #(r/as-element [songlist/component])}
            {:name "Lyrics"
             :component
-            #(let [id (j/get-in % [:route :params :id])]
-               (r/as-element [lyrics/component {:song/id (uuid id)}]))}]}]))
+            (fn [props]
+              (let [route (nav/adapt-route (j/get props :route))]
+                (r/as-element [lyrics/component (nav/route-params route)])))}]}]))
 
 (defn ^:export -main
   []

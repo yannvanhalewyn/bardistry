@@ -1,6 +1,7 @@
 (ns bardistry.songlist.songlist
   (:require
    [bardistry.db :as db]
+   [bardistry.navigation :as nav]
    [clojure.string :as str]
    [reagent.core :as r]))
 
@@ -19,10 +20,7 @@
 (defn component []
   (let [query (r/atom "")]
     (fn []
-      (let [songs (for [song (db/get-songs)]
-                    ;; TODO don't need to be thinking about types and routing
-                    ;; implementation
-                    (update song :song/id str))]
+      (let [songs (db/get-songs)]
         [SongList {:songs (->> (if-let [q @query]
                                  (filter (song-matcher q) songs)
                                  songs)
@@ -30,5 +28,6 @@
                    :isLoading (db/loading?)
                    :loadSongs db/load-songs!
                    :showClearSearch (not-empty @query)
+                   :onSongPress #(nav/navigate! "Lyrics" {:song/id %})
                    :onClearSearch #(reset! query "")
                    :onQueryChange #(reset! query %)}]))))

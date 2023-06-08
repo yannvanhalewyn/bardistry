@@ -1,24 +1,28 @@
-import {View, Text, Pressable, FlatList, SafeAreaView} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  SafeAreaView,
+} from 'react-native';
 import {SparklesIcon} from 'react-native-heroicons/solid';
 import SearchBar from './SearchBar.js';
 import colors from 'tailwindcss/colors';
 
 const Song = props => {
-  const navigation = useNavigation();
   const song = props.item;
 
   return (
-    <Pressable
+    <TouchableOpacity
       className="px-4 py-3"
       onPress={() =>
-        navigation.navigate('Lyrics', {id: song.id, title: song.title})
+        props.onPress(song.id)
       }>
       <Text className="font-lato text-md dark:text-white font-bold">
         {song.title}
       </Text>
       <Text className="font-lato mt-1 text-orange-500">{song.artist}</Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
@@ -27,8 +31,9 @@ const SongList = ({
   isLoading,
   loadSongs,
   showClearSearch,
-  onClearSearch,
   onQueryChange,
+  onClearSearch,
+  onSongPress,
 }) => {
   return (
     <SafeAreaView className="px-4 flex-1 bg-white dark:bg-black">
@@ -48,7 +53,7 @@ const SongList = ({
       <FlatList
         className="mx-4 my-4 rounded-lg bg-gray-50 border bg-gray-100 border-gray-200 dark:bg-gray-900 dark:border-gray-800"
         data={songs}
-        renderItem={props => <Song {...props} />}
+        renderItem={props => <Song {...props} onPress={onSongPress} />}
         ItemSeparatorComponent={
           <View className="border-0.5 border-gray-200 dark:border-gray-800"></View>
         }

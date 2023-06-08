@@ -47,6 +47,7 @@ function App(props) {
   return (
     <Suspense>
       <NavigationContainer
+        ref={props.navigationRef}
         initialState={initialState}
         onStateChange={state => {
           AsyncStorage.setItem(
@@ -64,10 +65,9 @@ function App(props) {
           <Stack.Screen
             name={props.screens[1].name}
             component={props.screens[1].component}
-            options={({route}) => ({
-              title: route.params.title,
+            options={{
               headerTintColor: colors.orange['500'],
-            })}
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

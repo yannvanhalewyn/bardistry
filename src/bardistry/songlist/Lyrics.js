@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, ScrollView, TextInput} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-const DismissKeyboard = ({children}) => (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>{children}</TouchableWithoutFeedback>
-);
 
 const Lyrics = props => {
+  const navigation = useNavigation();
+  useEffect((x) => {
+    navigation.setOptions({title: props.song.title});
+  }, [props.song.title]);
+
   return (
     <ScrollView
       keyboardDismissMode="on-drag"
