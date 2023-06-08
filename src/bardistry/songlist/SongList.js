@@ -8,6 +8,7 @@ import {
 import {SparklesIcon} from 'react-native-heroicons/solid';
 import SearchBar from './SearchBar.js';
 import colors from 'tailwindcss/colors';
+import AddSongButton from './AddSongButton';
 
 const Song = props => {
   const song = props.item;
@@ -33,15 +34,17 @@ const SongList = ({
   showClearSearch,
   onQueryChange,
   onClearSearch,
+  onAddSongPress,
   onSongPress,
 }) => {
   return (
     <SafeAreaView className="px-4 flex-1 bg-white dark:bg-black">
       <View className="mx-4 mt-8 flex-row items-center">
         <SparklesIcon color={colors.orange['500']} />
-        <Text className="ml-2 text-4xl font-black dark:text-white">
+        <Text className="ml-2 flex-grow text-4xl font-black dark:text-white">
           Bardistry
         </Text>
+        <AddSongButton onPress={onAddSongPress} />
       </View>
       <SearchBar
         className="mt-4"
