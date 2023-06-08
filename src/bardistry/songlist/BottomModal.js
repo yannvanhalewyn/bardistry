@@ -1,12 +1,12 @@
 import React, {useEffect, useMemo, useRef} from 'react';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {useColorScheme} from 'nativewind';
 import colors from 'tailwindcss/colors';
 
-const BottomModal = ({isOpen, onClose, children}) => {
+const BottomModal = ({isOpen, onClose, height, children}) => {
   const bottomSheetModal = useRef(null);
   const {colorScheme} = useColorScheme();
-  const snapPoints = useMemo(() => [200], []);
+  const snapPoints = useMemo(() => [height], []);
 
   useEffect(() => {
     if (isOpen) {
@@ -14,7 +14,7 @@ const BottomModal = ({isOpen, onClose, children}) => {
     } else {
       bottomSheetModal.current?.dismiss();
     }
-  }, [isOpen])
+  }, [isOpen]);
 
   return (
     <BottomSheetModal
@@ -23,10 +23,12 @@ const BottomModal = ({isOpen, onClose, children}) => {
       snapPoints={snapPoints}
       onDismiss={onClose}
       backgroundStyle={{
-        backgroundColor: colorScheme === 'dark' ? colors.gray['800'] : colors.gray['100'],
+        backgroundColor:
+          colorScheme === 'dark' ? colors.gray['800'] : colors.gray['100'],
       }}
       handleIndicatorStyle={{
-        backgroundColor: colorScheme === 'dark' ? colors.gray['500'] : colors.gray['500'],
+        backgroundColor:
+          colorScheme === 'dark' ? colors.gray['500'] : colors.gray['400'],
       }}>
       {children}
     </BottomSheetModal>

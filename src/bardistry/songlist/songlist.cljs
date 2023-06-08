@@ -21,7 +21,7 @@
 (defn component []
   (let [query (r/atom "")]
     (fn []
-      (let [songs (db/get-songs)]
+      (let [songs (songlist.db/all-songs)]
         [SongList
          {:songs (->> (if-let [q @query]
                         (filter (song-matcher q) songs)

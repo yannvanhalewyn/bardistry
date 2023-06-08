@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import BottomModal from './BottomModal.js';
 import SongForm from './SongForm.js';
 
-const Lyrics = ({song, isSheetOpen, onSheetClose}) => {
+const Lyrics = ({song, isSheetOpen, onSheetClose, onSongEdit}) => {
   const navigation = useNavigation();
   useEffect(
     x => {
@@ -45,8 +45,12 @@ const Lyrics = ({song, isSheetOpen, onSheetClose}) => {
         </View>
       </ScrollView>
 
-      <BottomModal isOpen={isSheetOpen} onClose={onSheetClose}>
-        <Text className="text-orange-500 text-center">Awesome 🎉</Text>
+      <BottomModal height={160} isOpen={isSheetOpen} onClose={onSheetClose}>
+        <SongForm
+          onSongEdit={onSongEdit}
+          song={song}
+          onSheetClose={onSheetClose}
+        />
       </BottomModal>
     </>
   );

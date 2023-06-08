@@ -2,7 +2,8 @@
   (:require
    [clojure.string :as str]
    [reagent.core :as r]
-   [bardistry.db :as db]))
+   [bardistry.db :as db]
+   [bardistry.songlist.db :as songlist.db]))
 
 (def Lyrics
   (r/adapt-react-class
@@ -46,10 +47,9 @@
   (swap! db/db update-in [::db/ui ::lyrics-bottom-sheet] not))
 
 (defn component [{:keys [:song/id]}]
-  (if-let [song (db/song-by-id id)]
+  (if-let [song (songlist.db/find-by-id id)]
     [Lyrics {:song (process-song song)
-             :onSheetClose #(do
-                              (.log js/console "On Sheet close")
-                             (swap! db/db assoc-in [::db/ui ::lyrics-bottom-sheet] false))
+             :onSheetClose #(swap! db/db assoc-in [::db/ui ::lyrics-bottom-sheet] false)
+             :onSongEdit songlist.db/update-song!
              :isSheetOpen (get-in @db/db [::db/ui ::lyrics-bottom-sheet])}]
     (.error js/console "Could not find song for id:" id)))

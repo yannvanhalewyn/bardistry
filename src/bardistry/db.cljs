@@ -23,8 +23,5 @@
   (p/let [songs (storage/retreive-clj "bardistry.songs")]
     (swap! db assoc :songs songs)))
 
-(defn song-by-id [id]
-  (get-in @db [:songs id]))
-
 (defn loading? []
   (:loading? @db))
