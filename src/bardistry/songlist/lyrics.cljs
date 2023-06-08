@@ -35,12 +35,12 @@
        (partition-by #(= % ""))
        (remove #(= % [""]))
        (map process-section)
-       (map (fn [song] (update song :section/lines #(str/trim (str/join "\n" %)))))))
+       (map (fn [{:keys [:section/lines] :as section}]
+              (assoc section :section/body (str/trim (str/join "\n" lines)))))))
 
 (defn- process-song [song]
-  (when song
-    (assoc song
-      :song/processed-lyrics (prepare-song-contents (:song/contents song)))))
+  (assoc song
+    :song/processed-lyrics (prepare-song-contents (:song/contents song))))
 
 (defn component [{:keys [:song/id]}]
   (if-let [song (db/song-by-id id)]
