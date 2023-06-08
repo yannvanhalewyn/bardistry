@@ -17,10 +17,13 @@ const SongForm = ({song, onSheetClose, onSongEdit}) => {
   const Input = ({placeholder, k, defaultValue, autoFocus}) => {
     return (
       <TextInput
+        autoCorrect={false}
         autoFocus={autoFocus}
         className="mt-1 px-2 py-2 rounded bg-gray-200 dark:bg-gray-700 dark:text-white"
         placeholder={placeholder}
         key={k}
+        selectTextOnFocus={true}
+        selectionColor={colors.orange['500']}
         onEndEditing={e => {
           const value = e.nativeEvent.text;
           // TODO hack to prevent bottom sheet to pop back up because of

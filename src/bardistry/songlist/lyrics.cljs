@@ -43,13 +43,25 @@
   (assoc song
     :song/processed-lyrics (prepare-song-contents (:song/contents song))))
 
-(defn toggle-edit []
-  (swap! db/db update-in [::db/ui ::lyrics-bottom-sheet] not))
+(defn toggle-form! []
+  (swap! db/db update-in [::db/ui ::song-form] not))
 
-(defn component [{:keys [:song/id]}]
-  (if-let [song (songlist.db/find-by-id id)]
-    [Lyrics {:song (process-song song)
-             :onSheetClose #(swap! db/db assoc-in [::db/ui ::lyrics-bottom-sheet] false)
-             :onSongEdit songlist.db/update-song!
-             :isSheetOpen (get-in @db/db [::db/ui ::lyrics-bottom-sheet])}]
-    (.error js/console "Could not find song for id:" id)))
+(defn open-form! []
+  (swap! db/db assoc-in [::db/ui ::song-form] true))
+
+(defn close-form! []
+  (swap! db/db assoc-in [::db/ui ::song-form] false))
+
+(defn component [{:keys [open-form?]}]
+  (if open-form?
+    (open-form!)
+    ;; Would be better kept as local state maybe, so that it gets reset
+    ;; automatically when opening a new song.
+    (close-form!))
+  (fn [{:keys [:song/id]}]
+    (if-let [song (songlist.db/find-by-id id)]
+      [Lyrics {:song (process-song song)
+               :onSheetClose close-form!
+               :onSongEdit songlist.db/update-song!
+               :isSheetOpen (get-in @db/db [::db/ui ::song-form])}]
+      (.error js/console "Could not find song for id:" id))))

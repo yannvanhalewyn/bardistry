@@ -4,6 +4,7 @@ import {View, Text, ScrollView, TextInput} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import BottomModal from './BottomModal.js';
 import SongForm from './SongForm.js';
+import colors from 'tailwindcss/colors'
 
 const Lyrics = ({song, isSheetOpen, onSheetClose, onSongEdit}) => {
   const navigation = useNavigation();
@@ -34,6 +35,7 @@ const Lyrics = ({song, isSheetOpen, onSheetClose, onSongEdit}) => {
                   </Text>
                 ) : null}
                 <TextInput
+                  selectionColor={colors.orange['500']}
                   multiline={true}
                   className="text-lg font-lato dark:text-white"
                   onChangeText={text => console.log(text)}>
