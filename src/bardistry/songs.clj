@@ -15,7 +15,6 @@
   {:song/id (get-id title artist)
    :song/title title
    :song/artist artist
-   :song/sort-artist (str/replace artist (re-pattern "(?i)^\\s*the\\s*") "")
    :song/contents (into [] contents)})
 
 (defn read-songs! [filename]

@@ -3,6 +3,7 @@
    [bardistry.db :as db]
    [bardistry.navigation :as nav]
    [bardistry.songlist.db :as songlist.db]
+   [bardistry.song :as song]
    [clojure.string :as str]
    [reagent.core :as r]))
 
@@ -26,7 +27,7 @@
          {:songs (->> (if-let [q @query]
                         (filter (song-matcher q) songs)
                         songs)
-                      (sort-by :song/sort-artist))
+                      (sort-by song/sort-artist))
           :isLoading (db/loading?)
           :loadSongs db/load-songs!
           :showClearSearch (not-empty @query)

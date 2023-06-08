@@ -16,10 +16,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 const EditButton = ({onPress}) => {
-  console.log('EDIT BUTTON');
   return (
     <TouchableOpacity onPress={onPress}>
-      <Text className="text-blue-500 font-bold">Edit</Text>
+      <Text className="text-blue-500 font-bold font-lato">Edit</Text>
     </TouchableOpacity>
   );
 };
