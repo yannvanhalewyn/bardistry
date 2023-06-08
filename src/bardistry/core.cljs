@@ -16,6 +16,7 @@
   (db/load-songs!)
   (fn []
     [App {:navigation-ref nav/navigation-ref
+          :onEditPress lyrics/toggle-edit
           :screens
           [{:name "Songs"
             :component

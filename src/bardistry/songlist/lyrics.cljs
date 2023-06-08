@@ -42,7 +42,14 @@
   (assoc song
     :song/processed-lyrics (prepare-song-contents (:song/contents song))))
 
+(defn toggle-edit []
+  (swap! db/db update-in [::db/ui ::lyrics-bottom-sheet] not))
+
 (defn component [{:keys [:song/id]}]
   (if-let [song (db/song-by-id id)]
-    [Lyrics {:song (process-song song)}]
+    [Lyrics {:song (process-song song)
+             :onSheetClose #(do
+                              (.log js/console "On Sheet close")
+                             (swap! db/db assoc-in [::db/ui ::lyrics-bottom-sheet] false))
+             :isSheetOpen (get-in @db/db [::db/ui ::lyrics-bottom-sheet])}]
     (.error js/console "Could not find song for id:" id)))
