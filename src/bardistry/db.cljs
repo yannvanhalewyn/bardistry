@@ -10,8 +10,13 @@
 
 (defn load-songs! []
   (swap! db assoc :loading? true)
-  (http/load!
-   {::http/endpoint "songs"
+  (http/request!
+   {::http/endpoint "q"
+    ::http/method :post
+    ::http/params {:query '{:find (pull ?song [:song/id :song/title :song/artist])
+                            :where [[?song :song/id _]]}
+                   ;; :params [id]
+                   }
     ::http/on-failure #(swap! db assoc :loading? false)
     ::http/on-success
     (fn [songs]

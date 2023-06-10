@@ -1,22 +1,40 @@
 (ns bardistry.http
   (:require
+   [applied-science.js-interop :as j]
    [bardistry.transit :as transit]
+   [clojure.string :as str]
    [promesa.core :as p]))
+
+(defn- transit-type? [content-type]
+  (and (string? content-type)
+       (str/starts-with? content-type "application/transit+json")))
+
+(defn- content-type [res]
+  (j/get-in res [:headers :map "content-type"]))
 
 (def HOST "192.168.5.180")
 (def PORT 8080)
 
 (defn- api-url [endpoint]
-  (str "http://" HOST ":" PORT "/" endpoint))
+  (str "http://" HOST ":" PORT "/api/" endpoint))
 
-(defn load! [{::keys [endpoint on-success on-failure]}]
-  (.log js/console "fetching" endpoint)
-  (-> (p/let [res (js/fetch (api-url endpoint))
+(defn request! [{::keys [endpoint method params on-success on-failure]}]
+  (println "http.request" method endpoint params)
+  (-> (p/let [res (js/fetch (api-url endpoint)
+                            (clj->js
+                             {:method (or method :get)
+                              :headers
+                              {:Content-Type "application/transit+json"
+                               :Accept "application/transit+json"}
+                              :body (when params
+                                      (transit/write params))}))
               body (.text res)
-              data (transit/read body)]
-        (.log js/console "SUCCESS" endpoint)
+              data (if (transit-type? (content-type res))
+                     (transit/read body)
+                     body)]
+        (println "http.success" method endpoint)
         (on-success data))
       (p/catch
           (fn [err]
-            (.error js/console "ERROR" endpoint err)
+            (println "http.failure" method endpoint err)
             (on-failure err)))))

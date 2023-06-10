@@ -1,7 +1,6 @@
 (ns bardistry.server.api
   (:require
-   [com.biffweb :as biff]
-   [xtdb.api :as xt]))
+   [com.biffweb :as biff]))
 
 (defn- all-songs [{:keys [biff/db]}]
   {:status 200
@@ -18,6 +17,12 @@
      :body song}
     {:status 404}))
 
+(defn- query [{:keys [biff/db params]}]
+  (println params)
+  {:status 200
+   :body (apply biff/q db (:query params) (:params params))})
+
 (def plugin
   {:api-routes [["/api/songs" {:get all-songs}]
-                ["/api/songs/:id/lyrics" {:get lyrics}]]})
+                ["/api/songs/:id/lyrics" {:get lyrics}]
+                ["/api/q" {:post query}]]})
