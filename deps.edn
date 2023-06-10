@@ -8,8 +8,6 @@
         camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.3"}
         org.slf4j/slf4j-simple {:mvn/version "2.0.0-alpha5"}
 
-        http-kit/http-kit {:mvn/version "2.7.0-SNAPSHOT"}
-
         ;; CLJS
         reagent/reagent {:mvn/version "1.2.0"
                          :exclusions [cljsjs/react cljsjs/react-dom]}

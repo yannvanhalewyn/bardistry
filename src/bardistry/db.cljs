@@ -1,6 +1,6 @@
 (ns bardistry.db
   (:require
-   [bardistry.http :as http]
+   [bardistry.api :as api]
    [bardistry.storage :as storage]
    [bardistry.util :as u]
    [promesa.core :as p]
@@ -10,15 +10,14 @@
 
 (defn load-songs! []
   (swap! db assoc :loading? true)
-  (http/request!
-   {::http/endpoint "q"
-    ::http/method :post
-    ::http/params {:query '{:find (pull ?song [:song/id :song/title :song/artist])
-                            :where [[?song :song/id _]]}
-                   ;; :params [id]
-                   }
-    ::http/on-failure #(swap! db assoc :loading? false)
-    ::http/on-success
+  (api/request!
+   {::api/endpoint "q"
+    ::api/method :post
+    ::api/params {:query '{:find (pull ?song [:song/id :song/title :song/artist
+                                              :song/contents])
+                           :where [[?song :song/id _]]}}
+    ::api/on-failure #(swap! db assoc :loading? false)
+    ::api/on-success
     (fn [songs]
       (let [songs (u/key-by :song/id songs)]
         (storage/store-clj "bardistry.songs" songs)
