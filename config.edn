@@ -48,4 +48,4 @@
          ;; want to deploy a different branch, for example:
          ;:biff.tasks/deploy-cmd ["git" "push" "prod" "main:master"]
          :biff.tasks/deploy-cmd ["git" "push" "prod" "master"]
-         :biff.tasks/server "example.com"}}
+         :biff.tasks/server "bardistry.app"}}
