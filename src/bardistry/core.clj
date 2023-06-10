@@ -22,17 +22,9 @@
 (def handler (-> (biff/reitit-handler {:routes routes})
                  biff/wrap-base-defaults))
 
-(def static-pages (apply biff/safe-merge (map :static plugins)))
-
-(defn generate-assets! [_ctx]
-  (biff/export-rum static-pages "target/resources/public")
-  (biff/delete-old-files {:dir "target/resources/public"
-                          :exts [".html"]}))
-
 (defn on-save [ctx]
   (biff/add-libs)
   (biff/eval-files! ctx)
-  (generate-assets! ctx)
   (test/run-all-tests #"bardistry.*"))
 
 (def malli-opts
@@ -79,7 +71,6 @@
                            initial-system
                            components)]
     (reset! system new-system)
-    (generate-assets! new-system)
     (log/info "Go to" (:biff/base-url new-system))))
 
 (defn refresh []
