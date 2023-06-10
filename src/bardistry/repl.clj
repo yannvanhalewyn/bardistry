@@ -4,9 +4,6 @@
             [clojure.edn :as edn]
             [clojure.java.io :as io]))
 
-(defn get-context []
-  (biff/assoc-db @main/system))
-
 (defn add-fixtures []
   (biff/submit-tx (get-context)
     (-> (io/resource "fixtures.edn")
