@@ -2,6 +2,7 @@
   (:require
    [applied-science.js-interop :as j]
    [bardistry.transit :as transit]
+   [bardistry.rn.device-info :as device-info]
    [clojure.string :as str]
    [promesa.core :as p]))
 
@@ -12,11 +13,15 @@
 (defn- content-type [res]
   (j/get-in res [:headers :map "content-type"]))
 
-(def HOST "192.168.5.180")
+(defn get-host []
+  (if (device-info/emulator?)
+    "localhost"
+    "192.168.5.180"))
+
 (def PORT 8080)
 
 (defn- api-url [endpoint]
-  (str "http://" HOST ":" PORT "/api/" endpoint))
+  (str "http://" (get-host) ":" PORT "/api/" endpoint))
 
 (defn request! [{::keys [:bardistry.api/endpoint :bardistry.api/method :bardistry.api/params :bardistry.api/on-success :bardistry.api/on-failure]}]
   (println "http.request" method endpoint params)
