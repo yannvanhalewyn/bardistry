@@ -3,7 +3,6 @@
             [bardistry.server.api :as api]
             [bardistry.server.email :as email]
             [bardistry.server.worker :as worker]
-            [bardistry.server.schema :as schema]
             [clojure.test :as test]
             [clojure.tools.logging :as log]
             [clojure.tools.namespace.repl :as tn-repl]
@@ -13,7 +12,6 @@
 (def plugins
   [(biff/authentication-plugin {})
    api/plugin
-   schema/plugin
    worker/plugin])
 
 (def routes [["" {:middleware [biff/wrap-site-defaults]}

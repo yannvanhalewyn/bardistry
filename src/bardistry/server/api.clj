@@ -21,7 +21,25 @@
   {:status 200
    :body (apply biff/q db (:query params) (:params params))})
 
+(def schema
+  {:song/id :uuid
+   :section/id :uuid
+   :song [:map {:closed true}
+          [:xt/id :song/id]
+          [:song/id :song/id]
+          [:song/title :string]
+          [:song/artist :string?]
+          [:song/lyrics
+           [:map {:closed true}
+            [:lyrics/arrangement [:vector :section/id]]
+            [:lyrics/sections
+             [:vector
+              [:map {:closed true}
+               [:section/title :string]
+               [:section/lines [:vector :string]]]]]]]]})
+
 (def plugin
-  {:api-routes [["/api/songs" {:get all-songs}]
+  {:schema schema
+   :api-routes [["/api/songs" {:get all-songs}]
                 ["/api/songs/:id/lyrics" {:get lyrics}]
                 ["/api/q" {:post query}]]})
