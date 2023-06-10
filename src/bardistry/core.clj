@@ -48,14 +48,24 @@
    :biff/handler #'handler
    :biff/malli-opts #'malli-opts
    :biff.beholder/on-save #'on-save
-   :biff.xtdb/tx-fns biff/tx-fns
-   :bardistry.core/chat-clients (atom #{})})
+   :biff.xtdb/tx-fns biff/tx-fns})
 
 (defonce system (atom {}))
 
+(def secrets (delay (read-string (slurp "secrets.edn"))))
+
+(defn get-secret [ctx k]
+  (get @secrets (get ctx k)))
+
+(defn use-secrets [ctx]
+  (when-not (every? #(get-secret ctx %) [:biff.middleware/cookie-secret :biff/jwt-secret])
+    (binding [*out* *err*]
+      (println "Secrets are missing. Run `bb generate-secrets` and edit secrets.env.")))
+  (assoc ctx :biff/secret #(get-secret ctx %)))
+
 (def components
   [biff/use-config
-   biff/use-secrets
+   use-secrets
    biff/use-xt
    biff/use-queues
    biff/use-tx-listener
@@ -84,6 +94,8 @@
   (tn-repl/refresh :after `start))
 
 (comment
+  (start)
+
   ;; Evaluate this if you make a change to initial-system, components, :tasks,
   ;; :queues, or config.edn. If you update secrets.env, you'll need to restart
   ;; the app.

@@ -13,7 +13,7 @@
         :biff/base-url "https://bardistry.app"
         ;; Postmark is used to send email sign-in links. Create an account at
         ;; https://postmarkapp.com
-        :postmark/api-key "POSTMARK_API_KEY"
+        :postmark/api-key :postmark-api-key
         ;; Change to the address of your sending identity. Set a reply-to
         ;; address on your sending identity if you want to receive replies and
         ;; your from address isn't configured for receiving.
@@ -22,10 +22,10 @@
         ;; https://www.google.com/recaptcha/about/ and add a site. Select v2
         ;; invisible. Add localhost to your list of allowed domains.
         :recaptcha/site-key nil
-        :recaptcha/secret-key "RECAPTCHA_SECRET_KEY"
+        :recaptcha/secret-key :recaptcha-api-key
         :biff.beholder/enabled false
-        :biff.middleware/cookie-secret "COOKIE_SECRET"
-        :biff/jwt-secret "JWT_SECRET"}
+        :biff.middleware/cookie-secret :cookie-secret
+        :biff/jwt-secret :jwt-secret}
  :dev {:merge [:prod]
        :biff.beholder/enabled true
        :biff/host "0.0.0.0"
