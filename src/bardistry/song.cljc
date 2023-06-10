@@ -9,5 +9,8 @@
    :song/artist ""
    :song/lyrics (lyrics/make)})
 
+(defn sections [song]
+  (lyrics/sections (:song/lyrics song)))
+
 (defn sort-artist [{:keys [:song/artist]}]
   (str/replace artist (re-pattern "(?i)^\\s*the\\s*") ""))

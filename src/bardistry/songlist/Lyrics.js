@@ -10,7 +10,7 @@ const Lyrics = ({song, isSheetOpen, onSheetClose, onSongEdit}) => {
   const navigation = useNavigation();
   useEffect(
     x => {
-      navigation.setOptions({title: song.title});
+      navigation.setOptions({title: ". . ."});
     },
     [song.title],
   );
@@ -20,30 +20,40 @@ const Lyrics = ({song, isSheetOpen, onSheetClose, onSongEdit}) => {
       <ScrollView
         keyboardDismissMode="on-drag"
         className="bg-white dark:bg-black">
-        <View className="px-4 pb-32">
-          {song.processedLyrics.map(section => {
-            const highlight = section['chorus?'];
-            const hlClassNames = ' p-4 rounded-lg bg-gray-100 dark:bg-gray-900';
+        <View className="px-4 pt-4 pb-16">
+          <TextInput className="text-2xl font-bold dark:text-white">
+            {song.title}
+          </TextInput>
 
-            return (
-              <View
-                key={section.id}
-                className={'mt-6' + (highlight ? hlClassNames : '')}>
-                {section.title ? (
-                  <Text className="font-bold dark:text-white">
-                    {section.title}
-                  </Text>
-                ) : null}
-                <TextInput
-                  selectionColor={colors.orange['500']}
-                  multiline={true}
-                  className="text-lg font-lato dark:text-white"
-                  onChangeText={text => console.log(text)}>
-                  {section.body}
-                </TextInput>
-              </View>
-            );
-          })}
+          <TextInput className="text-xl text-orange-500">
+            {song.artist}
+          </TextInput>
+
+          <View>
+            {song.sections.map(section => {
+              // pt-1 because multiline={true} adds some top padding.
+              const hlClassNames = ' p-4 pt-1 rounded-lg bg-gray-100 dark:bg-gray-900';
+
+              return (
+                <View
+                  key={section.id}
+                  className={'my-2' + (section.isChorus ? hlClassNames : '')}>
+                  <TextInput
+                    selectionColor={colors.orange['500']}
+                    multiline={true}
+                    className="text-lg font-lato dark:text-white"
+                    onChangeText={text => console.log(text)}>
+                    {section.title ? (
+                      <Text className="font-bold dark:text-white">
+                        {section.title + "\n"}
+                      </Text>
+                    ) : null}
+                    {section.body}
+                  </TextInput>
+                </View>
+              );
+            })}
+          </View>
         </View>
       </ScrollView>
 

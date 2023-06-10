@@ -2,6 +2,7 @@
   (:require
    [clojure.string :as str]
    [reagent.core :as r]
+   [bardistry.song :as song]
    [bardistry.db :as db]
    [bardistry.songlist.db :as songlist.db]))
 
@@ -9,39 +10,18 @@
   (r/adapt-react-class
    (.-default (js/require "../../src/bardistry/songlist/Lyrics.js"))))
 
-(defn collapse [collapse-el coll]
-  (reduce (fn [out el]
-            (if (and (= el collapse-el)
-                     (= (last out) collapse-el))
-              out
-              (conj out el)))
-          [] coll))
-
-(defn- parse-section-title [line]
-  (second
-   (re-find (re-pattern "(?i)\\[?((?:chorus|verse|bridge|intro|outro)\\s*\\d*)\\]?$") line)))
-
-(defn- process-section [[header-or-line & lines :as all-lines]]
-  (let [section-title (parse-section-title header-or-line)]
-    (-> (if section-title
-          {:section/title section-title
-           :section/chorus? (str/includes? (str/lower-case section-title) "chorus")
-           :section/lines lines}
-          {:section/lines all-lines})
-        (assoc :section/id (random-uuid)))))
-
-(defn- prepare-song-contents [contents]
-  (->> contents
-       (collapse "")
-       (partition-by #(= % ""))
-       (remove #(= % [""]))
-       (map process-section)
-       (map (fn [{:keys [:section/lines] :as section}]
-              (assoc section :section/body (str/trim (str/join "\n" lines)))))))
-
-(defn- process-song [song]
-  (assoc song
-    :song/processed-lyrics (prepare-song-contents (:song/contents song))))
+(defn- ->ui [{:song/keys [id title artist] :as song}]
+  (clj->js
+   {:id id
+    :title title
+    :artist artist
+    :sections (for [{:section/keys [title id lines]} (song/sections song)]
+                {:id id
+                 :title title
+                 :isChorus (when title
+                             (.log js/console (str :title) title (str :includes?) (str/includes? (str/lower-case title) "chorus"))
+                             (str/includes? (str/lower-case title) "chorus"))
+                 :body (str/join "\n" lines)})}))
 
 (defn toggle-form! []
   (swap! db/db update-in [::db/ui ::song-form] not))
@@ -60,7 +40,7 @@
     (close-form!))
   (fn [{:keys [:song/id]}]
     (if-let [song (songlist.db/find-by-id id)]
-      [Lyrics {:song (process-song song)
+      [Lyrics {:song (->ui song)
                :onSheetClose close-form!
                :onSongEdit songlist.db/update-song!
                :isSheetOpen (get-in @db/db [::db/ui ::song-form])}]

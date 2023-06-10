@@ -14,7 +14,7 @@
    {::api/endpoint "q"
     ::api/method :post
     ::api/params {:query '{:find (pull ?song [:song/id :song/title :song/artist
-                                              :song/contents])
+                                              :song/lyrics])
                            :where [[?song :song/id _]]}}
     ::api/on-failure #(swap! db assoc :loading? false)
     ::api/on-success
