@@ -1,14 +1,17 @@
-(ns bardistry.songlist.parse-lyrics
-  (:require
-   [clojure.string :as str]))
+(ns bardistry.songlist.parse-lyrics)
 
-(defn collapse [collapse-el coll]
-  (reduce (fn [out el]
-            (if (and (= el collapse-el)
-                     (= (last out) collapse-el))
-              out
-              (conj out el)))
-          [] coll))
+(defn collapse-xf [collapse-item]
+  (let [last-item (atom nil)]
+    (fn [rf]
+      (fn
+        ([] (rf))
+        ([result] (rf result))
+        ([result input]
+         (let [prev @last-item]
+           (reset! last-item input)
+           (if (= input collapse-item prev)
+             result
+             (rf result input))))))))
 
 (defn- parse-section-title [line]
   (second
@@ -19,27 +22,52 @@
     [:section/title title]
     [:section/line line]))
 
-(defn- split-on-title-entries [[sections cur-section] entry]
-  (if (= :section/title (first entry))
-    [(cond-> sections cur-section (conj cur-section)) [entry]]
-    [sections (conj cur-section entry)]))
+(defn title? [entry]
+  (= (first entry) :section/title))
 
-(defn end-split [[sections cur-section]]
-  (conj sections cur-section))
+(defn- split-sections-xf [rf]
+  (let [cur-section (atom nil)]
+    (fn
+      ([] (rf))
+      ([result]
+       (if-let [cur @cur-section]
+         (rf (unreduced (rf result cur)))
+         (rf result)))
+      ([result input]
+       (let [prev-section @cur-section]
+         (if (title? input)
+           (do (reset! cur-section [input])
+               (if prev-section
+                 (rf result prev-section)
+                 result))
+           (do (swap! cur-section conj input)
+               result)))))))
 
-(defn- make-section [[header-or-line & other-entries :as all-entries]]
-  (let [title (when (= (first header-or-line) :section/title)
+(defn- entries->section [[header-or-line & other-entries :as all-entries]]
+  (let [title (when (title? header-or-line)
                 (second header-or-line))
         lines (if title other-entries all-entries)]
     {:section/title title
-     :section/chorus? (str/includes? (str/lower-case title) "chorus")
      :section/lines (mapv second lines)}))
 
 (defn lines->lyrics [lines]
-  (->>
-   (collapse "" lines)
-   (map line->entry)
-   (reduce split-on-title-entries [[] nil])
-   (end-split)
-   (map make-section)
-   ))
+  (into []
+        (comp (collapse-xf "")
+              (map line->entry)
+              split-sections-xf
+              (map entries->section))
+        lines))
+
+(comment
+  (lines->lyrics
+   ["Verse 1"
+    "Hey Jude, don't make it bad"
+    ""
+    ""
+    "Sing a sad song"
+    "And make it better"
+    "Chorus"
+    "And anytime you feel the pain"
+    "Hey Jude, refrain"])
+
+  )
