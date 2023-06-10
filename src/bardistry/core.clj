@@ -1,5 +1,6 @@
 (ns bardistry.core
   (:require [com.biffweb :as biff]
+            [bardistry.server.api :as api]
             [bardistry.server.email :as email]
             [bardistry.server.worker :as worker]
             [bardistry.server.schema :as schema]
@@ -12,6 +13,7 @@
 
 (def plugins
   [(biff/authentication-plugin {})
+   api/plugin
    schema/plugin
    worker/plugin])
 
