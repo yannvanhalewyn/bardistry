@@ -2,6 +2,8 @@
   (:require
    [bardistry.core :as core]
    [bardistry.songlist.load-songs :as load-songs]
+   [clojure.tools.logging :as log]
+   [clojure.tools.namespace.repl :as tools.ns.repl]
    [com.biffweb :as biff]
    [xtdb.api :as xt]))
 
@@ -26,7 +28,12 @@
      [::xt/delete id])))
 
 (def start #'core/start)
-(def refresh #'core/refresh)
+
+(defn refresh []
+  (doseq [f (:biff/stop @core/system)]
+    (log/info "stopping:" (str f))
+    (f))
+  (tools.ns.repl/refresh :after `start))
 
 (comment
   (start)

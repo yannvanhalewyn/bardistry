@@ -11,15 +11,14 @@
   [::xt/delete song-id])
 
 (defn persist-song! [ctx song]
-  #_(xt/submit-tx node [(create-song-tx song)])
   (biff/submit-tx ctx [(create-song-tx song)]))
 
 (defn delete-song! [ctx song-id]
   (biff/submit-tx ctx [(delete-song-tx song-id)]))
 
-(defn configure-tx-fn! [node]
-  (xt/submit-tx
-   node
+(defn configure-tx-fn! [ctx]
+  (biff/submit-tx
+   ctx
    [[::xt/put
      {:xt/id :section/set-lines
       :xt/fn
@@ -32,5 +31,5 @@
                 [:song/lyrics :lyrics/sections section-id :section/lines]
                 new-lines)]])))}]]))
 
-(defn set-section-lines! [node song-id section-id new-lines]
-  (xt/submit-tx node [[::xt/fn :section/set-lines song-id section-id new-lines]]))
+(defn set-section-lines! [ctx song-id section-id new-lines]
+  (biff/submit-tx ctx [[::xt/fn :section/set-lines song-id section-id new-lines]]))

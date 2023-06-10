@@ -5,7 +5,6 @@
             [bardistry.server.worker :as worker]
             [clojure.test :as test]
             [clojure.tools.logging :as log]
-            [clojure.tools.namespace.repl :as tn-repl]
             [malli.core :as malc]
             [malli.registry :as malr]))
 
@@ -43,10 +42,10 @@
 
 (defonce system (atom {}))
 
-(def secrets (delay (read-string (slurp "secrets.edn"))))
-
-(defn get-secret [ctx k]
-  (get @secrets (get ctx k)))
+(def get-secret
+  (let [secrets (delay (read-string (slurp "secrets.edn")))]
+    (fn [ctx k]
+      (get @secrets (get ctx k)))))
 
 (defn use-secrets [ctx]
   (when-not (every? #(get-secret ctx %) [:biff.middleware/cookie-secret :biff/jwt-secret])
@@ -72,9 +71,3 @@
                            components)]
     (reset! system new-system)
     (log/info "Go to" (:biff/base-url new-system))))
-
-(defn refresh []
-  (doseq [f (:biff/stop @system)]
-    (log/info "stopping:" (str f))
-    (f))
-  (tn-repl/refresh :after `start))
