@@ -39,11 +39,19 @@
        (let [prev-section @cur-section]
          (if (title? input)
            (do (reset! cur-section [input])
-               (if prev-section
+               (if (not-empty prev-section)
                  (rf result prev-section)
                  result))
            (do (swap! cur-section conj input)
                result)))))))
+
+(defn- trim-list [coll]
+  (->> coll
+       (drop-while empty?)
+       (reverse)
+       (drop-while empty?)
+       (reverse)
+       (into [])))
 
 (defn- entries->section [[header-or-line & other-entries :as all-entries]]
   (let [id (random-uuid)
@@ -52,7 +60,7 @@
         lines (if title other-entries all-entries)]
     {:section/id id
      :section/title title
-     :section/lines (mapv second lines)}))
+     :section/lines (trim-list (mapv second lines))}))
 
 (defn lines->lyrics [lines]
   (into []
@@ -69,6 +77,8 @@
      :lyrics/arrangement (mapv :section/id sections)}))
 
 (comment
+  (parse ["Chorus" "Line"])
+
   (parse
    [""
     "Verse 1"
@@ -78,7 +88,14 @@
     "Sing a sad song"
     "And make it better"
     "Chorus"
+    ""
     "And anytime you feel the pain"
-    "Hey Jude, refrain"])
+    "Hey Jude, refrain"
+    ""
+    ""
+    "Hey Jude, refrain"
+    ])
+
+
 
   )
