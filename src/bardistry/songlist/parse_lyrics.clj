@@ -1,4 +1,6 @@
-(ns bardistry.songlist.parse-lyrics)
+(ns bardistry.songlist.parse-lyrics
+  (:require
+   [medley.core :as m]))
 
 (defn collapse-xf [collapse-item]
   (let [last-item (atom nil)]
@@ -26,11 +28,11 @@
   (= (first entry) :section/title))
 
 (defn- split-sections-xf [rf]
-  (let [cur-section (atom nil)]
+  (let [cur-section (atom [])]
     (fn
       ([] (rf))
       ([result]
-       (if-let [cur @cur-section]
+       (if-let [cur (not-empty @cur-section)]
          (rf (unreduced (rf result cur)))
          (rf result)))
       ([result input]
@@ -44,10 +46,12 @@
                result)))))))
 
 (defn- entries->section [[header-or-line & other-entries :as all-entries]]
-  (let [title (when (title? header-or-line)
+  (let [id (random-uuid)
+        title (when (title? header-or-line)
                 (second header-or-line))
         lines (if title other-entries all-entries)]
-    {:section/title title
+    {:section/id id
+     :section/title title
      :section/lines (mapv second lines)}))
 
 (defn lines->lyrics [lines]
@@ -55,12 +59,19 @@
         (comp (collapse-xf "")
               (map line->entry)
               split-sections-xf
+              (remove #(= % [[:section/line ""]]))
               (map entries->section))
         lines))
 
+(defn parse [lines]
+  (let [sections (lines->lyrics lines)]
+    {:lyrics/sections (m/index-by :section/id sections)
+     :lyrics/arrangement (mapv :section/id sections)}))
+
 (comment
-  (lines->lyrics
-   ["Verse 1"
+  (parse
+   [""
+    "Verse 1"
     "Hey Jude, don't make it bad"
     ""
     ""

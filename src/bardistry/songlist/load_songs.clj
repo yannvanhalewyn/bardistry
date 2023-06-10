@@ -1,5 +1,6 @@
 (ns bardistry.songlist.load-songs
   (:require
+   [bardistry.songlist.parse-lyrics :as parse-lyrics]
    [clojure.java.io :as io]
    [xtdb.api :as xt]))
 
@@ -15,7 +16,7 @@
   {:song/id (get-id title artist)
    :song/title title
    :song/artist artist
-   :song/contents (into [] contents)})
+   :song/lyrics (parse-lyrics/parse contents)})
 
 (defn read-songs! [file]
   (with-open [r (io/reader file)]
