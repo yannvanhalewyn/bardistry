@@ -13,13 +13,16 @@
 (defn xt-node []
   (:biff.xtdb/node @core/system))
 
-(defn q! [& args]
-  (apply biff/q (xt/db (xt-node)) args))
+(defn get-db []
+  (xt/db (xt-node)))
 
-(defn clear-db! [node]
+(defn q! [& args]
+  (apply biff/q (get-db) args))
+
+(defn clear-db! []
   (xt/submit-tx
-   node
-   (for [id (com.biffweb/q (xt/db node) '{:find ?e :where [[?e :xt/id ?a]]})]
+   (xt-node)
+   (for [id (com.biffweb/q (get-db) '{:find ?e :where [[?e :xt/id ?a]]})]
      [::xt/delete id])))
 
 (def start #'core/start)

@@ -5,7 +5,8 @@
 (defn make []
   (let [section-id (random-uuid)]
     {:lyrics/sections
-     {section-id {:section/title "Verse"
+     {section-id {:section/id section-id
+                  :section/title "Verse"
                   :section/lines [""]}}
      :lyrics/arrangement [section-id]}))
 
