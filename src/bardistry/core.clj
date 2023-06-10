@@ -61,7 +61,7 @@
 (defn use-secrets [ctx]
   (when-not (every? #(get-secret ctx %) [:biff.middleware/cookie-secret :biff/jwt-secret])
     (binding [*out* *err*]
-      (println "Secrets are missing. Run `bb generate-secrets` and edit secrets.env.")))
+      (println "Secrets are missing, add a secrets.edn")))
   (assoc ctx :biff/secret #(get-secret ctx %)))
 
 (def components

@@ -36,6 +36,11 @@
 (comment
   (def node (:biff.xtdb/node @bardistry.core/system))
 
+
+  (filter
+   #(= (:song/title %) "When You Break")
+   (read-songs! (io/resource "lyrics.txt")))
+
   (load-songs! node)
 
   (defn clear-db! [node]

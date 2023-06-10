@@ -19,7 +19,6 @@
                 {:id id
                  :title title
                  :isChorus (when title
-                             (.log js/console (str :title) title (str :includes?) (str/includes? (str/lower-case title) "chorus"))
                              (str/includes? (str/lower-case title) "chorus"))
                  :body (str/join "\n" lines)})}))
 

@@ -18,7 +18,6 @@
     {:status 404}))
 
 (defn- query [{:keys [biff/db params]}]
-  (println params)
   {:status 200
    :body (apply biff/q db (:query params) (:params params))})
 

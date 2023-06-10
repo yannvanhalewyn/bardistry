@@ -5,6 +5,8 @@
    [com.biffweb :as biff]
    [xtdb.api :as xt]))
 
+(set! *print-namespace-maps* false)
+
 (defn get-ctx []
   (biff/assoc-db @core/system))
 
@@ -30,7 +32,7 @@
 
   (q! '{:find (pull ?song [:song/title :song/artist :song/lyrics])
         :limit 1
-        :where [[?song :song/title "Mad World"]]})
+        :where [[?song :song/title "When You Break"]]})
 
   (clear-db! (xt-node))
 

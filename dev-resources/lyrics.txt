@@ -2325,6 +2325,7 @@ Oh, maybe it's time to let the old ways die
 While my Guitar Gently Wheeps
 The Beatles
 
+Verse
 I look at you all, see the love there that's sleeping
 While my guitar gently weeps
 I look at the floor and I see it needs sweeping
@@ -2336,7 +2337,7 @@ How to unfold your love
 I don't know how someone controlled you
 They bought and sold you
 
-
+Verse
 I look at the world and I notice it's turning
 While my guitar gently weeps
 With every mistake, we must surely be learning
@@ -2348,7 +2349,7 @@ You were perverted too
 I don't know how you were inverted
 No one alerted you
 
-
+Verse
 I look from the wings at the play you are staging
 While my guitar gently weeps
 As I'm sitting here doing nothing but aging
