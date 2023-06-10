@@ -1,7 +1,7 @@
-(ns bardistry.songs
+(ns bardistry.songlist.load-songs
   (:require
    [clojure.java.io :as io]
-   [clojure.string :as str]))
+   [xtdb.api :as xt]))
 
 (defonce song-ids (atom {}))
 
@@ -17,10 +17,32 @@
    :song/artist artist
    :song/contents (into [] contents)})
 
-(defn read-songs! [filename]
-  (with-open [r (io/reader (io/file filename))]
+(defn read-songs! [file]
+  (with-open [r (io/reader file)]
     (into []
           (comp (partition-by #(= % "{{SONG}}"))
                 (remove #(= % ["{{SONG}}"]))
                 (map process-song))
           (line-seq r))))
+
+(defn load-songs! [node]
+  (xt/submit-tx
+   node
+   (for [song (read-songs! (io/resource "lyrics.txt"))]
+     [::xt/put
+      (assoc song :xt/id (:song/id song))])))
+
+(comment
+  (def node (:biff.xtdb/node @bardistry.core/system))
+
+  (load-songs! node)
+
+  (defn clear-db! [node]
+    (xt/submit-tx
+     node
+     (for [id (com.biffweb/q (xt/db node) '{:find ?e :where [[?e :xt/id ?a]]})]
+       [::xt/delete id])))
+
+  (clear-db! node)
+
+  )

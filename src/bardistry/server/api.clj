@@ -1,11 +1,23 @@
 (ns bardistry.server.api
   (:require
-   [com.biffweb :as biff]))
+   [com.biffweb :as biff]
+   [xtdb.api :as xt]))
 
-(defn echo [{:keys [params biff/db]}]
-  (biff/q db '{:find [e title] :where [[e :song/title title]]})
+(defn- all-songs [{:keys [biff/db]}]
   {:status 200
-   :body params})
+   :body (biff/q db '{:find (pull song [:song/id :song/title :song/artist])
+                      :where [[song :song/id]]})})
+
+(defn- lyrics [{:keys [biff/db path-params] :as req}]
+  (if-let [song (first
+                 (biff/q db '{:find [(pull song [:song/id :song/contents])]
+                              :in [id]
+                              :where [[song :song/id id]]}
+                         (parse-uuid (:id path-params))))]
+    {:status 200
+     :body song}
+    {:status 404}))
 
 (def plugin
-  {:api-routes [["/api/echo" {:post echo}]]})
+  {:api-routes [["/api/songs" {:get all-songs}]
+                ["/api/songs/:id/lyrics" {:get lyrics}]]})
