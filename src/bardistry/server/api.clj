@@ -21,6 +21,10 @@
   {:status 200
    :body (apply biff/q db (:query params) (:params params))})
 
+(defn- mutate [{:keys [params] :as ctx}]
+  {:status 200
+   :body (biff/submit-tx ctx (:db/tx-ops params))})
+
 (def schema
   {:song/id :uuid
    :section/id :uuid
@@ -42,4 +46,5 @@
   {:schema schema
    :api-routes [["/api/songs" {:get all-songs}]
                 ["/api/songs/:id/lyrics" {:get lyrics}]
-                ["/api/q" {:post query}]]})
+                ["/api/q" {:post query}]
+                ["/api/mutate" {:post mutate}]]})

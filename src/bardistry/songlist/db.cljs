@@ -1,8 +1,10 @@
 (ns bardistry.songlist.db
   (:require
+   [bardistry.api :as api]
    [bardistry.db :as db]
    [bardistry.navigation :as nav]
-   [bardistry.song :as song]))
+   [bardistry.song :as song]
+   [clojure.string :as str]))
 
 (defn create-song! []
   (let [new-song (song/make)]
@@ -24,3 +26,11 @@
   (when (contains? (:songs @db/db) id)
     (swap! db/db update-in [:songs id]
            update-song key value)))
+
+(defn edit-section! [song-id section-id text]
+  (api/request!
+   {::api/endpoint "mutate"
+    ::api/method :post
+    ::api/params
+    {:db/tx-ops
+     [[:xtdb.api/fn :section/set-lines song-id section-id (str/split-lines text)]]}}))

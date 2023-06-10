@@ -6,7 +6,13 @@ import BottomModal from './BottomModal.js';
 import SongForm from './SongForm.js';
 import colors from 'tailwindcss/colors'
 
-const Lyrics = ({song, isSheetOpen, onSheetClose, onSongEdit}) => {
+const Lyrics = ({
+  song,
+  isSheetOpen,
+  onSheetClose,
+  onSongEdit,
+  onSectionEdit,
+}) => {
   const navigation = useNavigation();
   useEffect(
     x => {
@@ -42,7 +48,10 @@ const Lyrics = ({song, isSheetOpen, onSheetClose, onSongEdit}) => {
                     selectionColor={colors.orange['500']}
                     multiline={true}
                     className="text-lg font-lato dark:text-white"
-                    onChangeText={text => console.log(text)}>
+                    onEndEditing={e => {
+                      console.log("js:onEndEditing", section.id)
+                      onSectionEdit(section.id, e.nativeEvent.text);
+                    }}>
                     {section.title ? (
                       <Text className="font-bold dark:text-white">
                         {section.title + "\n"}
