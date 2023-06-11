@@ -1,7 +1,7 @@
 (ns dev
   (:require
    [bardistry.core :as core]
-   [bardistry.songlist.load-songs :as load-songs]
+   [dev.seed.load-songs :as load-songs]
    [clojure.tools.logging :as log]
    [clojure.tools.namespace.repl :as tools.ns.repl]
    [com.biffweb :as biff]

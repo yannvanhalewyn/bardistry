@@ -1,6 +1,6 @@
-(ns bardistry.songlist.load-songs
+(ns dev.seed.load-songs
   (:require
-   [bardistry.songlist.parse-lyrics :as parse-lyrics]
+   [dev.seed.parse-lyrics :as parse-lyrics]
    [clojure.java.io :as io]
    [xtdb.api :as xt]))
 

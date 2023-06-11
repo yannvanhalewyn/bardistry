@@ -1,4 +1,4 @@
-(ns bardistry.songlist.parse-lyrics
+(ns dev.seed.parse-lyrics
   (:require
    [medley.core :as m]))
 
