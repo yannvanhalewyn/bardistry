@@ -70,3 +70,25 @@
   (explain :song db-song)
 
 )
+  (def nina-songs ["Lost on You"
+                   "Cherry Wine"
+                   "Aerials"
+                   "You Don't Get Me High Anymore"
+                   "Shallow"
+                   "Little Lion Man"
+                   "Awake my Soul"
+                   "Sound of Silence"
+                   "In a Week"
+                   "Wish You were Here"
+                   "My Hero"
+                   "Exit Music"])
+
+  (biff/submit-tx
+   (get-ctx)
+   (for [song-title nina-songs]
+     (do (when-not (lookup :song/title song-title)
+           (println "Not found" song-title))
+         {:db/doc-type :song
+          :db.op/upsert {:song/title song-title}
+          :song/tags #{"Nina"}})))
+

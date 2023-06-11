@@ -15,11 +15,13 @@
    :song/id     :uuid
    :song/title  :string
    :song/artist :string
+   :song/tags [:set :string]
    :song        [:map {:closed true}
                  [:xt/id {:optional true} :uuid]
                  :song/id
                  :song/title
                  :song/artist
+                 [:song/tags {:optional true}]
                  [:song/lyrics :lyrics]]
 
    ;; Lyrics

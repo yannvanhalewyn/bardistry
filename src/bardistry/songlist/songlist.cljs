@@ -16,7 +16,8 @@
     (fn [song]
       (str/includes?
        (str (str/lower-case (:song/title song))
-            (str/lower-case (:song/artist song)))
+            (str/lower-case (:song/artist song))
+            (str/lower-case (str/join " " (:song/tags song))))
        q))))
 
 (defn component []
