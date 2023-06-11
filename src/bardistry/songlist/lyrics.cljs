@@ -19,7 +19,8 @@
                 {:id id
                  :title title
                  :isChorus (when title
-                             (str/includes? (str/lower-case title) "chorus"))
+                             (and (str/includes? (str/lower-case title) "chorus")
+                                  (not (str/includes? (str/lower-case title) "pre"))))
                  :body (str/join "\n" lines)})}))
 
 (defn toggle-form! []

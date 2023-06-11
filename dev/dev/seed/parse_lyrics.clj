@@ -17,7 +17,7 @@
 
 (defn- parse-section-title [line]
   (second
-   (re-find (re-pattern "(?i)\\[?((?:chorus|verse|bridge|intro|outro)\\s*\\d*)\\]?$") line)))
+   (re-find (re-pattern "(?i)\\[?((?:pre-chorus|chorus|verse|bridge|intro|outro)\\s*\\d*)\\]?$") line)))
 
 (defn- line->entry [line]
   (if-let [title (parse-section-title line)]
