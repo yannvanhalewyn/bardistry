@@ -13,19 +13,24 @@
 (def schema
   {:song/id :uuid
    :section/id :uuid
+   :song/title :string
+   :song/artist :string
+   :song/lyrics
+   [:map {:closed true}
+    [:lyrics/arrangement [:vector :section/id]]
+    [:lyrics/sections
+     [:map-of
+      :section/id
+      [:map {:closed true}
+       :section/id
+       [:section/title :string]
+       [:section/lines [:vector :string]]]]]]
+
    :song [:map {:closed true}
-          [:xt/id :song/id]
-          [:song/id :song/id]
-          [:song/title :string]
-          [:song/artist :string?]
-          [:song/lyrics
-           [:map {:closed true}
-            [:lyrics/arrangement [:vector :section/id]]
-            [:lyrics/sections
-             [:vector
-              [:map {:closed true}
-               [:section/title :string]
-               [:section/lines [:vector :string]]]]]]]]})
+          :song/id
+          :song/title
+          :song/artist
+          :song/lyrics]})
 
 (def plugin
   {:schema schema

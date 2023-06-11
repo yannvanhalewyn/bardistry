@@ -43,3 +43,35 @@
           (fn [err]
             (println "http.failure" method endpoint err)
             (on-failure err)))))
+
+;; (defonce response (atom nil))
+;; (defonce result (atom nil))
+;; (defonce error (atom nil))
+
+(comment
+
+  (-> (js/fetch (api-url "songs")
+                (clj->js
+                 {:headers {:Accept "application/transit+json"}})
+                ;; #js {:method "POST"
+                ;;      :headers {:Content-Type "application/transit+json"
+                ;;                :Accept "application/transit+json"}}
+
+                )
+      (p/then #(do
+                 (reset! response %)
+                 (.text %)))
+      (p/then #(reset! result %))
+      (p/catch #(reset! error %)))
+
+  @result
+
+  @error
+
+  (request! {::endpoint "q"
+             ::method :post
+             ::params {:foo "bar3"}
+             ::on-success #(reset! result %)
+             ::on-failure #(reset! error %)})
+
+  )
