@@ -11,26 +11,32 @@
    :body (biff/submit-tx ctx (:db/tx-ops params))})
 
 (def schema
-  {:song/id :uuid
-   :section/id :uuid
-   :song/title :string
+  {;; Song
+   :song/id     :uuid
+   :song/title  :string
    :song/artist :string
-   :song/lyrics
-   [:map {:closed true}
-    [:lyrics/arrangement [:vector :section/id]]
-    [:lyrics/sections
-     [:map-of
-      :section/id
-      [:map {:closed true}
-       :section/id
-       [:section/title :string]
-       [:section/lines [:vector :string]]]]]]
+   :song        [:map {:closed true}
+                 [:xt/id {:optional true} :uuid]
+                 :song/id
+                 :song/title
+                 :song/artist
+                 [:song/lyrics :lyrics]]
 
-   :song [:map {:closed true}
-          :song/id
-          :song/title
-          :song/artist
-          :song/lyrics]})
+   ;; Lyrics
+   :lyrics/arrangement [:vector :section/id]
+   :lyrics/sections    [:map-of :section/id :section]
+   :lyrics             [:map {:closed true}
+                        :lyrics/arrangement
+                        :lyrics/sections]
+
+   ;; Section
+   :section/id    :uuid
+   :section/title [:maybe :string]
+   :section/lines [:vector :string]
+   :section       [:map {:closed true}
+                   :section/id
+                   :section/title
+                   :section/lines]})
 
 (def plugin
   {:schema schema
@@ -38,6 +44,7 @@
             '(fn [ctx song-id section-id new-lines]
                (when-let [song (xtdb.api/entity (xtdb.api/db ctx) song-id)]
                  (when (contains? (get-in song [:song/lyrics :lyrics/sections]) section-id)
+                   ;; TODO compare old and new and reject if not the same
                    [[:xtbd.api/put
                      (assoc-in
                       song

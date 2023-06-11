@@ -5,9 +5,8 @@
    [clojure.tools.logging :as log]
    [clojure.tools.namespace.repl :as tools.ns.repl]
    [com.biffweb :as biff]
-   [xtdb.api :as xt]))
-
-(set! *print-namespace-maps* false)
+   [xtdb.api :as xt]
+   [malli.core :as malli]))
 
 (defn get-ctx []
   (biff/assoc-db @core/system))
@@ -20,6 +19,9 @@
 
 (defn q! [& args]
   (apply biff/q (get-db) args))
+
+(defn lookup [k v]
+  (biff/lookup (get-db) k v))
 
 (defn clear-db! []
   (xt/submit-tx
@@ -35,17 +37,36 @@
     (f))
   (tools.ns.repl/refresh :after `start))
 
+(defn reset []
+  (doseq [f (:biff/stop @core/system)]
+    (log/info "stopping:" (str f))
+    (f))
+  (start))
+
+(defn valid? [doc-type doc]
+  (malli/validate doc-type doc @(:biff/malli-opts @core/system)))
+
+(defn explain [doc-type doc]
+  (malli/explain doc-type doc @(:biff/malli-opts @core/system)))
+
 (comment
+  (set! *print-namespace-maps* false)
+
+  ;; System / DB management
   (start)
 
   (refresh)
 
-  (q! '{:find (pull ?song [:song/title :song/artist :song/lyrics])
-        :limit 1
-        :where [[?song :song/title "When You Break"]]})
-
-  (clear-db! (xt-node))
+  (clear-db!)
 
   (load-songs/load-songs! (xt-node))
 
-  )
+  ;; Song model and schema
+  (def new-song (bardistry.song/make))
+  (def db-song (lookup :song/title "Karma Police"))
+
+  (valid? :song new-song)
+  (valid? :song db-song)
+  (explain :song db-song)
+
+)
