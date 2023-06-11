@@ -38,7 +38,8 @@
    :biff/handler #'handler
    :biff/malli-opts #'malli-opts
    :biff.beholder/on-save #'on-save
-   :biff.xtdb/tx-fns biff/tx-fns})
+   :biff.xtdb/tx-fns (->> (conj (keep :tx-fns plugins) biff/tx-fns)
+                          (apply biff/safe-merge))})
 
 (defonce system (atom {}))
 
