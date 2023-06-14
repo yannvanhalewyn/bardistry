@@ -72,3 +72,4 @@ yarn-error.log
 /.nrepl-port
 /storage/
 /secrets.edn
+/.yarn/
