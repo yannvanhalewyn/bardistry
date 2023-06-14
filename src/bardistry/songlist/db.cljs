@@ -27,10 +27,21 @@
     (swap! db/db update-in [:songs id]
            update-song key value)))
 
+(defn update-song2! [id f]
+  (when (contains? (:songs @db/db) id)
+    (swap! db/db update-in [:songs id] f)))
+
 (defn edit-section! [song-id section-id text]
-  (api/request!
-   {::api/endpoint "mutate"
-    ::api/method :post
-    ::api/params
-    {:db/tx-ops
-     [[:xtdb.api/fn :section/set-lines song-id section-id (str/split-lines text)]]}}))
+  (let [[title & lines] (str/split-lines text)]
+    (update-song2!
+     song-id
+     #(-> %
+          (assoc-in [:song/lyrics :lyrics/sections section-id :section/lines] lines)
+          (assoc-in [:song/lyrics :lyrics/sections section-id :section/title] title)))
+
+    (api/request!
+     {::api/endpoint "mutate"
+      ::api/method :post
+      ::api/params
+      {:db/tx-ops
+       [[:xtdb.api/fn :section/set-lines song-id section-id lines]]}})))

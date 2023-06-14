@@ -47,7 +47,7 @@
                (when-let [song (xtdb.api/entity (xtdb.api/db ctx) song-id)]
                  (when (contains? (get-in song [:song/lyrics :lyrics/sections]) section-id)
                    ;; TODO compare old and new and reject if not the same
-                   [[:xtbd.api/put
+                   [[:xtdb.api/put
                      (assoc-in
                       song
                       [:song/lyrics :lyrics/sections section-id :section/lines]

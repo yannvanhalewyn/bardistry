@@ -55,7 +55,6 @@ const Section = ({section, onEdit}) => {
           autoFocus={true}
           className="text-lg font-lato dark:text-white"
           onEndEditing={e => {
-            console.log('js:onEndEditing', section.id);
             onEdit(section.id, e.nativeEvent.text);
           }}
           onBlur={e => setIsEditing(false)}>
