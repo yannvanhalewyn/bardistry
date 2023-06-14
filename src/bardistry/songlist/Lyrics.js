@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
-import {View, Text, ScrollView, TextInput} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {useNavigation} from '@react-navigation/native';
 import BottomModal from './BottomModal.js';
 import SongForm from './SongForm.js';
@@ -88,7 +89,8 @@ const Lyrics = ({
 
   return (
     <>
-      <ScrollView
+      <KeyboardAwareScrollView
+        extraScrollHeight={64}
         keyboardDismissMode="on-drag"
         className="bg-white dark:bg-black">
         <View className="pt-4 pb-16">
@@ -110,7 +112,7 @@ const Lyrics = ({
             ))}
           </View>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
 
       <BottomModal height={160} isOpen={isSheetOpen} onClose={onSheetClose}>
         <SongForm
