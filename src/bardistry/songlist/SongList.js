@@ -9,27 +9,34 @@ import {SparklesIcon} from 'react-native-heroicons/solid';
 import SearchBar from './SearchBar.js';
 import colors from 'tailwindcss/colors';
 import AddSongButton from './AddSongButton';
-import {HoldItem} from 'react-native-hold-menu';
+import ContextMenu from 'react-native-context-menu-view';
 
 const Song = props => {
   const song = props.item;
 
   return (
-    <HoldItem
-      items={[
-        {text: 'Edit', onPress: () => console.log('ON PRESS, EDIT')},
-        {text: 'Highlight', onPress: () => console.log("On Press Highlight")},
-        {text: 'Delete', destructive: true, onPress: () => console.log("On Press Delete")},
-      ]}>
+    <ContextMenu
+      actions={[{title: 'Add to collection', systemIcon: "list.bullet"},
+                {title: 'Delete', destructive: true, systemIcon: "trash"}]}
+      onLongPress={e => {
+        console.log("Long press")
+      }}
+      onPress={e => {
+        console.warn(
+          `Pressed ${e.nativeEvent.name} at index ${e.nativeEvent.index}`,
+        );
+      }}>
       <TouchableOpacity
         className="px-4 py-3"
+        // Prevent long press to navigate on Android
+        onLongPress={() => null}
         onPress={() => props.onPress(song.id)}>
         <Text className="font-lato text-md dark:text-white font-bold">
           {song.title}
         </Text>
         <Text className="font-lato mt-1 text-orange-500">{song.artist}</Text>
       </TouchableOpacity>
-    </HoldItem>
+    </ContextMenu>
   );
 };
 

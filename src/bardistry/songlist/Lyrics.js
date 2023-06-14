@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import BottomModal from './BottomModal.js';
 import SongForm from './SongForm.js';
 import colors from 'tailwindcss/colors';
-import {HoldItem} from 'react-native-hold-menu';
+import ContextMenu from 'react-native-context-menu-view';
 
 const Lyrics = ({
   song,
@@ -47,12 +47,13 @@ const Lyrics = ({
                 ' p-4 pt-4 rounded-lg bg-gray-100 dark:bg-gray-900';
 
               return (
-                <HoldItem
-                  items={[
-                    {text: 'Reply', onPress: () => {}},
-                    {text: 'Edit', onPress: () => {}},
-                    {text: 'Delete', destructive: true, onPress: () => {}},
-                  ]}>
+                <ContextMenu
+                  actions={[{title: 'Title 1'}, {title: 'Title 2'}]}
+                  onPress={e => {
+                    console.warn(
+                      `Pressed ${e.nativeEvent.name} at index ${e.nativeEvent.index}`,
+                    );
+                  }}>
                   <View
                     key={section.id}
                     className={'my-2' + (section.isChorus ? hlClassNames : '')}>
@@ -72,7 +73,7 @@ const Lyrics = ({
                       {section.body}
                     </Text>
                   </View>
-                </HoldItem>
+                </ContextMenu>
               );
             })}
           </View>
