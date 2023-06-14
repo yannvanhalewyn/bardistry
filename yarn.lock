@@ -3495,7 +3495,7 @@ __metadata:
     react-native-device-info: ^10.6.0
     react-native-gesture-handler: ^2.11.0
     react-native-heroicons: ^3.2.0
-    react-native-hold-menu: "portal:../react-native-hold-menu"
+    react-native-hold-menu: "file:../react-native-hold-menu"
     react-native-reanimated: ^3.2.0
     react-native-safe-area-context: ^4.5.3
     react-native-screens: ^3.20.0
@@ -11434,9 +11434,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-hold-menu@portal:../react-native-hold-menu::locator=Bardistry%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "react-native-hold-menu@portal:../react-native-hold-menu::locator=Bardistry%40workspace%3A."
+"react-native-hold-menu@file:../react-native-hold-menu::locator=Bardistry%40workspace%3A.":
+  version: 0.1.6
+  resolution: "react-native-hold-menu@file:../react-native-hold-menu#../react-native-hold-menu::hash=28cc2a&locator=Bardistry%40workspace%3A."
   dependencies:
     "@gorhom/portal": ^1.0.3
     expo-blur: ^12.0.1
@@ -11450,8 +11450,9 @@ __metadata:
     react-native: "*"
     react-native-gesture-handler: ">=1.8.0"
     react-native-reanimated: ">=2.1.0"
+  checksum: 6442da930e0f9c20cc32021ff1121fe96f4ae63d88cae3e8e8c21d92538cef75f31aa581cb039c0074f69365ab2edeafbcfccd2c088dcd0844fb83fa2fb14d27
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "react-native-ratings@npm:^8.1.0":
   version: 8.1.0
