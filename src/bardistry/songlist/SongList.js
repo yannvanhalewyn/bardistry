@@ -9,23 +9,31 @@ import {SparklesIcon} from 'react-native-heroicons/solid';
 import SearchBar from './SearchBar.js';
 import colors from 'tailwindcss/colors';
 import AddSongButton from './AddSongButton';
-import ContextMenu from 'react-native-context-menu-view';
+import ContextMenu from '../components/ContextMenu';
 
 const Song = props => {
   const song = props.item;
 
   return (
     <ContextMenu
-      actions={[{title: 'Add to collection', systemIcon: "list.bullet"},
-                {title: 'Delete', destructive: true, systemIcon: "trash"}]}
-      onLongPress={e => {
-        console.log("Long press")
-      }}
-      onPress={e => {
-        console.warn(
-          `Pressed ${e.nativeEvent.name} at index ${e.nativeEvent.index}`,
-        );
-      }}>
+      actions={[
+        {
+          title: 'Add to collection',
+          systemIcon: 'list.bullet',
+          onPress: () => console.log('add to collection'),
+        },
+        {
+          title: 'Edit labels',
+          systemIcon: 'tag',
+          onPress: () => console.log('edit labels'),
+        },
+        {
+          title: 'Delete',
+          destructive: true,
+          systemIcon: 'trash',
+          onPress: () => console.log('delete'),
+        },
+      ]}>
       <TouchableOpacity
         className="px-4 py-3"
         // Prevent long press to navigate on Android
