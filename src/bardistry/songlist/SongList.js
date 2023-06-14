@@ -9,21 +9,27 @@ import {SparklesIcon} from 'react-native-heroicons/solid';
 import SearchBar from './SearchBar.js';
 import colors from 'tailwindcss/colors';
 import AddSongButton from './AddSongButton';
+import {HoldItem} from 'react-native-hold-menu';
 
 const Song = props => {
   const song = props.item;
 
   return (
-    <TouchableOpacity
-      className="px-4 py-3"
-      onPress={() =>
-        props.onPress(song.id)
-      }>
-      <Text className="font-lato text-md dark:text-white font-bold">
-        {song.title}
-      </Text>
-      <Text className="font-lato mt-1 text-orange-500">{song.artist}</Text>
-    </TouchableOpacity>
+    <HoldItem
+      items={[
+        {text: 'Edit', onPress: () => console.log('ON PRESS, EDIT')},
+        {text: 'Highlight', onPress: () => console.log("On Press Highlight")},
+        {text: 'Delete', destructive: true, onPress: () => console.log("On Press Delete")},
+      ]}>
+      <TouchableOpacity
+        className="px-4 py-3"
+        onPress={() => props.onPress(song.id)}>
+        <Text className="font-lato text-md dark:text-white font-bold">
+          {song.title}
+        </Text>
+        <Text className="font-lato mt-1 text-orange-500">{song.artist}</Text>
+      </TouchableOpacity>
+    </HoldItem>
   );
 };
 

@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import BottomModal from './BottomModal.js';
 import SongForm from './SongForm.js';
 import colors from 'tailwindcss/colors';
+import {HoldItem} from 'react-native-hold-menu';
 
 const Lyrics = ({
   song,
@@ -24,7 +25,7 @@ const Lyrics = ({
   return (
     <>
       <ScrollView
-        keyboardDismissMode="interactive" // TODO make on-drag for android
+        keyboardDismissMode="on-drag"
         className="bg-white dark:bg-black">
         <View className="px-4 pt-4 pb-16">
           <TextInput
@@ -39,32 +40,39 @@ const Lyrics = ({
             {song.artist}
           </TextInput>
 
-          <View>
+          <View className="mt-2">
             {song.sections.map(section => {
               // pt-1 because multiline={true} adds some top padding.
               const hlClassNames =
-                ' p-4 pt-1 rounded-lg bg-gray-100 dark:bg-gray-900';
+                ' p-4 pt-4 rounded-lg bg-gray-100 dark:bg-gray-900';
 
               return (
-                <View
-                  key={section.id}
-                  className={'my-2' + (section.isChorus ? hlClassNames : '')}>
-                  <TextInput
-                    selectionColor={colors.orange['500']}
-                    multiline={true}
-                    className="text-lg font-lato dark:text-white"
-                    onEndEditing={e => {
-                      console.log("js:onEndEditing", section.id)
-                      onSectionEdit(section.id, e.nativeEvent.text);
-                    }}>
-                    {section.title ? (
-                      <Text className="font-bold dark:text-white">
-                        {section.title + '\n'}
-                      </Text>
-                    ) : null}
-                    {section.body}
-                  </TextInput>
-                </View>
+                <HoldItem
+                  items={[
+                    {text: 'Reply', onPress: () => {}},
+                    {text: 'Edit', onPress: () => {}},
+                    {text: 'Delete', destructive: true, onPress: () => {}},
+                  ]}>
+                  <View
+                    key={section.id}
+                    className={'my-2' + (section.isChorus ? hlClassNames : '')}>
+                    <Text
+                      selectionColor={colors.orange['500']}
+                      multiline={true}
+                      className="text-lg font-lato dark:text-white"
+                      onEndEditing={e => {
+                        console.log('js:onEndEditing', section.id);
+                        onSectionEdit(section.id, e.nativeEvent.text);
+                      }}>
+                      {section.title ? (
+                        <Text className="font-bold dark:text-white">
+                          {section.title + '\n'}
+                        </Text>
+                      ) : null}
+                      {section.body}
+                    </Text>
+                  </View>
+                </HoldItem>
               );
             })}
           </View>

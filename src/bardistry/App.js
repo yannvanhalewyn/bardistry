@@ -1,10 +1,10 @@
 import {Suspense, useState, useEffect} from 'react';
 import {Linking, View, Text, TouchableOpacity} from 'react-native';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useColorScheme} from 'nativewind';
 import colors from 'tailwindcss/colors';
+import { HoldMenuProvider } from 'react-native-hold-menu'
 
 import {
   NavigationContainer,
@@ -55,7 +55,7 @@ function App({screens, navigationRef, onEditPress}) {
 
   return (
     <Suspense>
-      <GestureHandlerRootView style={{flex: 1}}>
+      <HoldMenuProvider theme={colorScheme}>
         <BottomSheetModalProvider>
           <NavigationContainer
             ref={navigationRef}
@@ -84,7 +84,7 @@ function App({screens, navigationRef, onEditPress}) {
             </Stack.Navigator>
           </NavigationContainer>
         </BottomSheetModalProvider>
-      </GestureHandlerRootView>
+      </HoldMenuProvider>
     </Suspense>
   );
 }
