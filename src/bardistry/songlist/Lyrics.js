@@ -75,6 +75,8 @@ const Lyrics = ({
   song,
   isSheetOpen,
   onAddSection,
+  onEditTitle,
+  onEditArtist,
   onSheetClose,
   onSongEdit,
   onSectionEdit,
@@ -91,18 +93,23 @@ const Lyrics = ({
   return (
     <>
       <KeyboardAwareScrollView
+        key={song.id}
         extraScrollHeight={64}
         keyboardDismissMode="on-drag"
         className="bg-white dark:bg-black">
         <View className="pt-4 pb-16">
           <TextInput
+            onEndEditing={e => onEditTitle(e.nativeEvent.text)}
             className="mx-4 text-2xl font-bold dark:text-white"
+            selectionColor={colors.orange['500']}
             selectTextOnFocus={true}>
             {song.title}
           </TextInput>
 
           <TextInput
+            onEndEditing={e => onEditArtist(e.nativeEvent.text)}
             className="mx-4 text-xl text-orange-500"
+            selectionColor={colors.orange['500']}
             selectTextOnFocus={true}>
             {song.artist}
           </TextInput>
@@ -128,7 +135,8 @@ const Lyrics = ({
 
       <BottomModal height={160} isOpen={isSheetOpen} onClose={onSheetClose}>
         <SongForm
-          onSongEdit={onSongEdit}
+          onEditTitle={onEditTitle}
+          onEditArtist={onEditArtist}
           song={song}
           onSheetClose={onSheetClose}
         />

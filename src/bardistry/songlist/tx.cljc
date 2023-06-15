@@ -15,6 +15,9 @@
      (when-let [song (xtdb.api/entity (xtdb.api/db ctx) song-id)]
        [[:xtdb.api/put (update-in song [:song/lyrics :lyrics/arrangement] conj section-id)]]))})
 
+(defn update* [song-id params]
+  [[:song/update song-id params]])
+
 (defn update-section-content [song-id section-id lines]
   (let [[title & lines] (str/split-lines lines)]
     [[:song/assoc-in song-id
@@ -25,9 +28,10 @@
 
 (defn append-section [song-id]
   (let [section-id (random-uuid)]
-    [[:song/assoc-in song-id
-      [:song/lyrics :lyrics/sections section-id :section/lines]
-      ["Section Title" ""]]
+    [[:song/assoc-in song-id [:song/lyrics :lyrics/sections section-id]
+      {:section/id section-id
+       :section/title "Section Title"
+       :section/lines [""]}]
      [:song/append-section song-id section-id]]))
 
 (defn apply-mutations [songs-by-id mutations]
@@ -40,7 +44,10 @@
        :song/append-section
        (let [[song-id section-id] params]
          (update-in songs-by-id [song-id :song/lyrics :lyrics/arrangement]
-                    conj section-id))))
+                    conj section-id))
+       :song/update
+       (let [[song-id attrs] params]
+         (update songs-by-id song-id merge attrs))))
    songs-by-id
    mutations))
 
@@ -52,4 +59,12 @@
         [:xtdb.api/fn :song/assoc-in song-id path value])
       :song/append-section
       (let [[song-id section-id] params]
-        [:xtdb.api/fn :song/append-section song-id section-id]))))
+        [:xtdb.api/fn :song/append-section song-id section-id])
+
+      :song/update
+      (let [[song-id attrs] params]
+        (merge
+         {:db/op :update
+          :db/doc-type :song
+          :xt/id song-id}
+         attrs)))))

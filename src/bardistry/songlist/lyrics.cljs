@@ -42,8 +42,9 @@
     (if-let [song (songlist.db/find-by-id id)]
       [Lyrics {:song (->ui song)
                :onSheetClose close-form!
+               :onEditTitle #(songlist.db/update! (:song/id song) {:song/title %})
+               :onEditArtist #(songlist.db/update! (:song/id song) {:song/artist %})
                :onAddSection #(songlist.db/append-section! (:song/id song))
                :onSectionEdit #(songlist.db/edit-section! (:song/id song) %1 %2)
-               :onSongEdit songlist.db/update-song!
                :isSheetOpen (get-in @db/db [::db/ui ::song-form])}]
       (.error js/console "Could not find song for id:" id))))
