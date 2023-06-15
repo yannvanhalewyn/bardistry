@@ -1,4 +1,4 @@
-import {useState, useRef} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {BottomSheetTextInput} from '@gorhom/bottom-sheet';
 import colors from 'tailwindcss/colors';
@@ -10,6 +10,12 @@ const SongForm = ({onSubmit}) => {
   const state = useRef({title: '', artist: ''});
   const inputs = [useRef(null), useRef(null)];
   const setState = f => (state.current = f(state.current));
+
+  // Strangely using this over autoFocus={true} fixes modal not closing upon
+  // blurring.
+  useEffect(() => {
+    inputs[0].current?.focus();
+  }, [inputs[0]])
 
   const Input = ({
     reff,
@@ -61,6 +67,7 @@ const SongForm = ({onSubmit}) => {
 
       <TouchableOpacity
         onPress={() => {
+          // Not necessary, but smoothens out the transition experience (iOS)
           inputs[0].current?.blur();
           inputs[1].current?.blur();
           onSubmit(state.current);
