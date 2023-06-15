@@ -65,9 +65,11 @@ yarn-error.log
 # testing
 /coverage
 /target/
-/.clj-kondo/
 /.cpcache/
-/.lsp/
+/.clj-kondo/*
+!/.clj-kondo/config.edn
+/.lsp/*
+!/.lsp/config.edn
 /.shadow-cljs/
 /.nrepl-port
 /storage/
