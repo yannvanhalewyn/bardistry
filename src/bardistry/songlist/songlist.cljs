@@ -1,9 +1,10 @@
 (ns bardistry.songlist.songlist
   (:require
+   [applied-science.js-interop :as j]
    [bardistry.db :as db]
    [bardistry.navigation :as nav]
-   [bardistry.songlist.db :as songlist.db]
    [bardistry.song :as song]
+   [bardistry.songlist.db :as songlist.db]
    [clojure.string :as str]
    [reagent.core :as r]))
 
@@ -31,9 +32,19 @@
                       (sort-by song/sort-artist))
           :isLoading (db/loading?)
           :loadSongs db/load-songs!
-          :showClearSearch (not-empty @query)
-          :onAddSong songlist.db/create-song!
-          :onDeleteSong songlist.db/delete-song!
-          :onSongPress #(nav/navigate! "Lyrics" {:song/id %})
+
+          :onQueryChange #(reset! query %)
           :onClearSearch #(reset! query "")
-          :onQueryChange #(reset! query %)}]))))
+          :showClearSearch (not-empty @query)
+
+          :isFormOpen (db/get-ui! ::song-form)
+          :onOpenForm #(db/toggle-ui! ::song-form)
+          :onCloseForm #(db/set-ui! ::song-form false)
+          :onCreateSong (fn [form]
+                          (db/set-ui! ::song-form false)
+                          (songlist.db/create-song!
+                           {:song/title (j/get form :title)
+                            :song/artist (j/get form :artist)}))
+
+          :onDeleteSong songlist.db/delete-song!
+          :onSongPress #(nav/navigate! "Lyrics" {:song/id %})}]))))

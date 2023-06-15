@@ -22,20 +22,15 @@
                  :body (str/join "\n" lines)})}))
 
 (defn toggle-form! []
-  (swap! db/db update-in [::db/ui ::song-form] not))
+  (db/toggle-ui! ::song-form))
 
 (defn open-form! []
-  (swap! db/db assoc-in [::db/ui ::song-form] true))
+  (db/set-ui! ::song-form true))
 
 (defn close-form! []
-  (swap! db/db assoc-in [::db/ui ::song-form] false))
+  (db/set-ui! ::song-form false))
 
-(defn component [{:keys [open-form?]}]
-  (if open-form?
-    (open-form!)
-    ;; Would be better kept as local state maybe, so that it gets reset
-    ;; automatically when opening a new song.
-    (close-form!))
+(defn component []
   (fn [{:keys [:song/id]}]
     (if-let [song (songlist.db/find-by-id id)]
       [Lyrics {:song (->ui song)
@@ -45,6 +40,6 @@
                :onSectionAdd #(songlist.db/create-section! (:song/id song))
                :onSectionDelete #(songlist.db/delete-section! (:song/id song) %)
                :onSectionEdit #(songlist.db/update-section! (:song/id song) %1 %2)
-               :isSheetOpen (get-in @db/db [::db/ui ::song-form])
+               :isSheetOpen (db/get-ui! ::song-form)
                :setHighlight #(songlist.db/highlight-section! (:song/id song) %1 %2)}]
       (.error js/console "Could not find song for id:" id))))

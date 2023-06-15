@@ -8,7 +8,10 @@
 (defn create-song! [attrs]
   (let [new-song (song/make attrs)]
     (db/execute-mutations! (songlist.tx/create new-song))
-    (nav/navigate! "Lyrics" {:song/id (:song/id new-song)})))
+    ;; Allow modal to close before navigating
+    (js/setTimeout
+     #(nav/navigate! "Lyrics" {:song/id (:song/id new-song)})
+     0)))
 
 (defn delete-song! [song-id]
   (db/execute-mutations! (songlist.tx/delete song-id))

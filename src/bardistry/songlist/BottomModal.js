@@ -6,7 +6,7 @@ import colors from 'tailwindcss/colors';
 const BottomModal = ({isOpen, onClose, height, children}) => {
   const bottomSheetModal = useRef(null);
   const {colorScheme} = useColorScheme();
-  const snapPoints = useMemo(() => [height], []);
+  const snapPoints = useMemo(() => [height], [height]);
 
   useEffect(() => {
     if (isOpen) {

@@ -8,6 +8,15 @@
 
 (defonce db (r/atom {}))
 
+(defn toggle-ui! [ui-key]
+  (swap! db update-in [::ui ui-key] not))
+
+(defn set-ui! [ui-key val]
+  (swap! db assoc-in [::ui ui-key] val))
+
+(defn get-ui! [ui-key]
+  (get-in @db [::ui ui-key]))
+
 (defn load-songs! []
   (swap! db assoc :loading? true)
   (api/request!

@@ -53,17 +53,18 @@ const Song = ({item, onPress, onDelete}) => {
 const SongList = ({
   songs,
   isLoading,
-  isFormOpen,
   loadSongs,
-  showClearSearch,
   onQueryChange,
   onClearSearch,
-  onAddSong,
-  onAddSongCancel,
+  showClearSearch,
+  isFormOpen,
+  onOpenForm,
+  onCloseForm,
   onCreateSong,
   onDeleteSong,
   onSongPress,
 }) => {
+
   return (
     <>
       <SafeAreaView className="px-4 flex-1 bg-white dark:bg-black">
@@ -72,7 +73,7 @@ const SongList = ({
           <Text className="ml-2 flex-grow text-4xl font-black dark:text-white">
             Bardistry
           </Text>
-          <AddSongButton onPress={onAddSong} />
+          <AddSongButton onPress={onOpenForm} />
         </View>
         <SearchBar
           className="mt-4"
@@ -80,7 +81,6 @@ const SongList = ({
           onClearSearch={onClearSearch}
           onChangeText={onQueryChange}
         />
-
         <FlatList
           className="mx-4 my-4 rounded-lg bg-gray-50 border bg-gray-100 border-gray-200 dark:bg-gray-900 dark:border-gray-800"
           data={songs}
@@ -95,11 +95,8 @@ const SongList = ({
         />
       </SafeAreaView>
 
-      <BottomModal height={200} isOpen={isFormOpen} onClose={onAddSongCancel}>
-        <SongForm
-          onSubmit={onCreateSong}
-          onSheetClose={onAddSongCancel}
-        />
+      <BottomModal height={200} isOpen={isFormOpen} onClose={onCloseForm} >
+        <SongForm onSubmit={onCreateSong} />
       </BottomModal>
     </>
   );
