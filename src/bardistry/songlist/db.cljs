@@ -1,16 +1,19 @@
 (ns bardistry.songlist.db
   (:require
-   [bardistry.api :as api]
    [bardistry.db :as db]
    [bardistry.navigation :as nav]
    [bardistry.song :as song]
-   [bardistry.songlist.tx :as songlist.tx]
-   [clojure.string :as str]))
+   [bardistry.songlist.tx :as songlist.tx]))
 
 (defn create-song! []
   (let [new-song (song/make)]
-    (swap! db/db assoc-in [:songs (:song/id new-song)] new-song)
-    (nav/navigate! "Lyrics" {:song/id (:song/id new-song) :open-form? true})))
+    (db/execute-mutations! (songlist.tx/create new-song))
+    (nav/navigate! "Lyrics" {:song/id (:song/id new-song)
+                             :open-form? true})))
+
+(defn delete-song! [song-id]
+  (db/execute-mutations! (songlist.tx/delete song-id))
+  (nav/navigate! "Songs"))
 
 (defn all-songs []
   (vals (:songs @db/db)))

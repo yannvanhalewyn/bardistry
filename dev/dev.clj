@@ -6,6 +6,7 @@
    [clojure.tools.logging :as log]
    [clojure.tools.namespace.repl :as tools.ns.repl]
    [com.biffweb :as biff]
+   [com.biffweb.impl.xtdb :as biff.xt]
    [dev.seed.load-songs :as load-songs]
    [malli.core :as malli]
    [xtdb.api :as xt]))
@@ -13,11 +14,11 @@
 (defn get-ctx []
   (biff/assoc-db @core/system))
 
-(defn xt-node []
+(defn get-node []
   (:biff.xtdb/node @core/system))
 
 (defn get-db []
-  (xt/db (xt-node)))
+  (:biff/db (get-ctx)))
 
 (defn q! [& args]
   (apply biff/q (get-db) args))
@@ -25,12 +26,18 @@
 (defn submit-tx [tx]
   (biff/submit-tx (get-ctx) tx))
 
+(defn with-tx [tx]
+  (xt/with-tx (get-db) tx))
+
+(defn biff-tx->xt [tx]
+  (biff.xt/biff-tx->xt (get-ctx) tx))
+
 (defn lookup [k v]
   (biff/lookup (get-db) k v))
 
 (defn clear-db! []
   (xt/submit-tx
-   (xt-node)
+   (get-node)
    (for [id (com.biffweb/q (get-db) '{:find ?e :where [[?e :xt/id ?a]]})]
      [::xt/delete id])))
 
@@ -64,7 +71,7 @@
 
   (clear-db!)
 
-  (load-songs/load-songs! (xt-node))
+  (load-songs/load-songs! (get-node))
 
   ;; Song model and schema
   (def new-song (bardistry.song/make))

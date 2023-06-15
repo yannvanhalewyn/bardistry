@@ -11,8 +11,8 @@ import colors from 'tailwindcss/colors';
 import AddSongButton from './AddSongButton';
 import ContextMenu from '../components/ContextMenu';
 
-const Song = props => {
-  const song = props.item;
+const Song = ({item, onPress, onDelete}) => {
+  const song = item;
 
   return (
     <ContextMenu
@@ -31,14 +31,14 @@ const Song = props => {
           title: 'Delete',
           destructive: true,
           systemIcon: 'trash',
-          onPress: () => console.log('delete'),
+          onPress: () => onDelete(song.id),
         },
       ]}>
       <TouchableOpacity
         className="px-4 py-3"
         // Prevent long press to navigate on Android
         onLongPress={() => null}
-        onPress={() => props.onPress(song.id)}>
+        onPress={() => onPress(song.id)}>
         <Text className="font-lato text-md dark:text-white font-bold">
           {song.title}
         </Text>
@@ -55,7 +55,8 @@ const SongList = ({
   showClearSearch,
   onQueryChange,
   onClearSearch,
-  onAddSongPress,
+  onAddSong,
+  onDeleteSong,
   onSongPress,
 }) => {
   return (
@@ -65,7 +66,7 @@ const SongList = ({
         <Text className="ml-2 flex-grow text-4xl font-black dark:text-white">
           Bardistry
         </Text>
-        <AddSongButton onPress={onAddSongPress} />
+        <AddSongButton onPress={onAddSong} />
       </View>
       <SearchBar
         className="mt-4"
@@ -77,7 +78,7 @@ const SongList = ({
       <FlatList
         className="mx-4 my-4 rounded-lg bg-gray-50 border bg-gray-100 border-gray-200 dark:bg-gray-900 dark:border-gray-800"
         data={songs}
-        renderItem={props => <Song {...props} onPress={onSongPress} />}
+        renderItem={props => <Song {...props} onPress={onSongPress} onDelete={onDeleteSong} />}
         ItemSeparatorComponent={
           <View className="border-0.5 border-gray-200 dark:border-gray-800"></View>
         }

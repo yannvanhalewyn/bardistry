@@ -32,7 +32,8 @@
           :isLoading (db/loading?)
           :loadSongs db/load-songs!
           :showClearSearch (not-empty @query)
-          :onAddSongPress songlist.db/create-song!
+          :onAddSong songlist.db/create-song!
+          :onDeleteSong songlist.db/delete-song!
           :onSongPress #(nav/navigate! "Lyrics" {:song/id %})
           :onClearSearch #(reset! query "")
           :onQueryChange #(reset! query %)}]))))
