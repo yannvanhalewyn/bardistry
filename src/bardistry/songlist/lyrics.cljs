@@ -42,8 +42,9 @@
                :onSheetClose close-form!
                :onEditTitle #(songlist.db/update! (:song/id song) {:song/title %})
                :onEditArtist #(songlist.db/update! (:song/id song) {:song/artist %})
-               :onAddSection #(songlist.db/append-section! (:song/id song))
-               :onSectionEdit #(songlist.db/edit-section! (:song/id song) %1 %2)
+               :onSectionAdd #(songlist.db/create-section! (:song/id song))
+               :onSectionDelete #(songlist.db/delete-section! (:song/id song) %)
+               :onSectionEdit #(songlist.db/update-section! (:song/id song) %1 %2)
                :isSheetOpen (get-in @db/db [::db/ui ::song-form])
                :setHighlight #(songlist.db/highlight-section! (:song/id song) %1 %2)}]
       (.error js/console "Could not find song for id:" id))))

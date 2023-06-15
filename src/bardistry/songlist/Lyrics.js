@@ -9,7 +9,7 @@ import SongForm from './SongForm.js';
 import colors from 'tailwindcss/colors';
 import ContextMenu from '../components/ContextMenu';
 
-const Section = ({section, onEdit, setHighlight}) => {
+const Section = ({section, onEdit, onDelete, setHighlight}) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const contextMenu = [
@@ -33,7 +33,7 @@ const Section = ({section, onEdit, setHighlight}) => {
       title: 'Delete',
       destructive: true,
       systemIcon: 'trash',
-      onPress: e => console.log('Edit pressed'),
+      onPress: e => onDelete(section.id),
     },
   ];
 
@@ -75,12 +75,12 @@ const Section = ({section, onEdit, setHighlight}) => {
 const Lyrics = ({
   song,
   isSheetOpen,
-  onAddSection,
   onEditTitle,
   onEditArtist,
   onSheetClose,
-  onSongEdit,
+  onSectionAdd,
   onSectionEdit,
+  onSectionDelete,
   setHighlight,
 }) => {
   const navigation = useNavigation();
@@ -122,13 +122,14 @@ const Lyrics = ({
                 key={section.id}
                 section={section}
                 onEdit={onSectionEdit}
+                onDelete={onSectionDelete}
                 setHighlight={setHighlight}
               />
             ))}
           </View>
 
           <TouchableOpacity
-            onPress={onAddSection}
+            onPress={onSectionAdd}
             className="mt-2 flex-row items-center justify-center">
             <PlusIcon size={16} color={colors.gray['500']} />
             <Text className="text-gray-500 text-base">Add section</Text>
@@ -138,9 +139,9 @@ const Lyrics = ({
 
       <BottomModal height={160} isOpen={isSheetOpen} onClose={onSheetClose}>
         <SongForm
+          song={song}
           onEditTitle={onEditTitle}
           onEditArtist={onEditArtist}
-          song={song}
           onSheetClose={onSheetClose}
         />
       </BottomModal>

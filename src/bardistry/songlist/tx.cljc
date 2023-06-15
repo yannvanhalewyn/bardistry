@@ -1,6 +1,7 @@
 (ns bardistry.songlist.tx
   (:require
-   [clojure.string :as str]))
+   [clojure.string :as str]
+   [medley.core :as m]))
 
 (def tx-fns
   ;; TODO compare old and new and reject if not the same
@@ -10,10 +11,23 @@
      (when-let [song (xtdb.api/entity (xtdb.api/db ctx) song-id)]
        [[:xtdb.api/put (assoc-in song path value)]]))
 
+   :song/dissoc-in
+   '(fn [ctx song-id path]
+     (when-let [song (xtdb.api/entity (xtdb.api/db ctx) song-id)]
+       [[:xtdb.api/put (medley.core/dissoc-in song path)]]))
+
    :song/append-section
    '(fn [ctx song-id section-id]
      (when-let [song (xtdb.api/entity (xtdb.api/db ctx) song-id)]
-       [[:xtdb.api/put (update-in song [:song/lyrics :lyrics/arrangement] conj section-id)]]))})
+       [[:xtdb.api/put (update-in song [:song/lyrics :lyrics/arrangement] conj section-id)]]))
+
+   :song/remove-section
+   '(fn [ctx song-id section-id]
+     (when-let [song (xtdb.api/entity (xtdb.api/db ctx) song-id)]
+       [[:xtdb.api/put
+         (update-in song [:song/lyrics :lyrics/arrangement]
+                    (fn [arrangement]
+                      (into [] (remove #(= % section-id) arrangement))))]]))})
 
 (defn create [song]
   [[:song/create song]])
@@ -24,7 +38,15 @@
 (defn delete [song-id]
   [[:song/delete song-id]])
 
-(defn update-section-content [song-id section-id lines]
+(defn create-section [song-id]
+  (let [section-id (random-uuid)]
+    [[:song/assoc-in song-id [:song/lyrics :lyrics/sections section-id]
+      {:section/id section-id
+       :section/title "Section Title"
+       :section/lines [""]}]
+     [:song/append-section song-id section-id]]))
+
+(defn update-section [song-id section-id lines]
   (let [[title & lines] (str/split-lines lines)]
     [[:song/assoc-in song-id
       [:song/lyrics :lyrics/sections section-id :section/lines]
@@ -32,13 +54,10 @@
      [:song/assoc-in song-id
       [:song/lyrics :lyrics/sections section-id :section/title] title]]))
 
-(defn append-section [song-id]
-  (let [section-id (random-uuid)]
-    [[:song/assoc-in song-id [:song/lyrics :lyrics/sections section-id]
-      {:section/id section-id
-       :section/title "Section Title"
-       :section/lines [""]}]
-     [:song/append-section song-id section-id]]))
+(defn delete-section [song-id section-id]
+  [[:song/dissoc-in song-id
+    [:song/lyrics :lyrics/sections section-id]]
+   [:song/remove-section song-id section-id]])
 
 (defn highlight-section [song-id section-id highlight?]
   [[:song/assoc-in song-id [:song/lyrics :lyrics/sections section-id :section/highlight?] highlight?]])
@@ -50,12 +69,22 @@
 
        :song/assoc-in
        (let [[song-id path value] params]
-         (assoc-in songs-by-id (concat [song-id] path) value))
+         (assoc-in songs-by-id (into [song-id] path) value))
+
+       :song/dissoc-in
+       (let [[song-id path] params]
+         (m/dissoc-in songs-by-id (into [song-id] path)))
 
        :song/append-section
        (let [[song-id section-id] params]
          (update-in songs-by-id [song-id :song/lyrics :lyrics/arrangement]
                     conj section-id))
+
+       :song/remove-section
+       (let [[song-id section-id] params]
+         (update-in songs-by-id [song-id :song/lyrics :lyrics/arrangement]
+                    (fn [arrangement]
+                      (into [] (remove #(= % section-id) arrangement)))))
 
       :song/create
       (let [[song] params]
@@ -75,13 +104,11 @@
   (for [[mutation & params] mutations]
     (case mutation
 
-      :song/assoc-in
-      (let [[song-id path value] params]
-        [:xtdb.api/fn :song/assoc-in song-id path value])
-
-      :song/append-section
-      (let [[song-id section-id] params]
-        [:xtdb.api/fn :song/append-section song-id section-id])
+      (:song/append-section
+       :song/remove-section
+       :song/assoc-in
+       :song/dissoc-in)
+      (into [:xtdb.api/fn mutation] params)
 
       :song/create
       (let [[song] params]

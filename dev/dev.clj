@@ -81,7 +81,7 @@
   (valid? :song db-song)
   (explain :song db-song)
 
-)
+  ;; Setting Tags
   (def nina-songs ["Lost on You"
                    "Cherry Wine"
                    "Aerials"
@@ -103,4 +103,4 @@
          {:db/doc-type :song
           :db.op/upsert {:song/title song-title}
           :song/tags #{"Nina"}})))
-
+)

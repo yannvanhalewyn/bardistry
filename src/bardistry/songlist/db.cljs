@@ -24,12 +24,16 @@
 (defn update! [song-id attrs]
   (db/execute-mutations! (songlist.tx/update* song-id attrs)))
 
-(defn edit-section! [song-id section-id text]
-  (let [mutations (songlist.tx/update-section-content song-id section-id text)]
-    (db/execute-mutations! mutations)))
+(defn create-section! [song-id]
+  (db/execute-mutations! (songlist.tx/create-section song-id)))
 
-(defn append-section! [song-id]
-  (db/execute-mutations! (songlist.tx/append-section song-id)))
+(defn update-section! [song-id section-id text]
+  (db/execute-mutations!
+   (songlist.tx/update-section song-id section-id text)))
+
+(defn delete-section! [song-id section-id]
+  (db/execute-mutations! (songlist.tx/delete-section song-id section-id)))
 
 (defn highlight-section! [song-id section-id highlight?]
-  (db/execute-mutations! (songlist.tx/highlight-section song-id section-id highlight?)))
+  (db/execute-mutations!
+   (songlist.tx/highlight-section song-id section-id highlight?)))
