@@ -107,7 +107,12 @@ const Lyrics = ({
 
           <View className="mt-2">
             {song.sections.map(section => (
-              <Section section={section} onEdit={onSectionEdit} />
+              <Section
+
+                key={section.id}
+                section={section}
+                onEdit={onSectionEdit}
+              />
             ))}
           </View>
         </View>
