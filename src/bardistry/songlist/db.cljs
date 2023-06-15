@@ -38,3 +38,14 @@
       ::api/params
       {:db/tx-ops (songlist.tx/mutations->tx mutations)}
       ::api/on-success #(.log js/console "mutate success" (clj->js %))})))
+
+(defn append-section! [song-id]
+  (let [mutations (songlist.tx/append-section song-id)]
+    (swap! db/db update :songs songlist.tx/apply-mutations mutations)
+
+    (api/request!
+     {::api/endpoint "mutate"
+      ::api/method :post
+      ::api/params
+      {:db/tx-ops (songlist.tx/mutations->tx mutations)}
+      ::api/on-success #(.log js/console "mutate success" (clj->js %))})))

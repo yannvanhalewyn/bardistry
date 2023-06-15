@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 
-import {View, Text, TextInput} from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {PlusIcon} from 'react-native-heroicons/solid';
 import {useNavigation} from '@react-navigation/native';
 import BottomModal from './BottomModal.js';
 import SongForm from './SongForm.js';
@@ -73,6 +74,7 @@ const Section = ({section, onEdit}) => {
 const Lyrics = ({
   song,
   isSheetOpen,
+  onAddSection,
   onSheetClose,
   onSongEdit,
   onSectionEdit,
@@ -108,13 +110,19 @@ const Lyrics = ({
           <View className="mt-2">
             {song.sections.map(section => (
               <Section
-
                 key={section.id}
                 section={section}
                 onEdit={onSectionEdit}
               />
             ))}
           </View>
+
+          <TouchableOpacity
+            onPress={onAddSection}
+            className="mt-2 flex-row items-center justify-center">
+            <PlusIcon size={16} color={colors.gray['500']} />
+            <Text className="text-gray-500 text-base">Add section</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
 
