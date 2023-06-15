@@ -36,7 +36,8 @@ const Section = ({section, onEdit}) => {
     },
   ];
 
-  const hlClassNames = ' m-4 rounded-lg bg-gray-100 dark:bg-gray-900';
+  const isHighlighted = section.isChorus;
+  const hlClassNames = 'm-4 rounded-lg bg-gray-100 dark:bg-gray-900';
 
   const TextComponent = isEditing ? TextInput : Text;
 
@@ -45,8 +46,8 @@ const Section = ({section, onEdit}) => {
       <View
         key={section.id}
         className={
-          'px-4 py-2' +
-          (section.isChorus ? hlClassNames : '') +
+          'py-2 ' +
+          (isHighlighted ? hlClassNames : '') +
           // pt-1 because multiline={true} adds some top padding.
           (isEditing ? ' -pt-0' : '')
         }>
@@ -54,7 +55,7 @@ const Section = ({section, onEdit}) => {
           selectionColor={colors.orange['500']}
           multiline={true}
           autoFocus={true}
-          className="text-lg font-lato dark:text-white"
+          className='px-4 text-lg font-lato dark:text-white'
           onEndEditing={e => {
             onEdit(section.id, e.nativeEvent.text);
           }}
@@ -95,12 +96,12 @@ const Lyrics = ({
       <KeyboardAwareScrollView
         key={song.id}
         extraScrollHeight={64}
-        keyboardDismissMode="on-drag"
+        keyboardDismissMode="interactive"
         className="bg-white dark:bg-black">
         <View className="pt-4 pb-16">
           <TextInput
             onEndEditing={e => onEditTitle(e.nativeEvent.text)}
-            className="mx-4 text-2xl font-bold dark:text-white"
+            className="px-4 text-2xl font-bold dark:text-white"
             selectionColor={colors.orange['500']}
             selectTextOnFocus={true}>
             {song.title}
@@ -108,7 +109,7 @@ const Lyrics = ({
 
           <TextInput
             onEndEditing={e => onEditArtist(e.nativeEvent.text)}
-            className="mx-4 text-xl text-orange-500"
+            className="px-4 text-xl text-orange-500"
             selectionColor={colors.orange['500']}
             selectTextOnFocus={true}>
             {song.artist}
