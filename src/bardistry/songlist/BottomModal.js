@@ -24,7 +24,7 @@ const BottomModal = ({isOpen, onClose, height, children}) => {
       onDismiss={onClose}
       backgroundStyle={{
         backgroundColor:
-          colorScheme === 'dark' ? colors.gray['800'] : colors.gray['100'],
+          colorScheme === 'dark' ? colors.gray['900'] : colors.gray['100'],
       }}
       handleIndicatorStyle={{
         backgroundColor:
