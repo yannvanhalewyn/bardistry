@@ -5,11 +5,10 @@
    [bardistry.song :as song]
    [bardistry.songlist.tx :as songlist.tx]))
 
-(defn create-song! []
-  (let [new-song (song/make)]
+(defn create-song! [attrs]
+  (let [new-song (song/make attrs)]
     (db/execute-mutations! (songlist.tx/create new-song))
-    (nav/navigate! "Lyrics" {:song/id (:song/id new-song)
-                             :open-form? true})))
+    (nav/navigate! "Lyrics" {:song/id (:song/id new-song)})))
 
 (defn delete-song! [song-id]
   (db/execute-mutations! (songlist.tx/delete song-id))

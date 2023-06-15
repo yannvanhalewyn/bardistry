@@ -20,7 +20,7 @@
           :screens
           [{:name "Songs"
             :component
-            #(r/as-element [songlist/component])}
+            #(r/as-element [:f> songlist/component])}
            {:name "Lyrics"
             :component
             (fn [props]

@@ -1,62 +1,66 @@
-import {View, Text, Button} from 'react-native';
+import {useState, useRef} from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {BottomSheetTextInput} from '@gorhom/bottom-sheet';
 import colors from 'tailwindcss/colors';
 import {styled} from 'nativewind';
 
 const TextInput = styled(BottomSheetTextInput);
 
-const Label = ({title}) => {
-  return (
-    <Text className="text-sm font-bold font-lato dark:text-gray-300">
-      {title}
-    </Text>
-  );
-};
+const SongForm = ({onSheetClose, onSubmit}) => {
+  const state = useRef({title: '', artist: ''});
+  const setState = f => (state.current = f(state.current));
 
-const SongForm = ({song, onSheetClose, onEditTitle, onEditArtist}) => {
-  const Input = ({placeholder, k, onChange, defaultValue, autoFocus}) => {
+  const Input = ({
+    placeholder,
+    onChange,
+    defaultValue,
+    autoFocus,
+    separator,
+  }) => {
     return (
       <TextInput
         autoCorrect={false}
         autoFocus={autoFocus}
-        className="mt-1 px-2 py-2 rounded bg-gray-200 dark:bg-gray-700 dark:text-white"
+        className={
+          'px-3 py-3 dark:text-white' +
+          (separator ? ' border-b border-gray-200 dark:border-gray-800' : '')
+        }
         placeholder={placeholder}
-        key={k}
         selectTextOnFocus={true}
         selectionColor={colors.orange['500']}
-        onEndEditing={e => {
-          const value = e.nativeEvent.text;
-          // TODO hack to prevent bottom sheet to pop back up because of
-          // re-render, in case this gets dispatched because of swiping the
-          // sheet down.
-          setTimeout(() => onChange(value), 200);
-        }}
+        onChange={e => onChange(e.nativeEvent.text)}
         defaultValue={defaultValue}
       />
     );
   };
 
   return (
-    <View className="px-4">
-      <View>
-        <Label title="Title" />
+    <View className="px-4 mt-2">
+      <View className="rounded-lg border-0.5 border-gray-200 dark:border-gray-800 bg-gray-200 dark:bg-gray-700">
         <Input
+          separator={true}
           autoFocus={true}
           placeholder="Title"
           k="title"
-          onChange={onEditTitle}
-          defaultValue={song.title}
+          onChange={title =>
+            setState(state => Object.assign(state, {title: title}))
+          }
         />
-      </View>
-      <View className="mt-2">
-        <Label title="Artist" />
         <Input
-          placeholder="Title"
-          k="artist"
-          onChange={onEditArtist}
-          defaultValue={song.artist}
+          placeholder="Artist"
+          onChange={artist =>
+            setState(state => Object.assign(state, {artist: artist}))
+          }
         />
       </View>
+
+      <TouchableOpacity
+        onPress={() => onSubmit(state.current)}
+        className="mt-4 px-4 py-2 bg-orange-500 rounded-lg">
+        <Text className="text-center text-base font-bold text-white">
+          Add Song
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };

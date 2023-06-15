@@ -3,6 +3,8 @@
    [applied-science.js-interop :as j]
    [bardistry.transit :as transit]))
 
+(def rn-nav (js/require "@react-navigation/native"))
+
 (defonce nav (atom nil))
 
 (defn- ref-call [f & args]
@@ -23,6 +25,8 @@
     (string? (j/get rn-route :params))
     (j/update! :params transit/read)
     rn-route (js->clj :keywordize-keys true)))
+
+(def use-route (comp adapt-route (j/get rn-nav :useRoute)))
 
 (defn current-route []
   (adapt-route (ref-call :getCurrentRoute)))

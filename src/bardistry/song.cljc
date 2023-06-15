@@ -3,10 +3,10 @@
    [bardistry.lyrics :as lyrics]
    [clojure.string :as str]))
 
-(defn make []
+(defn make [attrs]
   {:song/id (random-uuid)
-   :song/title ""
-   :song/artist ""
+   :song/title (:song/title attrs "")
+   :song/artist (:song/artist attrs "")
    :song/lyrics (lyrics/make)})
 
 (defn sections [song]
