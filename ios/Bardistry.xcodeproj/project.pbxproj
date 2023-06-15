@@ -539,6 +539,7 @@
 				DEVELOPMENT_TEAM = 4S67A73N7H;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Bardistry/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -570,6 +571,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4S67A73N7H;
 				INFOPLIST_FILE = Bardistry/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

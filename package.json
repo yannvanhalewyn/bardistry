@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "repl": "shadow-cljs -A:dev watch app",
+    "clj:repl": "BIFF_ENV=dev clj -A:dev:cider-nrepl",
+    "repl": "BIFF_ENV=dev shadow-cljs -A:dev watch app",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
@@ -21,8 +22,11 @@
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-native": "0.71.8",
+    "react-native-context-menu-view": "^1.9.1",
+    "react-native-device-info": "^10.6.0",
     "react-native-gesture-handler": "^2.11.0",
     "react-native-heroicons": "^3.2.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-reanimated": "^3.2.0",
     "react-native-safe-area-context": "^4.5.3",
     "react-native-screens": "^3.20.0",
@@ -46,5 +50,6 @@
   },
   "engines": {
     "node": ">=16"
-  }
+  },
+  "packageManager": "yarn@3.6.0"
 }

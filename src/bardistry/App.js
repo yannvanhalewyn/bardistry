@@ -1,6 +1,6 @@
 import {Suspense, useState, useEffect} from 'react';
 import {Linking, View, Text, TouchableOpacity} from 'react-native';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useColorScheme} from 'nativewind';

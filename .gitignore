@@ -69,3 +69,7 @@ yarn-error.log
 /.cpcache/
 /.lsp/
 /.shadow-cljs/
+/.nrepl-port
+/storage/
+/secrets.edn
+/.yarn/

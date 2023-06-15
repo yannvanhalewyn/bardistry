@@ -13,8 +13,8 @@ const Label = ({title}) => {
   );
 };
 
-const SongForm = ({song, onSheetClose, onSongEdit}) => {
-  const Input = ({placeholder, k, defaultValue, autoFocus}) => {
+const SongForm = ({song, onSheetClose, onEditTitle, onEditArtist}) => {
+  const Input = ({placeholder, k, onChange, defaultValue, autoFocus}) => {
     return (
       <TextInput
         autoCorrect={false}
@@ -29,7 +29,7 @@ const SongForm = ({song, onSheetClose, onSongEdit}) => {
           // TODO hack to prevent bottom sheet to pop back up because of
           // re-render, in case this gets dispatched because of swiping the
           // sheet down.
-          setTimeout(() => onSongEdit(song.id, k, value), 200);
+          setTimeout(() => onChange(value), 200);
         }}
         defaultValue={defaultValue}
       />
@@ -44,12 +44,18 @@ const SongForm = ({song, onSheetClose, onSongEdit}) => {
           autoFocus={true}
           placeholder="Title"
           k="title"
+          onChange={onEditTitle}
           defaultValue={song.title}
         />
       </View>
       <View className="mt-2">
         <Label title="Artist" />
-        <Input placeholder="Title" k="artist" defaultValue={song.artist} />
+        <Input
+          placeholder="Title"
+          k="artist"
+          onChange={onEditArtist}
+          defaultValue={song.artist}
+        />
       </View>
     </View>
   );
