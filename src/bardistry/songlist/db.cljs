@@ -28,21 +28,13 @@
     (swap! db/db update-in [:songs id]
            update-song key value)))
 
-(defn update-song2! [id f]
-  (when (contains? (:songs @db/db) id)
-    (swap! db/db update-in [:songs id] f)))
-
 (defn edit-section! [song-id section-id text]
-  (let [[title & lines] (str/split-lines text)]
-    (update-song2!
-     song-id
-     #(-> %
-          (assoc-in [:song/lyrics :lyrics/sections section-id :section/lines] lines)
-          (assoc-in [:song/lyrics :lyrics/sections section-id :section/title] title)))
+  (let [mutations (songlist.tx/update-section-content song-id section-id text)]
+    (swap! db/db update :songs songlist.tx/apply-mutations mutations)
 
     (api/request!
      {::api/endpoint "mutate"
       ::api/method :post
       ::api/params
-      {:db/tx-ops (songlist.tx/set-lines song-id section-id lines)}
+      {:db/tx-ops (songlist.tx/mutations->tx mutations)}
       ::api/on-success #(.log js/console "mutate success" (clj->js %))})))
