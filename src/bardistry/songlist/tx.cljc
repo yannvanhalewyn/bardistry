@@ -40,6 +40,9 @@
        :section/lines [""]}]
      [:song/append-section song-id section-id]]))
 
+(defn highlight-section [song-id section-id highlight?]
+  [[:song/assoc-in song-id [:song/lyrics :lyrics/sections section-id :section/highlight?] highlight?]])
+
 (defn apply-mutations [songs-by-id mutations]
   (reduce
    (fn [songs-by-id [mutation & params]]

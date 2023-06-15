@@ -9,7 +9,7 @@ import SongForm from './SongForm.js';
 import colors from 'tailwindcss/colors';
 import ContextMenu from '../components/ContextMenu';
 
-const Section = ({section, onEdit}) => {
+const Section = ({section, onEdit, setHighlight}) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const contextMenu = [
@@ -18,16 +18,17 @@ const Section = ({section, onEdit}) => {
       systemIcon: 'pencil',
       onPress: e => setIsEditing(true),
     },
-    {
-      title: 'Highlight',
-      systemIcon: 'eye',
-      onPress: e => console.log('Highlight pressed'),
-    },
-    {
-      title: 'Append section',
-      systemIcon: 'text.append',
-      onPress: e => console.log('Edit pressed'),
-    },
+    section.highlight
+      ? {
+          title: 'Unhighlight',
+          systemIcon: 'eye.slash',
+          onPress: e => setHighlight(section.id, false),
+        }
+      : {
+          title: 'Highlight',
+          systemIcon: 'eye',
+          onPress: e => setHighlight(section.id, true),
+        },
     {
       title: 'Delete',
       destructive: true,
@@ -36,7 +37,6 @@ const Section = ({section, onEdit}) => {
     },
   ];
 
-  const isHighlighted = section.isChorus;
   const hlClassNames = 'm-4 rounded-lg bg-gray-100 dark:bg-gray-900';
 
   const TextComponent = isEditing ? TextInput : Text;
@@ -47,7 +47,7 @@ const Section = ({section, onEdit}) => {
         key={section.id}
         className={
           'py-2 ' +
-          (isHighlighted ? hlClassNames : '') +
+          (section.highlight ? hlClassNames : '') +
           // pt-1 because multiline={true} adds some top padding.
           (isEditing ? ' -pt-0' : '')
         }>
@@ -55,7 +55,7 @@ const Section = ({section, onEdit}) => {
           selectionColor={colors.orange['500']}
           multiline={true}
           autoFocus={true}
-          className='px-4 text-lg font-lato dark:text-white'
+          className="px-4 text-lg font-lato dark:text-white"
           onEndEditing={e => {
             onEdit(section.id, e.nativeEvent.text);
           }}
@@ -81,6 +81,7 @@ const Lyrics = ({
   onSheetClose,
   onSongEdit,
   onSectionEdit,
+  setHighlight,
 }) => {
   const navigation = useNavigation();
 
@@ -121,6 +122,7 @@ const Lyrics = ({
                 key={section.id}
                 section={section}
                 onEdit={onSectionEdit}
+                setHighlight={setHighlight}
               />
             ))}
           </View>

@@ -1,5 +1,6 @@
 (ns dev.seed.parse-lyrics
   (:require
+   [clojure.string :as str]
    [medley.core :as m]))
 
 (defn collapse-xf [collapse-item]
@@ -60,7 +61,11 @@
         lines (if title other-entries all-entries)]
     {:section/id id
      :section/title title
-     :section/lines (trim-list (mapv second lines))}))
+     :section/lines (trim-list (mapv second lines))
+     :section/highlight?
+     (when title
+       (and (str/includes? (str/lower-case title) "chorus")
+            (not (str/includes? (str/lower-case title) "pre"))))}))
 
 (defn lines->lyrics [lines]
   (into []

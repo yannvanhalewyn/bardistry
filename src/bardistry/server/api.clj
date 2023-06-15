@@ -16,7 +16,7 @@
    :song/id     :uuid
    :song/title  :string
    :song/artist :string
-   :song/tags [:set :string]
+   :song/tags   [:set :string]
    :song        [:map {:closed true}
                  [:xt/id {:optional true} :uuid]
                  :song/id
@@ -33,13 +33,15 @@
                         :lyrics/sections]
 
    ;; Section
-   :section/id    :uuid
-   :section/title [:maybe :string]
-   :section/lines [:vector :string]
-   :section       [:map {:closed true}
-                   :section/id
-                   :section/title
-                   :section/lines]})
+   :section/id         :uuid
+   :section/title      [:maybe :string]
+   :section/lines      [:vector :string]
+   :section/highlight? [:boolean]
+   :section            [:map {:closed true}
+                        :section/id
+                        :section/title
+                        :section/lines
+                        :section/highlight?]})
 
 (def plugin
   {:schema schema

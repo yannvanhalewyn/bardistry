@@ -15,12 +15,10 @@
    {:id id
     :title title
     :artist artist
-    :sections (for [{:section/keys [title id lines]} (song/sections song)]
+    :sections (for [{:section/keys [title id lines highlight?]} (song/sections song)]
                 {:id id
                  :title title
-                 :isChorus (when title
-                             (and (str/includes? (str/lower-case title) "chorus")
-                                  (not (str/includes? (str/lower-case title) "pre"))))
+                 :highlight highlight?
                  :body (str/join "\n" lines)})}))
 
 (defn toggle-form! []
@@ -46,5 +44,6 @@
                :onEditArtist #(songlist.db/update! (:song/id song) {:song/artist %})
                :onAddSection #(songlist.db/append-section! (:song/id song))
                :onSectionEdit #(songlist.db/edit-section! (:song/id song) %1 %2)
-               :isSheetOpen (get-in @db/db [::db/ui ::song-form])}]
+               :isSheetOpen (get-in @db/db [::db/ui ::song-form])
+               :setHighlight #(songlist.db/highlight-section! (:song/id song) %1 %2)}]
       (.error js/console "Could not find song for id:" id))))

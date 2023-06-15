@@ -30,3 +30,6 @@
 
 (defn append-section! [song-id]
   (db/execute-mutations! (songlist.tx/append-section song-id)))
+
+(defn highlight-section! [song-id section-id highlight?]
+  (db/execute-mutations! (songlist.tx/highlight-section song-id section-id highlight?)))

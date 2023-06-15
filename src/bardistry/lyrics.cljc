@@ -7,7 +7,8 @@
     {:lyrics/sections
      {section-id {:section/id section-id
                   :section/title "Verse"
-                  :section/lines [""]}}
+                  :section/lines [""]
+                  :section/highlight? false}}
      :lyrics/arrangement [section-id]}))
 
 (defn sections [{:lyrics/keys [sections arrangement]}]
