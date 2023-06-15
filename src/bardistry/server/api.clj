@@ -1,5 +1,6 @@
 (ns bardistry.server.api
   (:require
+   [bardistry.songlist.tx :as songlist.tx]
    [com.biffweb :as biff]))
 
 (defn- query [{:keys [biff/db params]}]
@@ -42,15 +43,6 @@
 
 (def plugin
   {:schema schema
-   :tx-fns {:section/set-lines
-            '(fn [ctx song-id section-id new-lines]
-               (when-let [song (xtdb.api/entity (xtdb.api/db ctx) song-id)]
-                 (when (contains? (get-in song [:song/lyrics :lyrics/sections]) section-id)
-                   ;; TODO compare old and new and reject if not the same
-                   [[:xtdb.api/put
-                     (assoc-in
-                      song
-                      [:song/lyrics :lyrics/sections section-id :section/lines]
-                      new-lines)]])))}
+   :tx-fns songlist.tx/tx-fns
    :api-routes [["/api/q" {:post query}]
                 ["/api/mutate" {:post mutate}]]})

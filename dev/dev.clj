@@ -1,6 +1,7 @@
 (ns dev
   (:require
    [bardistry.core :as core]
+   [bardistry.songlist.tx :as songlist.tx]
    [clojure.string :as str]
    [clojure.tools.logging :as log]
    [clojure.tools.namespace.repl :as tools.ns.repl]
@@ -20,6 +21,9 @@
 
 (defn q! [& args]
   (apply biff/q (get-db) args))
+
+(defn submit-tx [tx]
+  (biff/submit-tx (get-ctx) tx))
 
 (defn lookup [k v]
   (biff/lookup (get-db) k v))

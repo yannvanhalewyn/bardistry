@@ -25,7 +25,10 @@
 
 (defn request! [{::keys [:bardistry.api/endpoint :bardistry.api/method :bardistry.api/params :bardistry.api/on-success :bardistry.api/on-failure]}]
   (println "http.request" method endpoint params)
-  (p/let [res (-> (js/fetch (api-url endpoint)
+  (p/let [error-handler (fn [err]
+                        (.error js/console "http.failure" (str method) endpoint err)
+                        (on-failure err))
+          res (-> (js/fetch (api-url endpoint)
                             (clj->js
                              {:method (or method :get)
                               :headers
@@ -33,16 +36,15 @@
                                :Accept "application/transit+json"}
                               :body (when params
                                       (transit/write params))}))
-                  (p/catch
-                      (fn [err]
-                        (.error js/console "http.failure" (str method) endpoint err)
-                        (on-failure err))))
+                  (p/catch error-handler))
           body (.text res)
           data (if (transit-type? (content-type res))
                  (transit/read body)
                  body)]
-    (println "http.success" (str method) endpoint)
-    (on-success data)))
+    (if (j/get res :ok)
+      (do (println "http.success" (str method) endpoint (j/get res :status))
+          (on-success data))
+      (error-handler (clj->js data)))))
 
 ;; (defonce response (atom nil))
 ;; (defonce result (atom nil))

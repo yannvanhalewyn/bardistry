@@ -4,6 +4,7 @@
    [bardistry.db :as db]
    [bardistry.navigation :as nav]
    [bardistry.song :as song]
+   [bardistry.songlist.tx :as songlist.tx]
    [clojure.string :as str]))
 
 (defn create-song! []
@@ -43,5 +44,5 @@
      {::api/endpoint "mutate"
       ::api/method :post
       ::api/params
-      {:db/tx-ops
-       [[:xtdb.api/fn :section/set-lines song-id section-id lines]]}})))
+      {:db/tx-ops (songlist.tx/set-lines song-id section-id lines)}
+      ::api/on-success #(.log js/console "mutate success" (clj->js %))})))
