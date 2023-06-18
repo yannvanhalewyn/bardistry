@@ -16,5 +16,4 @@
   (println "clojure"
            (->> (run-args)
                 (map shell-escape)
-                (str/join " ")
-                (str "clj "))))
+                (str/join " "))))

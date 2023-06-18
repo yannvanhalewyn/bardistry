@@ -6,7 +6,8 @@
             [clojure.test :as test]
             [clojure.tools.logging :as log]
             [malli.core :as malc]
-            [malli.registry :as malr]))
+            [malli.registry :as malr]
+            [nrepl.cmdline :as nrepl-cmd]))
 
 (def plugins
   [(biff/authentication-plugin {})
@@ -72,3 +73,7 @@
                            components)]
     (reset! system new-system)
     (log/info "Go to" (:biff/base-url new-system))))
+
+(defn -main [& args]
+  (start)
+  (apply nrepl-cmd/-main args))
