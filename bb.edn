@@ -21,4 +21,4 @@
 
          ;; Internal tasks called by Biff in production.
          post-receive     com.biffweb.tasks/post-receive
-         run-cmd          com.biffweb.tasks/run-cmd}}
+         run-cmd          bardistry.tasks/run-cmd}}
