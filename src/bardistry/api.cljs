@@ -6,6 +6,8 @@
    [clojure.string :as str]
    [promesa.core :as p]))
 
+(def production true)
+
 (defn- transit-type? [content-type]
   (and (string? content-type)
        (str/starts-with? content-type "application/transit+json")))
@@ -13,7 +15,7 @@
 (defn- content-type [res]
   (j/get-in res [:headers :map "content-type"]))
 
-(defn get-host []
+(defn get-dev-host []
   (if (device-info/emulator?)
     "localhost"
     "192.168.5.180"))
@@ -21,9 +23,12 @@
 (def PORT 8080)
 
 (defn- api-url [endpoint]
-  (str "http://" (get-host) ":" PORT "/api/" endpoint))
+  (if production
+    (str "https://bardistry.app/api/" endpoint)
+    (str "http://" (get-dev-host) ":" PORT "/api/" endpoint)))
 
-(defn request! [{::keys [:bardistry.api/endpoint :bardistry.api/method :bardistry.api/params :bardistry.api/on-success :bardistry.api/on-failure]}]
+(defn request!
+  [{::keys [endpoint method params on-success on-failure]}]
   (println "http.request" method endpoint params)
   (p/let [error-handler (fn [err]
                         (.error js/console "http.failure" (str method) endpoint err)
@@ -46,29 +51,38 @@
           (on-success data))
       (error-handler (clj->js data)))))
 
+;; (defonce promise (atom nil))
 ;; (defonce response (atom nil))
 ;; (defonce result (atom nil))
 ;; (defonce error (atom nil))
 
 (comment
 
-  (-> (js/fetch (api-url "songs")
-                (clj->js
-                 {:headers {:Accept "application/transit+json"}})
-                ;; #js {:method "POST"
-                ;;      :headers {:Content-Type "application/transit+json"
-                ;;                :Accept "application/transit+json"}}
+  (let [params {:query '{:find (pull ?song [:song/id
+                                            :song/title
+                                            :song/artist])
+                         :where [[?song :song/id _]]}}]
+    (reset!
+     promise
+     (-> (js/fetch (api-url "q")
+                   (clj->js
+                    {:method "POST"
+                     :headers {:Content-Type "application/transit+json"
+                               :Accept "application/transit+json"}
+                     :body (transit/write params)}))
+         (p/then #(do
+                    (reset! response %)
+                    (.text %)))
+         (p/then #(reset! result %))
+         (p/catch #(reset! error %)))))
 
-                )
-      (p/then #(do
-                 (reset! response %)
-                 (.text %)))
-      (p/then #(reset! result %))
-      (p/catch #(reset! error %)))
+  @response
 
   @result
 
   @error
+
+  @promise
 
   (request! {::endpoint "q"
              ::method :post

@@ -18,6 +18,7 @@
          logs             com.biffweb.tasks/logs
          prod-repl        com.biffweb.tasks/prod-repl
          prod-dev         com.biffweb.tasks/prod-dev
+         ssh              (shell "ssh -i ~/.ssh/id_rsa_bardistry app@bardistry.app")
 
          ;; Internal tasks called by Biff in production.
          post-receive     com.biffweb.tasks/post-receive
