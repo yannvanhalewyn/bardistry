@@ -5,6 +5,8 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useColorScheme} from 'nativewind';
 import colors from 'tailwindcss/colors';
+import ErrorBoundary from "./ErrorBoundary"
+import ErrorFallback from "./ErrorFallback"
 
 import {
   NavigationContainer,
@@ -54,7 +56,7 @@ function App({screens, navigationRef, onEditPress}) {
   }
 
   return (
-    <Suspense>
+    <ErrorBoundary fallback={ErrorFallback}>
       <GestureHandlerRootView style={{flex: 1}}>
         <BottomSheetModalProvider>
           <NavigationContainer
@@ -85,7 +87,7 @@ function App({screens, navigationRef, onEditPress}) {
           </NavigationContainer>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
-    </Suspense>
+    </ErrorBoundary>
   );
 }
 
