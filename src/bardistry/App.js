@@ -1,12 +1,12 @@
 import {Suspense, useState, useEffect} from 'react';
 import {Linking, View, Text, TouchableOpacity} from 'react-native';
-import {GestureHandlerRootView} from 'react-native-gesture-handler'
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useColorScheme} from 'nativewind';
 import colors from 'tailwindcss/colors';
-import ErrorBoundary from "./ErrorBoundary"
-import ErrorFallback from "./ErrorFallback"
+import ErrorBoundary from './ErrorBoundary';
+import ErrorFallback from './ErrorFallback';
 
 import {
   NavigationContainer,
@@ -56,7 +56,9 @@ function App({screens, navigationRef, onEditPress}) {
   }
 
   return (
-    <ErrorBoundary fallback={ErrorFallback}>
+    <ErrorBoundary
+      fallback={ErrorFallback}
+      onReset={() => setInitialState(null)}>
       <GestureHandlerRootView style={{flex: 1}}>
         <BottomSheetModalProvider>
           <NavigationContainer
