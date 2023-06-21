@@ -10,7 +10,7 @@
 
 (def SongList
   (r/adapt-react-class
-   (.-default (js/require "../../src/bardistry/songlist/SongList.js"))))
+   (.-default (js/require "../../../src/bardistry/songlist/SongList.js"))))
 
 (defn- song-matcher [q]
   (let [q (str/lower-case q)]

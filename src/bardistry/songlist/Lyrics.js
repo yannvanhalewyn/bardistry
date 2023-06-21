@@ -149,4 +149,11 @@ const Lyrics = ({
   );
 };
 
-export default Lyrics;
+const Component = props => {
+  if (!props.song) {
+    return null;
+  }
+  return <Lyrics {...props} />;
+};
+
+export default Component;

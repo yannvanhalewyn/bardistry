@@ -9,7 +9,7 @@
 
 (def App
   (r/adapt-react-class
-   (.-default (js/require "../../src/bardistry/App.js"))))
+   (.-default (js/require "../../../src/bardistry/App.js"))))
 
 (defn app-root []
   (db/hydrate!)

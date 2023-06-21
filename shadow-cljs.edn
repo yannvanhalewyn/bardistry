@@ -3,10 +3,11 @@
  {:app
   {:target :react-native
    :init-fn bardistry.shadow/init
-   :output-dir "target/app"
+   :output-dir "target/app/dev"
    ;; :compiler-options {:closure-defines
    ;;                    {"re_frame.trace.trace_enabled_QMARK_" true}}
    :devtools {:reload-strategy :full
               ;; :preloads [re-frisk-remote.preload]
               }
-   }}}
+   :release {:output-dir       "target/app/prod"
+             :compiler-options {:source-map true}}}}}

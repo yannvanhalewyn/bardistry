@@ -1,1 +1,1 @@
-import './target/app/index.js';
+import './target/app/dev/index.js';

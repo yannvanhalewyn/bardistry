@@ -10,6 +10,7 @@
         org.slf4j/slf4j-simple {:mvn/version "2.0.0-alpha5"}
 
         ;; CLJS
+        thheller/shadow-cljs {:mvn/version "2.23.3"}
         reagent/reagent {:mvn/version "1.2.0" :exclusions [cljsjs/react cljsjs/react-dom]}
         funcool/promesa {:mvn/version "11.0.671"}
         com.cognitect/transit-cljs {:mvn/version "0.8.280"}
@@ -19,5 +20,4 @@
   {:extra-paths ["dev" "dev-resources"]
    :extra-deps {cider/piggieback {:mvn/version "0.5.3"}
                 cider/cider-nrepl {:mvn/version "0.30.0"}
-                thheller/shadow-cljs {:mvn/version "2.23.3"}
                 vvvvalvalval/scope-capture {:mvn/version "0.3.2"}}}}}

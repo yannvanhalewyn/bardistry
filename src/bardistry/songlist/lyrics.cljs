@@ -8,18 +8,19 @@
 
 (def Lyrics
   (r/adapt-react-class
-   (.-default (js/require "../../src/bardistry/songlist/Lyrics.js"))))
+   (.-default (js/require "../../../src/bardistry/songlist/Lyrics.js"))))
 
 (defn- ->ui [{:song/keys [id title artist] :as song}]
   (clj->js
    {:id id
     :title title
     :artist artist
-    :sections (for [{:section/keys [title id lines highlight?]} (song/sections song)]
-                {:id id
-                 :title title
-                 :highlight highlight?
-                 :body (str/join "\n" lines)})}))
+    :sections
+    (for [{:section/keys [title id lines highlight?]} (song/sections song)]
+      {:id id
+       :title title
+       :highlight highlight?
+       :body (str/join "\n" lines)})}))
 
 (defn toggle-form! []
   (db/toggle-ui! ::song-form))
@@ -32,8 +33,8 @@
 
 (defn component []
   (fn [{:keys [:song/id]}]
-    (if-let [song (songlist.db/find-by-id id)]
-      [Lyrics {:song (->ui song)
+    (let [song (songlist.db/find-by-id id)]
+      [Lyrics {:song (when song (->ui song))
                :onSheetClose close-form!
                :onEditTitle #(songlist.db/update! (:song/id song) {:song/title %})
                :onEditArtist #(songlist.db/update! (:song/id song) {:song/artist %})
@@ -41,5 +42,4 @@
                :onSectionDelete #(songlist.db/delete-section! (:song/id song) %)
                :onSectionEdit #(songlist.db/update-section! (:song/id song) %1 %2)
                :isSheetOpen (db/get-ui! ::song-form)
-               :setHighlight #(songlist.db/highlight-section! (:song/id song) %1 %2)}]
-      (.error js/console "Could not find song for id:" id))))
+               :setHighlight #(songlist.db/highlight-section! (:song/id song) %1 %2)}])))
