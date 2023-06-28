@@ -1,86 +1,53 @@
-import React, {useState, useEffect} from 'react';
-
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {useEffect, useRef} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  useWindowDimensions,
+} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {PlusIcon} from 'react-native-heroicons/solid';
+import {useHeaderHeight} from '@react-navigation/elements';
 import {useNavigation} from '@react-navigation/native';
 import BottomModal from './BottomModal.js';
 import SongForm from './SongForm.js';
 import colors from 'tailwindcss/colors';
-import ContextMenu from '../components/ContextMenu';
+import Section from './Section';
 
-const Section = ({section, onEdit, onDelete, setHighlight}) => {
-  const [isEditing, setIsEditing] = useState(false);
-
-  const contextMenu = [
-    {
-      title: 'Edit',
-      systemIcon: 'pencil',
-      onPress: e => setIsEditing(true),
-    },
-    section.highlight
-      ? {
-          title: 'Unhighlight',
-          systemIcon: 'eye.slash',
-          onPress: e => setHighlight(section.id, false),
-        }
-      : {
-          title: 'Highlight',
-          systemIcon: 'eye',
-          onPress: e => setHighlight(section.id, true),
-        },
-    {
-      title: 'Delete',
-      destructive: true,
-      systemIcon: 'trash',
-      onPress: e => onDelete(section.id),
-    },
-  ];
-
-  const hlClassNames = 'm-4 rounded-lg bg-gray-100 dark:bg-gray-900';
-
-  const TextComponent = isEditing ? TextInput : Text;
-
+const Sections = ({
+  song,
+  onEdit,
+  onDelete,
+  setHighlight,
+  onMeasure,
+}) => {
   return (
-    <ContextMenu actions={contextMenu}>
-      <View
-        key={section.id}
-        className={
-          'py-2 ' +
-          (section.highlight ? hlClassNames : '') +
-          // pt-1 because multiline={true} adds some top padding.
-          (isEditing ? ' -pt-0' : '')
-        }>
-        <TextComponent
-          selectionColor={colors.orange['500']}
-          multiline={true}
-          autoFocus={true}
-          className="px-4 text-lg font-lato dark:text-white"
-          onEndEditing={e => {
-            onEdit(section.id, e.nativeEvent.text);
-          }}
-          onBlur={e => setIsEditing(false)}>
-          {section.title ? (
-            <TextComponent className="font-bold dark:text-white">
-              {section.title + '\n'}
-            </TextComponent>
-          ) : null}
-          {section.body}
-        </TextComponent>
-      </View>
-    </ContextMenu>
+    <View className="" style={{}}>
+      {song.sections?.map(section => (
+        <Section
+          key={section.id}
+          section={section}
+          onLayout={event => onMeasure(section.id, event.nativeEvent.layout)}
+          onEdit={onEdit}
+          onDelete={onDelete}
+          setHighlight={setHighlight}
+        />
+      ))}
+    </View>
   );
 };
 
 const Lyrics = ({
   song,
   isSheetOpen,
-  onEditTitle,
   onEditArtist,
-  onSheetClose,
+  onEditTitle,
   onSectionAdd,
-  onSectionEdit,
   onSectionDelete,
+  onSectionEdit,
+  onSectionMeasure,
+  onSheetClose,
   setHighlight,
 }) => {
   const navigation = useNavigation();
@@ -97,6 +64,7 @@ const Lyrics = ({
       <KeyboardAwareScrollView
         key={song.id}
         extraScrollHeight={64}
+        bounces={false}
         keyboardDismissMode="interactive"
         className="bg-white dark:bg-black">
         <View className="pt-4 pb-16">
@@ -117,15 +85,13 @@ const Lyrics = ({
           </TextInput>
 
           <View className="mt-2">
-            {song.sections.map(section => (
-              <Section
-                key={section.id}
-                section={section}
-                onEdit={onSectionEdit}
-                onDelete={onSectionDelete}
-                setHighlight={setHighlight}
-              />
-            ))}
+            <Sections
+              song={song}
+              onMeasure={onSectionMeasure}
+              onEdit={onSectionEdit}
+              onDelete={onSectionDelete}
+              setHighlight={setHighlight}
+            />
           </View>
 
           <TouchableOpacity
