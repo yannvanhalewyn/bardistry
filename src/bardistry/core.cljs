@@ -23,9 +23,14 @@
             #(r/as-element [:f> songlist/component])}
            {:name "Lyrics"
             :component
-            (fn [props]
-              (let [route (nav/adapt-route (j/get props :route))]
-                (r/as-element [lyrics/component (nav/route-params route)])))}]}]))
+            #(r/as-element
+              [:f> lyrics/component
+               (-> (j/get % :route)
+                   (nav/adapt-route)
+                   (nav/route-params))])
+            #_(fn [props]
+                (let [route (nav/adapt-route (j/get props :route))]
+                  (r/as-element [lyrics/component (nav/route-params route)])))}]}]))
 
 (defn ^:export -main
   []

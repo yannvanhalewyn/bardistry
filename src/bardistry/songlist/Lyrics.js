@@ -13,7 +13,9 @@ import {useNavigation} from '@react-navigation/native';
 import BottomModal from './BottomModal.js';
 import SongForm from './SongForm.js';
 import colors from 'tailwindcss/colors';
-import Section from './Section';
+import {Section, KeyboardEditButtons} from './Section';
+console.log("---Section", Section)
+console.log("KBB", KeyboardEditButtons)
 
 const Sections = ({
   song,
@@ -51,6 +53,7 @@ const Lyrics = ({
   setHighlight,
 }) => {
   const navigation = useNavigation();
+  const inputAccessoryViewID = "lyrics";
 
   useEffect(
     x => {
@@ -102,6 +105,7 @@ const Lyrics = ({
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
+      <KeyboardEditButtons/>
 
       <BottomModal height={160} isOpen={isSheetOpen} onClose={onSheetClose}>
         <SongForm
@@ -116,9 +120,23 @@ const Lyrics = ({
 };
 
 const Component = props => {
+  const dimensions = useWindowDimensions();
+  const headerHeight = useHeaderHeight();
+  console.log('Lyrics.render', dimensions, headerHeight);
+
   if (!props.song) {
-    return null;
+    return (
+      <Text className="text-white mt-12 text-center font-bold text-2xl">
+        No Song
+      </Text>
+    );
   }
+  // return (
+  //   <View
+  //     className="bg-red-500"
+  //     style={{width: dimensions.width / 2, height: dimensions.height}}></View>
+  // );
+  // throw new Error("This is an error.")
   return <Lyrics {...props} />;
 };
 

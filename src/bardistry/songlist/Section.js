@@ -1,10 +1,6 @@
 import {useState} from 'react';
 
-import {
-  View,
-  Text,
-  TextInput,
-} from 'react-native';
+import {View, Text, TextInput, Button, InputAccessoryView} from 'react-native';
 import ContextMenu from '../components/ContextMenu';
 import colors from 'tailwindcss/colors';
 
@@ -54,9 +50,13 @@ const Section = ({section, onEdit, onDelete, setHighlight}) => {
           selectionColor={colors.orange['500']}
           multiline={true}
           autoFocus={true}
+          inputAccessoryViewID="lyrics.keyboard-edit-button"
           className="px-4 text-lg font-lato dark:text-white"
           onEndEditing={e => {
             onEdit(section.id, e.nativeEvent.text);
+          }}
+          onSelectionChange={e => {
+            console.log('selection change', e.nativeEvent.selection);
           }}
           onBlur={e => setIsEditing(false)}>
           {section.title ? (
@@ -71,4 +71,12 @@ const Section = ({section, onEdit, onDelete, setHighlight}) => {
   );
 };
 
-export default Section;
+const KeyboardEditButtons = () => {
+  return (
+    <InputAccessoryView nativeID="lyrics.keyboard-edit-buttons">
+      <Button onPress={() => alert("hi")} title="Clear Text" />
+    </InputAccessoryView>
+  );
+};
+
+export { Section, KeyboardEditButtons };

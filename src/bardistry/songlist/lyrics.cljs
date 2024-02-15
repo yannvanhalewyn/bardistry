@@ -1,10 +1,13 @@
 (ns bardistry.songlist.lyrics
   (:require
-   [clojure.string :as str]
-   [reagent.core :as r]
-   [bardistry.song :as song]
+   [applied-science.js-interop :as j]
    [bardistry.db :as db]
-   [bardistry.songlist.db :as songlist.db]))
+   [bardistry.rn.device-info :as device-info]
+   [bardistry.navigation :as nav]
+   [bardistry.song :as song]
+   [bardistry.songlist.db :as songlist.db]
+   [clojure.string :as str]
+   [reagent.core :as r]))
 
 (def Lyrics
   (r/adapt-react-class

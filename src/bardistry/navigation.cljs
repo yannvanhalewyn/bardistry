@@ -4,6 +4,7 @@
    [bardistry.transit :as transit]))
 
 (def rn-nav (js/require "@react-navigation/native"))
+(def rn-elements (js/require "@react-navigation/elements"))
 
 (defonce nav (atom nil))
 
@@ -27,6 +28,7 @@
     rn-route (js->clj :keywordize-keys true)))
 
 (def use-route (comp adapt-route (j/get rn-nav :useRoute)))
+(def use-header-height (j/get rn-elements :useHeaderHeight))
 
 (defn current-route []
   (adapt-route (ref-call :getCurrentRoute)))

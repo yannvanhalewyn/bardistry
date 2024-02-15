@@ -46,13 +46,35 @@
        :section/lines [""]}]
      [:song/append-section song-id section-id]]))
 
-(defn update-section [song-id section-id lines]
-  (let [[title & lines] (str/split-lines lines)]
-    [[:song/assoc-in song-id
-      [:song/lyrics :lyrics/sections section-id :section/lines]
-      (vec lines)]
-     [:song/assoc-in song-id
-      [:song/lyrics :lyrics/sections section-id :section/title] title]]))
+(defn insert-after
+  ;; TODO maybe this should emplace at the end if not found?
+  "If target is not found, will not emplace it."
+  [coll target x]
+  (reduce
+   (fn [coll cur]
+     (if (= cur target)
+       (do
+         (println coll cur (concat coll [cur]))
+         (into coll (concat [cur] x)))
+       (conj coll cur)))
+   []
+   coll))
+
+(defn update-section [song-id section-id text]
+  (let [sections (str/split text #"\n\n")
+        [first-section & other-sections] sections
+        [title & lines] (str/split-lines (first sections))]
+    (for [section sections
+          :let [[title & lines] (str/split-lines section)]]
+      [[:song/assoc-in song-id
+        [:song/lyrics :lyrics/sections section-id :section/lines]
+        (vec lines)]
+       [:song/assoc-in song-id
+        [:song/lyrics :lyrics/sections section-id :section/title] title]]
+      )
+    ;; Append other sections to arrangement, after section-id
+    ;; We need an add section action to be sent to the server, so that this can be done in a transaction.
+    ))
 
 (defn delete-section [song-id section-id]
   [[:song/dissoc-in song-id
