@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# https://ryan.himmelwright.net/post/scripting-tmux-workspaces/
+
+session="Bardistry"
+
+session_exists=$(tmux list-sessions | grep $session)
+
+if [ "$session_exists" = "" ]
+then
+  echo "Creating new session"
+  tmux new-session -d -s $session
+
+  # REPL / Devtools
+  tmux rename-window -t 1 "AI"
+  tmux send-keys -t 1 "claude" C-m
+
+  # Editor
+  tmux new-window -t $session -n "nvim"
+  tmux send-keys -t 1 "nvim dev/user.clj" C-m
+  tmux split-window -t 1 -v -p 10
+  tmux send-keys -t 2 "dev/repl"
+  tmux split-window -t 2 -h
+  tmux send-keys -t 3 "yarn dev"
+  tmux select-pane -t 1
+
+  # Git
+  tmux new-window -t $session -n "jj"
+  tmux send-keys -t 1 "lazyjj" C-m
+  tmux split-window -t 1 -v -p 10 # bottom split for jj commands
+  tmux select-pane -t 1
+
+  # Shell
+  tmux new-window -t $session -n "shell"
+else
+  echo "Session already exists"
+fi
+
+# Attach to session's editor pane
+echo "Attaching to session"
+tmux -u attach-session -t $SESSION:2
