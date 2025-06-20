@@ -1,6 +1,7 @@
 (ns bardistry.db
   (:require
    [bardistry.api :as api]
+   [bardistry.songlist.tx :as songlist.tx]
    [bardistry.storage :as storage]
    [bardistry.util :as u]
    [promesa.core :as p]
@@ -44,11 +45,11 @@
 
 (defn execute-mutations! [mutations]
   (.log js/console "bardistry.mutations" (clj->js mutations))
-  (swap! db update :songs bardistry.songlist.tx/apply-mutations mutations)
+  (swap! db update :songs songlist.tx/apply-mutations mutations)
 
   (api/request!
    {::api/endpoint "mutate"
     ::api/method :post
     ::api/params
-    {:db/tx-ops (bardistry.songlist.tx/mutations->tx mutations)}
+    {:db/tx-ops (songlist.tx/mutations->tx mutations)}
     ::api/on-success #(.log js/console "mutate success" (clj->js %))}))

@@ -70,11 +70,11 @@
         [:song/lyrics :lyrics/sections section-id :section/lines]
         (vec lines)]
        [:song/assoc-in song-id
-        [:song/lyrics :lyrics/sections section-id :section/title] title]]
-      )
+        [:song/lyrics :lyrics/sections section-id :section/title] title]])))
+
     ;; Append other sections to arrangement, after section-id
     ;; We need an add section action to be sent to the server, so that this can be done in a transaction.
-    ))
+
 
 (defn delete-section [song-id section-id]
   [[:song/dissoc-in song-id
@@ -112,13 +112,13 @@
       (let [[song] params]
         (assoc songs-by-id (:song/id song) song))
 
-       :song/update
-       (let [[song-id attrs] params]
-         (update songs-by-id song-id merge attrs))
+      :song/update
+      (let [[song-id attrs] params]
+        (update songs-by-id song-id merge attrs))
 
-       :song/delete
-       (let [[song-id] params]
-         (dissoc songs-by-id song-id))))
+      :song/delete
+      (let [[song-id] params]
+        (dissoc songs-by-id song-id))))
    songs-by-id
    mutations))
 
