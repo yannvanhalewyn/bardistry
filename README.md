@@ -6,6 +6,10 @@ Run `bb dev` to get started. See `bb tasks` for other commands.
 
 Ensure `index.js` requires the development target.
 
+```javascript
+import 'target/app/dev/index.js';
+``````
+
 Run `yarn repl` to start the ClojureScript compiler and Clojure REPL.
 Run `yarn start` to start the Metro Dev server.
 
@@ -40,6 +44,8 @@ In XCode, run a build using the Bardistry Release scheme.
 
 ## Deploy backend
 
+Ensure `bardistry.api` has `production` set to true
+
 Deploy backend using:
 
 ```
@@ -57,4 +63,10 @@ Or log into the production server to check on the app service status:
 ```sh
 ssh app@bardistry.app
 systemctl status app
+```
+
+Open up REPL to prod:
+
+```sh
+ssh -i ~/.ssh/id_rsa_bardistry -NL 7888:localhost:42277 app@104.248.246.62
 ```

@@ -36,7 +36,6 @@
 (comment
   (def node (:biff.xtdb/node @bardistry.core/system))
 
-
   (filter
    #(= (:song/title %) "When You Break")
    (read-songs! (io/resource "lyrics.txt")))
@@ -49,6 +48,6 @@
      (for [id (com.biffweb/q (xt/db node) '{:find ?e :where [[?e :xt/id ?a]]})]
        [::xt/delete id])))
 
-  (clear-db! node)
+  (clear-db! node))
 
-  )
+

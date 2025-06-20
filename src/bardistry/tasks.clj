@@ -24,13 +24,14 @@
   []
   (println "Connect to nrepl port 7888")
   (spit ".nrepl-port" "7888")
-  (bb-tasks/shell "ssh" "-NL" "7888:localhost:42277" (str "root@" (:biff.tasks/server @config)))
-  )
+  (bb-tasks/shell "ssh" "-NL" "7888:localhost:42277" (str "root@" (:biff.tasks/server @config))))
 
-(defn query-api [& args]
+
+
+(defn query-api [& args])
   ;; cat params.edn | jet --from edn --to transit | curl -XPOST --data @'-' --header 'Content-Type: application/transit+json' https://bardistry.app/api/q
 
-  )
+
 
 
 ;; Run this over production repl to backup songs and then download files
@@ -39,7 +40,7 @@
                  '{:find [?artist ?title]
                    :where [[?e :song/artist ?artist]
                            [?e :song/title ?title]]
-                   :order-by [[?artist :asc]]})
+                   :order-by [[?artist :asc]]}))
 
 
-  )
+

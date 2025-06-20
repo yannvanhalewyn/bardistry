@@ -68,6 +68,23 @@
   (start)
 
   (refresh)
+  (def local-songs
+   (map first
+     (xtdb.api/q (get-db)
+       '{:find [(pull ?e [*])]
+         :where [[?e :song/title ?a]]})))
+
+  (def local-tuples
+    (into #{} (map (juxt :song/artist :song/title)  local-songs)))
+
+  (def remote-tuples
+    (into #{} (read-string (slurp "songs.edn"))))
+
+  (def missing
+    (second (clojure.data/diff local-tuples remote-tuples)))
+
+  (spit "missing.edn"
+    (with-out-str (clojure.pprint/pprint missing)))
 
   (clear-db!)
 

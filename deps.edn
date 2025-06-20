@@ -1,23 +1,27 @@
 {:paths ["src" "resources" "target/resources"]
  :deps {;; Clojure
         org.clojure/clojure {:mvn/version "1.11.1"}
-        net.cgrand/xforms {:mvn/version "0.19.4"}
+        net.cgrand/xforms {:mvn/version "0.19.6"}
         dev.weavejester/medley {:mvn/version "1.7.0"}
 
         ;; Biff
-        com.biffweb/biff {:git/url "https://github.com/jacobobryant/biff" :sha "df935d8" :tag "v0.7.5"}
+        ;; TODO upgraded biff without checking
+        ;; Update to aero config
+        ;; :https://github.com/jacobobryant/biff/commit/40510a006f8c436effdef4f9956e02856525bfbf
+        com.biffweb/biff {:git/url "https://github.com/jacobobryant/biff" :sha "3b2fa14" :tag "v1.8.0"}
         camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.3"}
-        org.slf4j/slf4j-simple {:mvn/version "2.0.0-alpha5"}
+        org.slf4j/slf4j-simple {:mvn/version "2.0.12"}
 
         ;; CLJS
-        thheller/shadow-cljs {:mvn/version "2.23.3"}
+        thheller/shadow-cljs {:mvn/version "2.27.4"}
         reagent/reagent {:mvn/version "1.2.0" :exclusions [cljsjs/react cljsjs/react-dom]}
-        funcool/promesa {:mvn/version "11.0.671"}
+        re-frame/re-frame {:mvn/version "1.4.3"}
+        funcool/promesa {:mvn/version "11.0.678"}
         com.cognitect/transit-cljs {:mvn/version "0.8.280"}
         applied-science/js-interop {:mvn/version "0.4.2"}}
  :aliases
  {:dev
   {:extra-paths ["dev" "dev-resources"]
    :extra-deps {cider/piggieback {:mvn/version "0.5.3"}
-                cider/cider-nrepl {:mvn/version "0.30.0"}
-                vvvvalvalval/scope-capture {:mvn/version "0.3.2"}}}}}
+                cider/cider-nrepl {:mvn/version "0.45.0"}
+                vvvvalvalval/scope-capture {:mvn/version "0.3.3"}}}}}

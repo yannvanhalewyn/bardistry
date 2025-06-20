@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "clj:repl": "BIFF_ENV=dev clj -A:dev:cider-nrepl",
-    "repl": "BIFF_ENV=dev shadow-cljs -A:dev watch app",
+    "clj:repl": "BIFF_ENV=dev clj -A:dev:local-dev",
+    "repl": "BIFF_ENV=dev shadow-cljs -A:dev:local-dev watch app",
     "cljs:build": "shadow-cljs release app",
     "android": "react-native run-android",
     "ios": "react-native run-ios",

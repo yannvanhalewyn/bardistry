@@ -31,8 +31,8 @@
   [{::keys [endpoint method params on-success on-failure]}]
   (println "http.request" method endpoint params)
   (p/let [error-handler (fn [err]
-                        (.error js/console "http.failure" (str method) endpoint err)
-                        (on-failure err))
+                         (.error js/console "http.failure" (str method) endpoint err)
+                         (on-failure err))
           res (-> (js/fetch (api-url endpoint)
                             (clj->js
                              {:method (or method :get)
@@ -88,6 +88,6 @@
              ::method :post
              ::params {:foo "bar3"}
              ::on-success #(reset! result %)
-             ::on-failure #(reset! error %)})
+             ::on-failure #(reset! error %)}))
 
-  )
+

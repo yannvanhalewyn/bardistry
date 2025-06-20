@@ -1,6 +1,6 @@
 {:deps {com.biffweb/tasks {:git/url "https://github.com/jacobobryant/biff"
-                           :sha "df935d8"
-                           :tag "v0.7.5"
+                           :sha "3b2fa14"
+                           :tag "v1.8.0"
                            :deps/root "tasks"}}
  :paths ["src"]
  :tasks {;; Used only in local development.
