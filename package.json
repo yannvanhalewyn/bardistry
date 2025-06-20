@@ -46,7 +46,7 @@
     "metro-react-native-babel-preset": "0.76.5",
     "prettier": "^2.4.1",
     "react-test-renderer": "18.2.0",
-    "shadow-cljs": "^2.23.3",
+    "shadow-cljs": "^2.28.14",
     "tailwindcss": "^3.3.2"
   },
   "engines": {

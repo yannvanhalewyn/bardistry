@@ -2913,7 +2913,7 @@ __metadata:
     react-native-svg: ^13.9.0
     react-native-vector-icons: ^9.2.0
     react-test-renderer: 18.2.0
-    shadow-cljs: ^2.23.3
+    shadow-cljs: ^2.28.14
     tailwindcss: ^3.3.2
   languageName: unknown
   linkType: soft
@@ -3496,16 +3496,16 @@ __metadata:
   linkType: hard
 
 "bn.js@npm:^4.0.0, bn.js@npm:^4.1.0, bn.js@npm:^4.11.9":
-  version: 4.12.1
-  resolution: "bn.js@npm:4.12.1"
-  checksum: f7f84a909bd07bdcc6777cccbf280b629540792e6965fb1dd1aeafba96e944f197ca10cbec2692f51e0a906ff31da1eb4317f3d1cd659d6f68b8bcd211f7ecbc
+  version: 4.12.2
+  resolution: "bn.js@npm:4.12.2"
+  checksum: dd224afda6f5a7d15f2fe5154e1a1c245576a725584ea1852c8c42f9748dfe847bc63a48b2885360023389a24cfebb3653ca97f4c69742f3c22bc63da6565030
   languageName: node
   linkType: hard
 
 "bn.js@npm:^5.2.1":
-  version: 5.2.1
-  resolution: "bn.js@npm:5.2.1"
-  checksum: 3dd8c8d38055fedfa95c1d5fc3c99f8dd547b36287b37768db0abab3c239711f88ff58d18d155dd8ad902b0b0cee973747b7ae20ea12a09473272b0201c9edd3
+  version: 5.2.2
+  resolution: "bn.js@npm:5.2.2"
+  checksum: 4384d35fef785c757eb050bc1f13d60dd8e37662ca72392ae6678b35cfa2a2ae8f0494291086294683a7d977609c7878ac3cff08ecca7f74c3ca73f3acbadbe8
   languageName: node
   linkType: hard
 
@@ -10559,7 +10559,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shadow-cljs@npm:^2.23.3":
+"shadow-cljs@npm:^2.28.14":
   version: 2.28.23
   resolution: "shadow-cljs@npm:2.28.23"
   dependencies:
